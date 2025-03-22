@@ -82,6 +82,8 @@ export default {
 				'sans': ['Zen Kaku Gothic New', 'sans-serif'],
 				'serif': ['Zen Old Mincho', 'serif'],
 				'mincho': ['Zen Old Mincho', 'serif'],
+				'en': ['Zen Kaku Gothic New', 'sans-serif'],
+				'jp': ['Zen Old Mincho', 'serif'],
 			},
 			keyframes: {
 				'accordion-down': {
