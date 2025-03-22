@@ -1,0 +1,72 @@
+
+import React, { useEffect, useRef } from "react";
+
+const Testimonials = () => {
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const testimonialRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("animate-fade-in-up");
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    if (testimonialRef.current) observer.observe(testimonialRef.current);
+
+    return () => {
+      if (testimonialRef.current) observer.unobserve(testimonialRef.current);
+    };
+  }, []);
+
+  return (
+    <section id="testimonials" className="py-20 bg-kyoto-dark-green" ref={sectionRef}>
+      <div className="section-container">
+        <div className="text-center mb-16">
+          <h3 className="text-sm uppercase tracking-wider text-kyoto-gold mb-2">
+            お客様の声
+          </h3>
+          <h2 className="section-title text-kyoto-white mx-auto">
+            会員の声
+          </h2>
+        </div>
+
+        <div 
+          ref={testimonialRef}
+          className="bg-white/10 backdrop-blur-sm p-10 rounded-sm border border-kyoto-gold/30 max-w-2xl mx-auto opacity-0"
+        >
+          <div className="mb-8">
+            <svg className="w-10 h-10 text-kyoto-gold/50" fill="currentColor" viewBox="0 0 32 32" aria-hidden="true">
+              <path d="M9.352 4C4.456 4 0.672 7.456 0.672 12.224c0 4.224 3.36 8.224 8.512 8.224 0.672 0 1.248-0.096 1.76-0.224 0.672 0.448 2.24 1.504 2.016 3.328 0 0-0.096 0.672-0.96 0.448-5.6-2.016-9.632-7.232-9.632-13.76 0-6.56 5.392-9.632 9.632-9.632 3.584 0 5.824 2.24 5.824 5.472 0 3.808-3.2 6.528-6.272 6.528-1.312 0-2.016-0.288-2.624-0.672-0.448-0.448-0.96-0.672-1.312-0.672-0.352 0-0.672 0.224-0.672 0.672 0 0.288 0.096 0.544 0.32 0.768 1.312 1.312 3.104 1.984 4.832 1.984 6.272 0 12-5.28 12-12C24.032 6.912 17.088 4 9.352 4z" />
+            </svg>
+          </div>
+          
+          <blockquote className="text-lg md:text-xl text-white italic leading-relaxed mb-8">
+            市のコートは予約が大変。でもここなら、思い立った時にプレーできる。自然に囲まれて、毎回スッキリ！
+          </blockquote>
+          
+          <div className="flex items-center">
+            <div className="h-12 w-12 rounded-full bg-kyoto-gold overflow-hidden mr-4">
+              <img 
+                src="/lovable-uploads/2dcc5e2e-3ed3-41e2-9038-cbab6f2a3962.png" 
+                alt="会員の方" 
+                className="h-full w-full object-cover"
+              />
+            </div>
+            <div>
+              <p className="text-kyoto-gold font-bold">京都ローンテニスクラブ会員</p>
+              <p className="text-white/70 text-sm">10年以上のメンバー</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default Testimonials;
