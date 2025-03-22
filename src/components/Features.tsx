@@ -33,21 +33,21 @@ const Features = () => {
   }, []);
 
   return (
-    <section id="features" className="py-20 bg-kyoto-white" ref={sectionRef}>
-      <div className="section-container">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+    <section id="features" className="py-12 bg-kyoto-white" ref={sectionRef}>
+      <div className="section-container max-w-6xl mx-auto px-4 sm:px-6 py-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
           {/* Text Content */}
           <div
             ref={textRef}
             className="opacity-0 transform translate-x-[-100%]"
           >
-            <h3 className="text-sm uppercase tracking-wider text-kyoto-dark-green mb-2">
+            <h3 className="text-sm uppercase tracking-wider text-kyoto-dark-green mb-1">
               クラブの特徴
             </h3>
-            <h2 className="section-title text-kyoto-dark-green">
+            <h2 className="section-title text-kyoto-dark-green text-2xl md:text-3xl">
               京都ローンテニスクラブへ<br />ようこそ
             </h2>
-            <div className="space-y-6 text-gray-700">
+            <div className="space-y-3 text-gray-700 text-sm md:text-base">
               <p className="leading-relaxed">
                 伝統ある会員制クラブ。会員の手で運営しているから、年会費もプレー代もお手頃。
               </p>
@@ -69,16 +69,16 @@ const Features = () => {
             className="opacity-0 transform translate-x-[100%]"
           >
             <div className="relative">
-              <div className="aspect-square overflow-hidden rounded">
+              <div className="overflow-hidden rounded-sm">
                 <img
                   src="/lovable-uploads/a140f6d7-a8b7-489d-b607-c3ecfd71d3b3.png"
                   alt="テニスラケットの準備"
-                  className="object-cover w-full h-full transform transition-transform duration-700 hover:scale-105"
+                  className="object-cover w-full h-64 md:h-72 transform transition-transform duration-700 hover:scale-105"
                 />
               </div>
               {/* Decorative elements */}
-              <div className="absolute -bottom-8 -left-8 w-32 h-32 bg-kyoto-tennis-green/10 rounded-full -z-10"></div>
-              <div className="absolute -top-8 -right-8 w-24 h-24 bg-kyoto-gold/10 rounded-full -z-10"></div>
+              <div className="absolute -bottom-6 -left-6 w-24 h-24 bg-kyoto-tennis-green/10 rounded-full -z-10"></div>
+              <div className="absolute -top-6 -right-6 w-20 h-20 bg-kyoto-gold/10 rounded-full -z-10"></div>
             </div>
           </div>
         </div>

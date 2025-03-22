@@ -4,13 +4,13 @@ import { MapPin, Clock, Car, Droplets } from "lucide-react";
 
 const FacilityItem = ({ icon, title, description }) => {
   return (
-    <div className="flex p-4 bg-white/80 backdrop-blur-sm rounded-sm shadow hover-lift">
-      <div className="mr-4 text-kyoto-dark-green">
+    <div className="flex p-3 bg-white/80 backdrop-blur-sm rounded-sm shadow hover-lift">
+      <div className="mr-3 text-kyoto-dark-green">
         {icon}
       </div>
       <div>
-        <h4 className="font-bold text-kyoto-dark-green mb-1">{title}</h4>
-        <p className="text-gray-700 text-sm">{description}</p>
+        <h4 className="font-bold text-kyoto-dark-green mb-0.5 text-sm">{title}</h4>
+        <p className="text-gray-700 text-xs">{description}</p>
       </div>
     </div>
   );
@@ -48,22 +48,22 @@ const Facilities = () => {
   }, []);
 
   return (
-    <section id="facilities" className="py-20 bg-kyoto-light-green relative overflow-hidden" ref={sectionRef}>
+    <section id="facilities" className="py-12 bg-kyoto-light-green relative overflow-hidden" ref={sectionRef}>
       {/* Background decorative elements */}
       <div className="absolute top-0 left-0 w-1/3 h-1/3 bg-kyoto-tennis-green/10 -z-10 rounded-br-full"></div>
       <div className="absolute bottom-0 right-0 w-1/3 h-1/3 bg-kyoto-gold/10 -z-10 rounded-tl-full"></div>
       
-      <div className="section-container">
-        <div className="text-center mb-16">
-          <h3 className="text-sm uppercase tracking-wider text-kyoto-dark-green mb-2">
+      <div className="section-container max-w-6xl mx-auto px-4 sm:px-6 py-8">
+        <div className="text-center mb-8">
+          <h3 className="text-sm uppercase tracking-wider text-kyoto-dark-green mb-1">
             アクセス・施設案内
           </h3>
-          <h2 className="section-title text-kyoto-dark-green mx-auto">
+          <h2 className="section-title text-kyoto-dark-green mx-auto text-2xl md:text-3xl">
             静原の自然の中で
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
           {/* Map image */}
           <div 
             ref={mapRef}
@@ -73,10 +73,10 @@ const Facilities = () => {
               <img 
                 src="/lovable-uploads/bc28539d-5d5f-4dec-8fce-4ba7e99d3b22.png" 
                 alt="テニスコート空撮" 
-                className="w-full h-auto"
+                className="w-full h-64 md:h-72 object-cover"
               />
               <div className="absolute inset-0 flex items-center justify-center bg-kyoto-dark-green/30 hover:bg-kyoto-dark-green/20 transition-colors duration-300">
-                <span className="px-4 py-2 bg-kyoto-gold text-kyoto-dark-green font-bold">
+                <span className="px-3 py-1 bg-kyoto-gold text-kyoto-dark-green font-bold text-sm">
                   航空写真
                 </span>
               </div>
@@ -88,32 +88,32 @@ const Facilities = () => {
             ref={infoRef}
             className="opacity-0 transform translate-x-[100%]"
           >
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="grid grid-cols-2 gap-3">
               <FacilityItem 
-                icon={<MapPin size={24} />} 
+                icon={<MapPin size={20} />} 
                 title="コート" 
                 description="3面（オムニコート）、ナイター1面あり" 
               />
               <FacilityItem 
-                icon={<Droplets size={24} />} 
+                icon={<Droplets size={20} />} 
                 title="設備" 
                 description="クラブハウス・シャワー完備" 
               />
               <FacilityItem 
-                icon={<Car size={24} />} 
+                icon={<Car size={20} />} 
                 title="駐車場" 
                 description="無料駐車場完備" 
               />
               <FacilityItem 
-                icon={<Clock size={24} />} 
+                icon={<Clock size={20} />} 
                 title="営業時間" 
                 description="年中無休 10:00～16:00" 
               />
             </div>
 
-            <div className="mt-8 bg-white/80 backdrop-blur-sm p-6 rounded-sm shadow">
-              <h4 className="font-bold text-kyoto-dark-green mb-4">アクセス</h4>
-              <ul className="space-y-2 text-gray-700">
+            <div className="mt-4 bg-white/80 backdrop-blur-sm p-4 rounded-sm shadow">
+              <h4 className="font-bold text-kyoto-dark-green mb-2 text-sm">アクセス</h4>
+              <ul className="space-y-1 text-gray-700 text-xs">
                 <li className="flex items-start">
                   <span className="font-medium mr-2">バス:</span>
                   <span>叡山電鉄市原駅 → 京都バス大原行「しずはうす前」下車 徒歩2分</span>

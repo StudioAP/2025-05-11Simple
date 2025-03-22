@@ -3,10 +3,10 @@ import React, { useEffect } from "react";
 import Navbar from "../components/Navbar";
 import Hero from "../components/Hero";
 import Features from "../components/Features";
-import Programs from "../components/Programs";
-import Testimonials from "../components/Testimonials";
-import Pricing from "../components/Pricing";
 import Facilities from "../components/Facilities";
+import Testimonials from "../components/Testimonials";
+import Programs from "../components/Programs";
+import Pricing from "../components/Pricing";
 import Contact from "../components/Contact";
 import Footer from "../components/Footer";
 
@@ -33,10 +33,10 @@ const Index = () => {
       <Navbar />
       <Hero />
       <Features />
-      <Programs />
-      <Testimonials />
-      <Pricing />
       <Facilities />
+      <Testimonials />
+      <Programs />
+      <Pricing />
       <Contact />
       <Footer />
     </div>
