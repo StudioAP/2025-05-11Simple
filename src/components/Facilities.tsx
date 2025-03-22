@@ -1,6 +1,6 @@
 
 import React, { useEffect, useRef } from "react";
-import { MapPin, Clock, Car, Shower } from "lucide-react";
+import { MapPin, Clock, Car, Droplets } from "lucide-react";
 
 const FacilityItem = ({ icon, title, description }) => {
   return (
@@ -95,7 +95,7 @@ const Facilities = () => {
                 description="3面（オムニコート）、ナイター1面あり" 
               />
               <FacilityItem 
-                icon={<Shower size={24} />} 
+                icon={<Droplets size={24} />} 
                 title="設備" 
                 description="クラブハウス・シャワー完備" 
               />
