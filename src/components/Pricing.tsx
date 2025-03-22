@@ -27,37 +27,37 @@ const PricingCard = ({ title, price, entryFee, features, isPopular = false }) =>
   return (
     <div
       ref={cardRef}
-      className={`bg-white rounded-sm shadow-lg p-6 hover-lift opacity-0 relative overflow-hidden ${
+      className={`bg-white rounded-sm shadow-lg p-4 hover-lift opacity-0 relative overflow-hidden ${
         isPopular ? "border-2 border-kyoto-gold" : "border border-gray-200"
       }`}
     >
       {isPopular && (
         <div className="absolute top-0 right-0">
-          <div className="bg-kyoto-gold text-kyoto-dark-green text-xs font-bold uppercase py-1 px-3 transform rotate-45 translate-x-7 translate-y-3">
+          <div className="bg-kyoto-gold text-kyoto-dark-green text-xs font-bold uppercase py-1 px-2 transform rotate-45 translate-x-5 translate-y-2">
             人気
           </div>
         </div>
       )}
 
-      <h3 className="text-xl font-bold text-kyoto-dark-green mb-2">{title}</h3>
+      <h3 className="text-lg font-bold text-kyoto-dark-green mb-1">{title}</h3>
       
-      <div className="mb-6">
+      <div className="mb-3">
         <div className="flex items-baseline">
-          <span className="text-4xl font-bold text-kyoto-dark-green">
+          <span className="text-2xl font-bold text-kyoto-dark-green">
             {price}
           </span>
-          <span className="text-gray-600 ml-1">円/年</span>
+          <span className="text-gray-600 ml-1 text-xs">円/年</span>
         </div>
-        <div className="text-sm text-gray-600 mt-1">
+        <div className="text-xs text-gray-600">
           入会金: {entryFee}
         </div>
       </div>
 
-      <ul className="space-y-3 mb-8">
+      <ul className="space-y-1 mb-4 text-xs">
         {features.map((feature, index) => (
           <li key={index} className="flex items-start">
             <svg
-              className="w-5 h-5 text-kyoto-gold shrink-0 mr-2 mt-0.5"
+              className="w-4 h-4 text-kyoto-gold shrink-0 mr-1 mt-0.5"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -77,7 +77,7 @@ const PricingCard = ({ title, price, entryFee, features, isPopular = false }) =>
 
       <Button
         variant={isPopular ? "secondary" : "outline"}
-        className="w-full"
+        className="w-full text-xs py-1"
       >
         詳細を見る
       </Button>
@@ -139,24 +139,21 @@ const Pricing = () => {
   ];
 
   return (
-    <section id="pricing" className="py-20 bg-kyoto-cream">
+    <section id="pricing" className="py-12 bg-kyoto-cream">
       <div className="section-container">
-        <div className="text-center mb-16">
-          <h3 className="text-sm uppercase tracking-wider text-kyoto-dark-green mb-2">
+        <div className="text-center mb-8">
+          <h3 className="text-sm uppercase tracking-wider text-kyoto-dark-green mb-1">
             料金プラン
           </h3>
           <h2
             ref={titleRef}
-            className="section-title text-kyoto-dark-green mx-auto opacity-0"
+            className="section-title text-kyoto-dark-green mx-auto opacity-0 text-2xl md:text-3xl"
           >
             テニスを始めよう
           </h2>
-          <p className="text-gray-700 max-w-2xl mx-auto mt-6 opacity-0 animate-fade-in-up">
-            あなたにピッタリのプランで。どのプランもビジター料金の追加でゲストを招待できます。
-          </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
           {pricingPlans.map((plan, index) => (
             <PricingCard
               key={index}
@@ -169,15 +166,15 @@ const Pricing = () => {
           ))}
         </div>
 
-        <div className="mt-16 bg-white rounded-sm shadow p-8 text-center opacity-0 animate-fade-in-up">
-          <h3 className="text-xl font-bold text-kyoto-dark-green mb-4">
+        <div className="mt-6 bg-white rounded-sm shadow p-4 text-center opacity-0 animate-fade-in-up max-w-md mx-auto">
+          <h3 className="text-lg font-bold text-kyoto-dark-green mb-2">
             ビジターも大歓迎
           </h3>
-          <p className="text-gray-700 mb-6">
-            会員でなくても1日単位でご利用いただけます。いつでも気軽にお越しください。
+          <p className="text-gray-700 text-sm mb-2">
+            会員でなくても1日単位でご利用いただけます
           </p>
-          <div className="text-3xl font-bold text-kyoto-dark-green">
-            1,500<span className="text-xl font-normal text-gray-600">円/日</span>
+          <div className="text-2xl font-bold text-kyoto-dark-green">
+            1,500<span className="text-base font-normal text-gray-600">円/日</span>
           </div>
         </div>
       </div>

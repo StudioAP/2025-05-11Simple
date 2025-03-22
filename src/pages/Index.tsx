@@ -33,6 +33,7 @@ const Index = () => {
       <Navbar />
       <Hero />
       <Features />
+      {/* Moved Facilities and Testimonials before Programs */}
       <Facilities />
       <Testimonials />
       <Programs />
