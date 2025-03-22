@@ -41,13 +41,10 @@ const Features = () => {
             ref={textRef}
             className="opacity-0 transform translate-x-[-100%]"
           >
-            <h3 className="text-sm uppercase tracking-wider text-kyoto-dark-green mb-1">
-              クラブの特徴
-            </h3>
-            <h2 className="section-title text-kyoto-dark-green text-2xl md:text-3xl">
+            <h2 className="section-title text-kyoto-dark-green text-2xl md:text-3xl mb-6">
               京都ローンテニスクラブへ<br />ようこそ
             </h2>
-            <div className="space-y-3 text-gray-700 text-sm md:text-base">
+            <div className="space-y-4 text-gray-700 text-sm md:text-base">
               <p className="leading-relaxed">
                 伝統ある会員制クラブ。会員の手で運営しているから、年会費もプレー代もお手頃。
               </p>
@@ -56,9 +53,6 @@ const Features = () => {
               </p>
               <p className="leading-relaxed">
                 初心者もベテランも、みんなが楽しめる場所。
-              </p>
-              <p className="leading-relaxed">
-                静原の自然に囲まれて、心が軽くなるテニスを。
               </p>
             </div>
           </div>
@@ -73,7 +67,7 @@ const Features = () => {
                 <img
                   src="/lovable-uploads/a140f6d7-a8b7-489d-b607-c3ecfd71d3b3.png"
                   alt="テニスラケットの準備"
-                  className="object-cover w-full h-64 md:h-72 transform transition-transform duration-700 hover:scale-105"
+                  className="object-cover w-full h-64 md:h-80 transform transition-transform duration-700 hover:scale-105"
                 />
               </div>
               {/* Decorative elements */}

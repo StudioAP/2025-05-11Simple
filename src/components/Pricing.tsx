@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef } from "react";
 import Button from "./Button";
 
@@ -46,14 +45,14 @@ const PricingCard = ({ title, price, entryFee, features, isPopular = false }) =>
           <span className="text-2xl font-bold text-kyoto-dark-green">
             {price}
           </span>
-          <span className="text-gray-600 ml-1 text-xs">円/年</span>
+          <span className="text-gray-600 ml-1 text-xs md:text-sm">円/年</span>
         </div>
-        <div className="text-xs text-gray-600">
+        <div className="text-xs md:text-sm text-gray-600">
           入会金: {entryFee}
         </div>
       </div>
 
-      <ul className="space-y-1 mb-4 text-xs">
+      <ul className="space-y-1 mb-4 text-xs md:text-sm">
         {features.map((feature, index) => (
           <li key={index} className="flex items-start">
             <svg
@@ -77,7 +76,7 @@ const PricingCard = ({ title, price, entryFee, features, isPopular = false }) =>
 
       <Button
         variant={isPopular ? "secondary" : "outline"}
-        className="w-full text-xs py-1"
+        className="w-full text-xs md:text-sm py-1"
       >
         詳細を見る
       </Button>
@@ -87,6 +86,7 @@ const PricingCard = ({ title, price, entryFee, features, isPopular = false }) =>
 
 const Pricing = () => {
   const titleRef = useRef<HTMLHeadingElement>(null);
+  const imageRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -101,9 +101,11 @@ const Pricing = () => {
     );
 
     if (titleRef.current) observer.observe(titleRef.current);
+    if (imageRef.current) observer.observe(imageRef.current);
 
     return () => {
       if (titleRef.current) observer.unobserve(titleRef.current);
+      if (imageRef.current) observer.unobserve(imageRef.current);
     };
   }, []);
 
@@ -142,35 +144,45 @@ const Pricing = () => {
     <section id="pricing" className="py-12 bg-kyoto-cream">
       <div className="section-container">
         <div className="text-center mb-8">
-          <h3 className="text-sm uppercase tracking-wider text-kyoto-dark-green mb-1">
-            料金プラン
-          </h3>
           <h2
             ref={titleRef}
             className="section-title text-kyoto-dark-green mx-auto opacity-0 text-2xl md:text-3xl"
           >
-            テニスを始めよう
+            Membership Plans
           </h2>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-          {pricingPlans.map((plan, index) => (
-            <PricingCard
-              key={index}
-              title={plan.title}
-              price={plan.price}
-              entryFee={plan.entryFee}
-              features={plan.features}
-              isPopular={plan.isPopular}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center mb-8">
+          <div 
+            ref={imageRef}
+            className="opacity-0 rounded-sm overflow-hidden shadow-lg"
+          >
+            <img 
+              src="/lovable-uploads/a140f6d7-a8b7-489d-b607-c3ecfd71d3b3.png" 
+              alt="テニスコート" 
+              className="w-full h-64 md:h-80 object-cover"
             />
-          ))}
+          </div>
+
+          <div className="grid grid-cols-2 gap-3">
+            {pricingPlans.map((plan, index) => (
+              <PricingCard
+                key={index}
+                title={plan.title}
+                price={plan.price}
+                entryFee={plan.entryFee}
+                features={plan.features}
+                isPopular={plan.isPopular}
+              />
+            ))}
+          </div>
         </div>
 
         <div className="mt-6 bg-white rounded-sm shadow p-4 text-center opacity-0 animate-fade-in-up max-w-md mx-auto">
           <h3 className="text-lg font-bold text-kyoto-dark-green mb-2">
             ビジターも大歓迎
           </h3>
-          <p className="text-gray-700 text-sm mb-2">
+          <p className="text-gray-700 text-sm md:text-base mb-2">
             会員でなくても1日単位でご利用いただけます
           </p>
           <div className="text-2xl font-bold text-kyoto-dark-green">

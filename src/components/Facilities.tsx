@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef } from "react";
 import { MapPin, Clock, Car, Droplets } from "lucide-react";
 
@@ -9,8 +8,8 @@ const FacilityItem = ({ icon, title, description }) => {
         {icon}
       </div>
       <div>
-        <h4 className="font-bold text-kyoto-dark-green mb-0.5 text-sm">{title}</h4>
-        <p className="text-gray-700 text-xs">{description}</p>
+        <h4 className="font-bold text-kyoto-dark-green mb-0.5 text-sm md:text-base">{title}</h4>
+        <p className="text-gray-700 text-xs md:text-sm">{description}</p>
       </div>
     </div>
   );
@@ -55,11 +54,8 @@ const Facilities = () => {
       
       <div className="section-container max-w-6xl mx-auto px-4 sm:px-6 py-8">
         <div className="text-center mb-8">
-          <h3 className="text-sm uppercase tracking-wider text-kyoto-dark-green mb-1">
-            アクセス・施設案内
-          </h3>
           <h2 className="section-title text-kyoto-dark-green mx-auto text-2xl md:text-3xl">
-            静原の自然の中で
+            Facilities & Access
           </h2>
         </div>
 
@@ -73,10 +69,10 @@ const Facilities = () => {
               <img 
                 src="/lovable-uploads/bc28539d-5d5f-4dec-8fce-4ba7e99d3b22.png" 
                 alt="テニスコート空撮" 
-                className="w-full h-64 md:h-72 object-cover"
+                className="w-full h-64 md:h-80 object-cover"
               />
               <div className="absolute inset-0 flex items-center justify-center bg-kyoto-dark-green/30 hover:bg-kyoto-dark-green/20 transition-colors duration-300">
-                <span className="px-3 py-1 bg-kyoto-gold text-kyoto-dark-green font-bold text-sm">
+                <span className="px-3 py-1 bg-kyoto-gold text-kyoto-dark-green font-bold text-sm md:text-base">
                   航空写真
                 </span>
               </div>
@@ -90,30 +86,30 @@ const Facilities = () => {
           >
             <div className="grid grid-cols-2 gap-3">
               <FacilityItem 
-                icon={<MapPin size={20} />} 
+                icon={<MapPin size={22} />} 
                 title="コート" 
                 description="3面（オムニコート）、ナイター1面あり" 
               />
               <FacilityItem 
-                icon={<Droplets size={20} />} 
+                icon={<Droplets size={22} />} 
                 title="設備" 
                 description="クラブハウス・シャワー完備" 
               />
               <FacilityItem 
-                icon={<Car size={20} />} 
+                icon={<Car size={22} />} 
                 title="駐車場" 
                 description="無料駐車場完備" 
               />
               <FacilityItem 
-                icon={<Clock size={20} />} 
+                icon={<Clock size={22} />} 
                 title="営業時間" 
                 description="年中無休 10:00～16:00" 
               />
             </div>
 
             <div className="mt-4 bg-white/80 backdrop-blur-sm p-4 rounded-sm shadow">
-              <h4 className="font-bold text-kyoto-dark-green mb-2 text-sm">アクセス</h4>
-              <ul className="space-y-1 text-gray-700 text-xs">
+              <h4 className="font-bold text-kyoto-dark-green mb-2 text-sm md:text-base">アクセス</h4>
+              <ul className="space-y-1 text-gray-700 text-xs md:text-sm">
                 <li className="flex items-start">
                   <span className="font-medium mr-2">バス:</span>
                   <span>叡山電鉄市原駅 → 京都バス大原行「しずはうす前」下車 徒歩2分</span>
