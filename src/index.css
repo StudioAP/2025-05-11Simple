@@ -46,20 +46,26 @@
 
   body {
     @apply bg-background text-foreground font-sans antialiased;
+    font-size: 16px; /* Base font size increase */
   }
 
   h1, h2, h3, h4, h5, h6 {
     @apply font-mincho tracking-wide;
   }
+  
+  p {
+    font-size: 1.05rem; /* Slightly increased paragraph text */
+    line-height: 1.6;
+  }
 }
 
 @layer components {
   .section-container {
-    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24;
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16;
   }
   
   .kyoto-divider {
-    @apply relative h-px w-full my-12 overflow-hidden;
+    @apply relative h-px w-full my-8 overflow-hidden;
     background: linear-gradient(90deg, transparent, theme('colors.kyoto.gold'), transparent);
   }
   
@@ -69,7 +75,8 @@
   }
   
   .section-title {
-    @apply text-3xl md:text-4xl font-bold mb-8 relative inline-block;
+    @apply text-3xl md:text-4xl font-bold mb-6 relative inline-block;
+    font-size: calc(1.75rem + 0.5vw); /* Responsive sizing */
   }
   
   .section-title::after {

@@ -50,9 +50,9 @@ const Testimonials = () => {
   ];
 
   return (
-    <section id="testimonials" className="py-8 bg-kyoto-dark-green" ref={sectionRef}>
-      <div className="section-container">
-        <div className="text-center mb-6">
+    <section id="testimonials" className="py-6 bg-kyoto-dark-green" ref={sectionRef}>
+      <div className="section-container py-8 md:py-12">
+        <div className="text-center mb-4">
           <h3 className="text-sm uppercase tracking-wider text-kyoto-gold mb-1">
             お客様の声
           </h3>
@@ -74,12 +74,12 @@ const Testimonials = () => {
                 </svg>
               </div>
               
-              <blockquote className="text-sm md:text-base text-white italic leading-relaxed mb-3 h-24 overflow-y-auto">
+              <blockquote className="text-base md:text-lg text-white italic leading-relaxed mb-3 h-20 overflow-y-auto">
                 {testimonial.quote}
               </blockquote>
               
               <div className="flex items-center">
-                <div className="h-8 w-8 rounded-full bg-kyoto-gold overflow-hidden mr-2">
+                <div className="h-10 w-10 rounded-full bg-kyoto-gold overflow-hidden mr-2">
                   <img 
                     src={testimonial.image} 
                     alt={testimonial.author} 
@@ -87,8 +87,8 @@ const Testimonials = () => {
                   />
                 </div>
                 <div>
-                  <p className="text-kyoto-gold font-bold text-xs">{testimonial.author}</p>
-                  <p className="text-white/70 text-xs">{testimonial.position}</p>
+                  <p className="text-kyoto-gold font-bold text-sm">{testimonial.author}</p>
+                  <p className="text-white/70 text-sm">{testimonial.position}</p>
                 </div>
               </div>
             </div>

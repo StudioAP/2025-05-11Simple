@@ -23,9 +23,9 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
               variant === "outline",
             "bg-transparent text-kyoto-gold hover:bg-kyoto-dark-green/10": 
               variant === "ghost",
-            "text-sm px-3 py-1.5": size === "sm",
-            "text-base px-5 py-2.5": size === "md",
-            "text-lg px-8 py-3.5": size === "lg",
+            "text-sm px-3 py-2": size === "sm",
+            "text-base px-5 py-3": size === "md",
+            "text-lg px-8 py-4": size === "lg",
           },
           className
         )}
