@@ -48,6 +48,7 @@ const Programs = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+          {/* テニス体験 */}
           <div 
             ref={(el) => (fadeRefs.current[2] = el)} 
             className="opacity-0"
@@ -81,6 +82,7 @@ const Programs = () => {
             </div>
           </div>
 
+          {/* 予約方法 */}
           <div 
             ref={(el) => (fadeRefs.current[3] = el)} 
             className="opacity-0"
@@ -101,6 +103,60 @@ const Programs = () => {
                 </Button>
               </div>
             </div>
+          </div>
+        </div>
+
+        {/* お知らせセクション */}
+        <div className="mt-16">
+          <h3 className="text-2xl font-bold text-kyoto-dark-green text-center mb-8">お知らせ</h3>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div 
+              ref={(el) => (fadeRefs.current[4] = el)} 
+              className="bg-white p-6 rounded-sm shadow-lg hover-lift opacity-0"
+            >
+              <div className="border-l-4 border-kyoto-gold pl-4">
+                <h4 className="text-kyoto-dark-green font-bold mb-2">第12回交流会</h4>
+                <p className="text-gray-700 text-sm mb-2">
+                  2025年3月29日(土) 10:00～16:00
+                </p>
+                <p className="text-gray-700 text-sm">
+                  どなたでも参加可能。初心者歓迎！
+                </p>
+              </div>
+            </div>
+            
+            <div 
+              ref={(el) => (fadeRefs.current[5] = el)} 
+              className="bg-white p-6 rounded-sm shadow-lg hover-lift opacity-0"
+            >
+              <div className="border-l-4 border-kyoto-gold pl-4">
+                <h4 className="text-kyoto-dark-green font-bold mb-2">毎月最終土曜交流会</h4>
+                <p className="text-gray-700 text-sm mb-2">
+                  メンバー500円 / ビジター1,500円
+                </p>
+                <p className="text-gray-700 text-sm">
+                  誰でも参加OK。遊びに来てください！
+                </p>
+              </div>
+            </div>
+            
+            <div 
+              ref={(el) => (fadeRefs.current[6] = el)} 
+              className="bg-white p-6 rounded-sm shadow-lg hover-lift opacity-0"
+            >
+              <div className="border-l-4 border-kyoto-gold pl-4">
+                <h4 className="text-kyoto-dark-green font-bold mb-2">会員優先予約期間</h4>
+                <p className="text-gray-700 text-sm">
+                  会員の方は2週間前から優先的にコートの予約が可能です。
+                </p>
+              </div>
+            </div>
+          </div>
+          
+          <div className="text-center mt-8">
+            <Button variant="outline" className="mx-auto">
+              イベント一覧を見る
+            </Button>
           </div>
         </div>
       </div>

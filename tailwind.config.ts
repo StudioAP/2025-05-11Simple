@@ -79,9 +79,9 @@ export default {
 				sm: 'calc(var(--radius) - 4px)'
 			},
 			fontFamily: {
-				'sans': ['Noto Sans JP', 'sans-serif'],
-				'serif': ['Noto Serif JP', 'serif'],
-				'mincho': ['Shippori Mincho', 'serif'],
+				'sans': ['Zen Kaku Gothic New', 'sans-serif'],
+				'serif': ['Zen Old Mincho', 'serif'],
+				'mincho': ['Zen Old Mincho', 'serif'],
 			},
 			keyframes: {
 				'accordion-down': {

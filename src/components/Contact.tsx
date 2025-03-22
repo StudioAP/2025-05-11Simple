@@ -98,46 +98,40 @@ const Contact = () => {
             </div>
           </div>
 
-          {/* Announcements */}
+          {/* Additional Information */}
           <div 
             ref={(el) => (fadeRefs.current[1] = el)} 
             className="opacity-0"
           >
             <div className="bg-kyoto-dark-green/50 backdrop-blur-sm p-8 rounded-sm border border-kyoto-gold/30 h-full">
-              <h3 className="text-2xl font-bold text-kyoto-white mb-6">お知らせ</h3>
+              <h3 className="text-2xl font-bold text-kyoto-white mb-6">アクセス情報</h3>
               
               <div className="space-y-6">
-                <div className="border-l-4 border-kyoto-gold pl-4">
-                  <h4 className="text-kyoto-gold font-bold mb-2">第12回交流会</h4>
-                  <p className="text-kyoto-white/80 text-sm mb-2">
-                    2025年3月29日(土) 10:00～16:00
-                  </p>
-                  <p className="text-kyoto-white/80 text-sm">
-                    どなたでも参加可能。初心者歓迎！
+                <div className="text-kyoto-white/80">
+                  <h4 className="text-kyoto-gold font-bold mb-2">営業日</h4>
+                  <p className="text-sm mb-4">
+                    年中無休で営業しています。お好きな日にお越しください。
                   </p>
                 </div>
                 
-                <div className="border-l-4 border-kyoto-gold pl-4">
-                  <h4 className="text-kyoto-gold font-bold mb-2">毎月最終土曜交流会</h4>
-                  <p className="text-kyoto-white/80 text-sm mb-2">
-                    メンバー500円 / ビジター1,500円
-                  </p>
-                  <p className="text-kyoto-white/80 text-sm">
-                    誰でも参加OK。遊びに来てください！
+                <div className="text-kyoto-white/80">
+                  <h4 className="text-kyoto-gold font-bold mb-2">駐車場</h4>
+                  <p className="text-sm mb-4">
+                    無料駐車場を完備しています。お車でもお気軽にお越しください。
                   </p>
                 </div>
                 
-                <div className="border-l-4 border-kyoto-gold pl-4">
-                  <h4 className="text-kyoto-gold font-bold mb-2">会員優先予約期間</h4>
-                  <p className="text-kyoto-white/80 text-sm">
-                    会員の方は2週間前から優先的にコートの予約が可能です。
+                <div className="text-kyoto-white/80">
+                  <h4 className="text-kyoto-gold font-bold mb-2">送迎</h4>
+                  <p className="text-sm">
+                    イベント開催時には最寄り駅からの送迎も行っております。お問い合わせください。
                   </p>
                 </div>
               </div>
               
               <div className="mt-8">
                 <Button variant="outline" className="w-full text-kyoto-gold">
-                  イベント一覧を見る
+                  詳細地図を見る
                 </Button>
               </div>
             </div>
