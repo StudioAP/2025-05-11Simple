@@ -19,4 +19,20 @@ export default defineConfig(({ mode }) => ({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  // Renderでの静的ホスティング用設定
+  base: "/",
+  build: {
+    outDir: "dist",
+    assetsDir: "assets",
+    // SPAネットワークリクエストをindex.htmlにリダイレクトするためのキャッチオールファイル作成
+    rollupOptions: {
+      output: {
+        manualChunks: (id) => {
+          if (id.includes('node_modules')) {
+            return 'vendor';
+          }
+        }
+      }
+    }
+  },
 }));
