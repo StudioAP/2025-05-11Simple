@@ -28,7 +28,7 @@ const Hero = () => {
       >
         <div className="staggered-fade-in">
           <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-kyoto-white leading-tight mb-6">
-            <span className="block">京都一の歴史と</span>
+            <span className="block">京都いちの歴史と、</span>
             <span className="block mt-2">豊かな緑がある</span>
             <span className="block mt-2">テニスクラブ。</span>
           </h1>
@@ -43,12 +43,12 @@ const Hero = () => {
           
           <div className="mb-8"></div>
           
-          <h2 className="text-xl md:text-2xl text-kyoto-white mb-6 font-light">
+          <h2 className="text-xl md:text-3xl text-kyoto-white mb-0 font-light">
             自然の中、心地よい汗を流そう。<br />
             京都ローンテニスクラブ。
           </h2>
           
-          <div className="text-center mb-8 p-4 bg-kyoto-dark-green/50 backdrop-blur-sm rounded">
+          <div className="text-center mb-4 p-4 bg-kyoto-dark-green/50 backdrop-blur-sm rounded">
             <h1 className="text-3xl md:text-4xl text-kyoto-gold font-bold mb-2">
               京都ローンテニスクラブ
             </h1>
