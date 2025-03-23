@@ -3,6 +3,14 @@ import Button from "./Button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "./ui/dialog";
 import { Input } from "./ui/input";
 import { toast } from "./ui/use-toast";
+import newsData from "../data/news.json";
+
+interface Announcement {
+  title: string;
+  date: string;
+  description: string;
+  imageUrl?: string;
+}
 
 const Programs = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -10,27 +18,24 @@ const Programs = () => {
   const [adminOpen, setAdminOpen] = useState(false);
   const [password, setPassword] = useState("");
   const [isAdmin, setIsAdmin] = useState(false);
-  const [announcements, setAnnouncements] = useState([
-    {
-      title: "第12回交流会",
-      date: "2025年3月29日(土) 10:00～16:00",
-      description: "どなたでも参加可能。初心者歓迎！"
-    },
-    {
-      title: "毎月最終土曜交流会",
-      date: "メンバー500円 / ビジター1,500円",
-      description: "誰でも参加OK。遊びに来てください！"
-    },
-    {
-      title: "会員優先予約期間",
-      date: "",
-      description: "会員の方は2週間前から優先的にコートの予約が可能です。"
-    }
-  ]);
+  // ローカルストレージのデータを優先してニュースを読み込む
+  const [announcements, setAnnouncements] = useState<Announcement[]>(() => {
+    // ローカルストレージから読み込み
+    const savedNews = localStorage.getItem('newsItems');
+    const newsItems = savedNews ? JSON.parse(savedNews) : newsData.newsItems;
+    
+    return newsItems.map(item => ({
+      title: item.title,
+      date: item.date,
+      description: item.content,
+      imageUrl: item.imageUrl || ""
+    }));
+  });
   const [newAnnouncement, setNewAnnouncement] = useState({
     title: "",
     date: "",
-    description: ""
+    description: "",
+    imageUrl: ""
   });
 
   useEffect(() => {
@@ -74,24 +79,37 @@ const Programs = () => {
 
   const handleAddAnnouncement = () => {
     if (newAnnouncement.title && newAnnouncement.description) {
-      setAnnouncements([newAnnouncement, ...announcements]);
-      setNewAnnouncement({ title: "", date: "", description: "" });
+      const updatedAnnouncements = [newAnnouncement, ...announcements];
+      
+      // ローカルストレージに保存
+      const newsItems = updatedAnnouncements.map(item => ({
+        id: Date.now(), // ユニークIDを生成
+        title: item.title,
+        date: item.date,
+        content: item.description,
+        imageUrl: item.imageUrl || ""
+      }));
+      localStorage.setItem('newsItems', JSON.stringify(newsItems));
+      
+      setAnnouncements(updatedAnnouncements);
+      setNewAnnouncement({ title: "", date: "", description: "", imageUrl: "" });
       toast({
         title: "お知らせを追加しました",
+        description: "ローカルストレージに保存されました"
       });
     }
   };
 
   return (
-    <section id="programs" className="py-12 bg-kyoto-light-green japanese-pattern">
+    <section id="programs" className="py-8 bg-kyoto-light-green japanese-pattern">
       <div className="section-container">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {/* Programs & Services */}
           <div>
-            <div className="text-center mb-6">
+            <div className="text-center mb-4">
               <h2 
                 ref={(el) => (fadeRefs.current[0] = el)} 
-                className="section-title text-kyoto-dark-green opacity-0 mx-auto text-2xl md:text-3xl"
+                className="section-title text-kyoto-dark-green opacity-0 mx-auto text-xl md:text-2xl"
               >
                 Programs & Services
               </h2>
@@ -103,28 +121,28 @@ const Programs = () => {
                 ref={(el) => (fadeRefs.current[1] = el)} 
                 className="opacity-0"
               >
-                <div className="bg-white p-6 rounded-sm shadow-lg hover-lift">
-                  <h3 className="text-xl font-bold text-kyoto-dark-green mb-3">Tennis Experience</h3>
+                <div className="bg-white p-4 md:p-5 rounded-sm shadow-lg hover-lift">
+                  <h3 className="text-xl font-bold text-kyoto-dark-green mb-3">＊ お気軽テニス体験 ＊</h3>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                     <img 
                       src="/lovable-uploads/2dcc5e2e-3ed3-41e2-9038-cbab6f2a3962.png" 
                       alt="テニス体験" 
-                      className="w-full h-48 md:h-56 object-cover rounded-sm"
+                      className="w-full h-40 md:h-48 object-cover rounded-sm"
                     />
                     <div>
                       <p className="text-gray-700 text-sm md:text-base mb-3">
-                        初めてでも安心。会員が温かく迎えます。<br />
-                        一人でも友達とでも、平日でも週末でもOK
+                        初めてでも安心！<br />
+                        会員が温かく迎えます。<br />
+                        一人でも友達とでも。<br /> 
+                        平日でも週末でもOK！<br /> 
                       </p>
                       <div className="mb-3">
                         <p className="text-gray-700 font-medium text-sm md:text-base">ご予約方法：</p>
-                        <p className="text-gray-700 text-sm md:text-base">
+                        <p className="text-base md:text-lg font-medium text-kyoto-dark-green">
                           電話: (075)-741-2917（前日まで）
                         </p>
                       </div>
-                      <Button variant="secondary" className="self-start text-sm md:text-base">
-                        今すぐ予約する
-                      </Button>
+                      {/* 予約ボタンを削除しました */}
                     </div>
                   </div>
                   <div className="flex flex-col space-y-2">
@@ -144,63 +162,74 @@ const Programs = () => {
                       <div className="w-6 h-6 rounded-full bg-kyoto-gold/20 flex items-center justify-center mr-2">
                         <span className="text-kyoto-dark-green font-semibold text-xs">3</span>
                       </div>
-                      <p className="text-gray-700 text-sm md:text-base">会員とテニスを楽しむ</p>
+                      <p className="text-gray-700 text-sm md:text-base">さっそくテニスを楽しみましょう！</p>
                     </div>
                   </div>
                 </div>
               </div>
-
+              {/* 会員＆ビジター交流会 - よりコンパクトなデザイン */}
+              <div className="bg-white p-3 md:p-4 rounded-sm shadow-lg hover-lift mt-3 md:mt-4">
+                <h3 className="text-lg font-bold text-kyoto-dark-green mb-2">{newsData.events[0].title}</h3>
+                <p className="text-kyoto-dark-green font-medium text-sm md:text-base mb-2">
+                  {newsData.events[0].schedule}
+                </p>
+                <div className="space-y-1 text-sm">
+                  {newsData.events[0].details.map((detail, index) => (
+                    <p key={index} className="text-gray-700 text-xs md:text-sm flex items-center">
+                      <span className="w-1 h-1 rounded-full bg-kyoto-gold inline-block mr-1"></span>
+                      {/* 参加費の場合は強調表示 */}
+                      {detail.includes('参加費') ? (
+                        <span className="font-bold text-sm md:text-base text-kyoto-dark-green">{detail}</span>
+                      ) : (
+                        detail
+                      )}
+                    </p>
+                  ))}
+                </div>
+              </div>
               {/* Testimonials */}
               <div 
                 ref={(el) => (fadeRefs.current[2] = el)} 
                 className="opacity-0"
-              >
-                <div className="bg-white p-6 rounded-sm shadow-lg hover-lift">
-                  <h3 className="text-xl font-bold text-kyoto-dark-green mb-3">Testimonials</h3>
-                  <div className="space-y-4">
-                    <div className="bg-kyoto-cream/50 p-3 rounded-sm">
-                      <p className="text-gray-700 italic text-sm md:text-base mb-2">
-                        「40代から始めましたが、温かく迎えていただきました。今では週末が待ち遠しいです。」
-                      </p>
-                      <p className="text-right text-sm text-gray-600">- 田中さん（会員歴2年）</p>
-                    </div>
-                    <div className="bg-kyoto-cream/50 p-3 rounded-sm">
-                      <p className="text-gray-700 italic text-sm md:text-base mb-2">
-                        「自然の中でテニスができる環境が素晴らしい。ストレス解消になります。」
-                      </p>
-                      <p className="text-right text-sm text-gray-600">- 佐藤さん（会員歴5年）</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              > 
+              </div> 
             </div>
           </div>
 
           {/* News & Events */}
           <div>
-            <div className="flex justify-between items-center mb-6">
-              <h3 className="text-2xl font-bold text-kyoto-dark-green">News & Events</h3>
-              <button 
-                onClick={() => setAdminOpen(true)} 
-                className="text-xs text-kyoto-dark-green/50 hover:text-kyoto-dark-green"
-              >
-                管理者
-              </button>
+            <div className="text-center mb-4">
+              <h3 className="section-title text-kyoto-dark-green mx-auto text-xl md:text-2xl">News & Events</h3>
             </div>
             
-            <div className="space-y-4">
+            {/* 差別化したデザインのNewsセクション */}
+            <div className="space-y-3">
+              <div className="bg-kyoto-gold/10 p-2 rounded-sm text-center mb-2 animate-pulse">
+                <p className="text-xs font-bold text-kyoto-dark-green">＊ 随時更新 ＊</p>
+              </div>
               {announcements.map((announcement, index) => (
                 <div 
                   key={index}
                   ref={(el) => (fadeRefs.current[3 + index] = el)} 
-                  className="bg-white p-4 rounded-sm shadow-lg hover-lift opacity-0"
+                  className="bg-white p-3 rounded-sm shadow-lg hover-lift opacity-0 border-l-4 border-kyoto-gold/80"
                 >
-                  <div className="border-l-3 border-kyoto-gold pl-3">
-                    <h4 className="text-lg font-bold text-kyoto-dark-green">{announcement.title}</h4>
-                    {announcement.date && (
-                      <p className="text-xs text-gray-500 mb-2">{announcement.date}</p>
+                  <div className="pl-2">
+                    <div className="flex justify-between items-center mb-1">
+                      <h4 className="text-base font-bold text-kyoto-dark-green">{announcement.title}</h4>
+                      {announcement.date && (
+                        <span className="text-xs bg-kyoto-gold/20 px-2 py-0.5 rounded text-kyoto-dark-green">{announcement.date}</span>
+                      )}
+                    </div>
+                    <p className="text-sm md:text-base text-gray-700">{announcement.description}</p>
+                    {announcement.imageUrl && (
+                      <div className="mt-2">
+                        <img 
+                          src={announcement.imageUrl} 
+                          alt={announcement.title} 
+                          className="w-full h-auto rounded-sm border border-gray-200" 
+                        />
+                      </div>
                     )}
-                    <p className="text-sm text-gray-700">{announcement.description}</p>
                   </div>
                 </div>
               ))}
@@ -254,6 +283,19 @@ const Programs = () => {
                   className="w-full border rounded-sm p-2 text-sm"
                   rows={4}
                 />
+              </div>
+              
+              <div>
+                <label htmlFor="announcement-image" className="block text-sm font-medium mb-1">
+                  画像URL
+                </label>
+                <Input
+                  id="announcement-image"
+                  placeholder="/lovable-uploads/画像ファイル名.jpg"
+                  value={newAnnouncement.imageUrl}
+                  onChange={(e) => setNewAnnouncement({ ...newAnnouncement, imageUrl: e.target.value })}
+                />
+                <p className="text-xs text-gray-500 mt-1">※ 画像ファイルをアップロードしたパスを入力してください</p>
               </div>
               
               <div className="flex justify-end">

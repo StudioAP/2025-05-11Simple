@@ -32,12 +32,11 @@ const Index = () => {
     <div className="min-h-screen bg-white overflow-hidden">
       <Navbar />
       <Hero />
-      <Features />
-      {/* Facilities and Testimonials before Programs */}
+      {/* 新しいセクション順序: Hero、Facilities、Pricing、Testimonials、Programs、Contact */}
       <Facilities />
+      <Pricing />
       <Testimonials />
       <Programs />
-      <Pricing />
       <Contact />
       <Footer />
     </div>

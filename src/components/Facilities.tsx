@@ -1,48 +1,105 @@
 import React, { useEffect, useRef } from "react";
-import { MapPin, Clock, Car, Droplets } from "lucide-react";
+import { MapPin, Clock, Car, Droplets, Image } from "lucide-react";
 
 const FacilityItem = ({ icon, title, description }) => {
   return (
-    <div className="flex p-3 bg-white/80 backdrop-blur-sm rounded-sm shadow hover-lift">
-      <div className="mr-3 text-kyoto-dark-green">
+    <div className="flex p-4 bg-white/80 backdrop-blur-sm rounded-sm shadow hover-lift">
+      <div className="mr-4 text-kyoto-dark-green">
         {icon}
       </div>
       <div>
-        <h4 className="font-bold text-kyoto-dark-green mb-0.5 text-sm md:text-base">{title}</h4>
-        <p className="text-gray-700 text-xs md:text-sm">{description}</p>
+        <h4 className="font-bold text-kyoto-dark-green mb-1 text-base md:text-lg">{title}</h4>
+        <p className="text-gray-700 text-sm md:text-base">{description}</p>
       </div>
     </div>
   );
 };
 
+const PhotoFrame = ({ title, imageUrl, altText }) => {
+  return (
+    <div className="overflow-hidden rounded-sm shadow-lg hover-lift group">
+      <div className="relative">
+        <img
+          src={imageUrl}
+          alt={altText}
+          className="w-full h-48 md:h-56 object-cover transition-transform duration-500 group-hover:scale-105"
+        />
+        <div className="absolute bottom-0 left-0 right-0 bg-kyoto-dark-green/70 p-2 text-center">
+          <span className="text-kyoto-white text-sm font-medium">{title}</span>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// 施設データ（写真と説明の一対一対応）
+const facilityData = [
+  {
+    photo: {
+      title: "コート写真", 
+      imageUrl: "/lovable-uploads/coat.jpeg", 
+      altText: "テニスコート写真"
+    },
+    info: {
+      icon: <MapPin size={24} />, 
+      title: "コート", 
+      description: "3面（オムニコート）、ナイター1面"
+    }
+  },
+  {
+    photo: {
+      title: "設備写真", 
+      imageUrl: "/lovable-uploads/setsubi.jpg", 
+      altText: "クラブハウス設備写真"
+    },
+    info: {
+      icon: <Droplets size={24} />, 
+      title: "設備", 
+      description: "クラブハウス・シャワー完備"
+    }
+  },
+  {
+    photo: {
+      title: "駐車場写真", 
+      imageUrl: "/lovable-uploads/carport.jpg", 
+      altText: "駐車場写真"
+    },
+    info: {
+      icon: <Car size={24} />, 
+      title: "駐車場", 
+      description: "無料駐車場完備"
+    }
+  }
+  // 営業時間情報を削除しました
+];
+
 const Facilities = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
-  const mapRef = useRef<HTMLDivElement>(null);
   const infoRef = useRef<HTMLDivElement>(null);
+  const photosRef = useRef<HTMLDivElement>(null);
+  const mobileViewRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            if (entry.target === mapRef.current) {
-              entry.target.classList.add("animate-slide-in-left");
-            }
-            if (entry.target === infoRef.current) {
-              entry.target.classList.add("animate-slide-in-right");
-            }
+            entry.target.classList.remove("opacity-0");
+            entry.target.classList.add("animate-fade-in");
           }
         });
       },
       { threshold: 0.1 }
     );
 
-    if (mapRef.current) observer.observe(mapRef.current);
     if (infoRef.current) observer.observe(infoRef.current);
+    if (photosRef.current) observer.observe(photosRef.current);
+    if (mobileViewRef.current) observer.observe(mobileViewRef.current);
 
     return () => {
-      if (mapRef.current) observer.unobserve(mapRef.current);
       if (infoRef.current) observer.unobserve(infoRef.current);
+      if (photosRef.current) observer.unobserve(photosRef.current);
+      if (mobileViewRef.current) observer.unobserve(mobileViewRef.current);
     };
   }, []);
 
@@ -55,71 +112,63 @@ const Facilities = () => {
       <div className="section-container max-w-6xl mx-auto px-4 sm:px-6 py-8">
         <div className="text-center mb-8">
           <h2 className="section-title text-kyoto-dark-green mx-auto text-2xl md:text-3xl">
-            Facilities & Access
+            Facilities
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
-          {/* Map image */}
-          <div 
-            ref={mapRef}
-            className="rounded-sm overflow-hidden shadow-lg opacity-0 transform translate-x-[-100%]"
-          >
-            <div className="relative">
-              <img 
-                src="/lovable-uploads/bc28539d-5d5f-4dec-8fce-4ba7e99d3b22.png" 
-                alt="テニスコート空撮" 
-                className="w-full h-64 md:h-80 object-cover"
-              />
-              <div className="absolute inset-0 flex items-center justify-center bg-kyoto-dark-green/30 hover:bg-kyoto-dark-green/20 transition-colors duration-300">
-                <span className="px-3 py-1 bg-kyoto-gold text-kyoto-dark-green font-bold text-sm md:text-base">
-                  航空写真
-                </span>
+        {/* スマホ表示用のレイアウト - 写真と説明文を連続して表示 */}
+        <div 
+          ref={mobileViewRef}
+          className="md:hidden opacity-0"
+        >
+          <div className="space-y-6">
+            {facilityData.map((facility, index) => (
+              <div key={index} className="space-y-4">
+                {facility.photo && (
+                  <PhotoFrame 
+                    title={facility.photo.title} 
+                    imageUrl={facility.photo.imageUrl} 
+                    altText={facility.photo.altText} 
+                  />
+                )}
+                <FacilityItem 
+                  icon={facility.info.icon} 
+                  title={facility.info.title} 
+                  description={facility.info.description} 
+                />
+                {index < facilityData.length - 1 && (
+                  <div className="border-t border-kyoto-dark-green/20 pt-4"></div>
+                )}
               </div>
-            </div>
+            ))}
           </div>
+        </div>
 
-          {/* Facility information */}
+        {/* PC表示用のレイアウト - 横並びに変更 */}
+        <div className="hidden md:block">
+          {/* 施設情報と写真を横並びに表示 */}
           <div 
-            ref={infoRef}
-            className="opacity-0 transform translate-x-[100%]"
+            ref={infoRef} 
+            className="grid grid-cols-3 gap-8 mx-auto opacity-0"
           >
-            <div className="grid grid-cols-2 gap-3">
-              <FacilityItem 
-                icon={<MapPin size={22} />} 
-                title="コート" 
-                description="3面（オムニコート）、ナイター1面あり" 
-              />
-              <FacilityItem 
-                icon={<Droplets size={22} />} 
-                title="設備" 
-                description="クラブハウス・シャワー完備" 
-              />
-              <FacilityItem 
-                icon={<Car size={22} />} 
-                title="駐車場" 
-                description="無料駐車場完備" 
-              />
-              <FacilityItem 
-                icon={<Clock size={22} />} 
-                title="営業時間" 
-                description="年中無休 10:00～16:00" 
-              />
-            </div>
-
-            <div className="mt-4 bg-white/80 backdrop-blur-sm p-4 rounded-sm shadow">
-              <h4 className="font-bold text-kyoto-dark-green mb-2 text-sm md:text-base">アクセス</h4>
-              <ul className="space-y-1 text-gray-700 text-xs md:text-sm">
-                <li className="flex items-start">
-                  <span className="font-medium mr-2">バス:</span>
-                  <span>叡山電鉄市原駅 → 京都バス大原行「しずはうす前」下車 徒歩2分</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="font-medium mr-2">車:</span>
-                  <span>市原交差点から東へ5分</span>
-                </li>
-              </ul>
-            </div>
+            {facilityData.map((facility, index) => (
+              <div key={index} className="flex flex-col">
+                {/* 写真 */}
+                <div className="mb-4">
+                  <PhotoFrame 
+                    title={facility.photo.title} 
+                    imageUrl={facility.photo.imageUrl} 
+                    altText={facility.photo.altText} 
+                  />
+                </div>
+                {/* 施設情報 */}
+                <FacilityItem 
+                  icon={facility.info.icon} 
+                  title={facility.info.title} 
+                  description={facility.info.description} 
+                />
+              </div>
+            ))}
           </div>
         </div>
       </div>

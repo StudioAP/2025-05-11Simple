@@ -47,16 +47,16 @@ const Navbar = () => {
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center space-x-8">
           <a
-            href="#features"
+            href="#facilities"
             className="text-kyoto-white hover:text-kyoto-gold transition-colors"
           >
-            特徴
+            施設
           </a>
           <a
-            href="#programs"
+            href="#pricing"
             className="text-kyoto-white hover:text-kyoto-gold transition-colors"
           >
-            プログラム
+            会員プラン
           </a>
           <a
             href="#testimonials"
@@ -65,16 +65,10 @@ const Navbar = () => {
             お客様の声
           </a>
           <a
-            href="#pricing"
+            href="#programs"
             className="text-kyoto-white hover:text-kyoto-gold transition-colors"
           >
-            料金
-          </a>
-          <a
-            href="#facilities"
-            className="text-kyoto-white hover:text-kyoto-gold transition-colors"
-          >
-            施設
+            プログラム
           </a>
           <a
             href="#contact"
@@ -82,14 +76,12 @@ const Navbar = () => {
           >
             お問い合わせ
           </a>
-          <Button variant="outline" size="sm" className="ml-4">
-            体験を今すぐ予約
-          </Button>
+          {/* 「体験を今すぐ予約」ボタンを削除 */}
         </div>
 
         {/* Mobile Menu Button */}
         <button
-          className="md:hidden text-kyoto-white hover:text-kyoto-gold"
+          className="md:hidden text-kyoto-white hover:text-kyoto-gold z-50 relative"
           onClick={toggleMobileMenu}
           aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
         >
@@ -102,59 +94,40 @@ const Navbar = () => {
       </div>
 
       {/* Mobile Menu */}
-      <div
-        className={`md:hidden absolute top-full left-0 w-full bg-kyoto-dark-green/95 transform transition-transform duration-300 ease-in-out ${
-          isMobileMenuOpen ? "translate-y-0" : "-translate-y-full"
-        }`}
-      >
-        <div className="container mx-auto px-4 py-4 flex flex-col space-y-4">
-          <a
-            href="#features"
-            className="text-kyoto-white hover:text-kyoto-gold transition-colors py-2 border-b border-kyoto-gold/20"
-            onClick={() => setIsMobileMenuOpen(false)}
-          >
-            特徴
-          </a>
-          <a
-            href="#programs"
-            className="text-kyoto-white hover:text-kyoto-gold transition-colors py-2 border-b border-kyoto-gold/20"
-            onClick={() => setIsMobileMenuOpen(false)}
-          >
-            プログラム
-          </a>
-          <a
-            href="#testimonials"
-            className="text-kyoto-white hover:text-kyoto-gold transition-colors py-2 border-b border-kyoto-gold/20"
-            onClick={() => setIsMobileMenuOpen(false)}
-          >
-            お客様の声
-          </a>
-          <a
-            href="#pricing"
-            className="text-kyoto-white hover:text-kyoto-gold transition-colors py-2 border-b border-kyoto-gold/20"
-            onClick={() => setIsMobileMenuOpen(false)}
-          >
-            料金
-          </a>
-          <a
-            href="#facilities"
-            className="text-kyoto-white hover:text-kyoto-gold transition-colors py-2 border-b border-kyoto-gold/20"
-            onClick={() => setIsMobileMenuOpen(false)}
-          >
-            施設
-          </a>
-          <a
-            href="#contact"
-            className="text-kyoto-white hover:text-kyoto-gold transition-colors py-2 border-b border-kyoto-gold/20"
-            onClick={() => setIsMobileMenuOpen(false)}
-          >
-            お問い合わせ
-          </a>
-          <Button variant="outline" size="sm" className="mt-4">
-            体験を今すぐ予約
-          </Button>
+      {isMobileMenuOpen ? (
+        <div className="md:hidden absolute top-full left-0 w-full bg-kyoto-dark-green/95 transform transition-opacity duration-300">
+          <div className="container mx-auto px-4 py-4 flex flex-col space-y-4">
+            <a
+              href="#facilities"
+              className="text-kyoto-white hover:text-kyoto-gold transition-colors py-2 border-b border-kyoto-gold/20"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              施設
+            </a>
+            <a
+              href="#pricing"
+              className="text-kyoto-white hover:text-kyoto-gold transition-colors py-2 border-b border-kyoto-gold/20"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              会員プラン
+            </a>
+            <a
+              href="#programs"
+              className="text-kyoto-white hover:text-kyoto-gold transition-colors py-2 border-b border-kyoto-gold/20"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              プログラム
+            </a>
+            <a
+              href="#contact"
+              className="text-kyoto-white hover:text-kyoto-gold transition-colors py-2 border-b border-kyoto-gold/20"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              お問い合わせ
+            </a>
+          </div>
         </div>
-      </div>
+      ) : null}
     </nav>
   );
 };

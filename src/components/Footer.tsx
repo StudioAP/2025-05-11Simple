@@ -10,9 +10,13 @@ const Footer = () => {
           {/* Logo and Club Name */}
           <div className="mb-6 text-center">
             <div className="flex flex-col items-center mb-2">
-              <span className="text-kyoto-gold font-mincho text-2xl md:text-3xl font-bold tracking-wider">
+              <a 
+                href="/manage-news" 
+                className="text-kyoto-gold font-mincho text-2xl md:text-3xl font-bold tracking-wider hover:text-kyoto-gold/80 transition-colors duration-200"
+                title="管理画面へ"
+              >
                 京都ローンテニスクラブ
-              </span>
+              </a>
               <span className="text-kyoto-white text-sm md:text-base tracking-widest mt-1">
                 KYOTO LAWN TENNIS CLUB
               </span>

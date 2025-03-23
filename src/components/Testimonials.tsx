@@ -52,12 +52,9 @@ const Testimonials = () => {
   return (
     <section id="testimonials" className="py-6 bg-kyoto-dark-green" ref={sectionRef}>
       <div className="section-container py-8 md:py-12">
-        <div className="text-center mb-4">
-          <h3 className="text-sm uppercase tracking-wider text-kyoto-gold mb-1">
-            お客様の声
-          </h3>
+        <div className="text-center mb-4"> 
           <h2 className="section-title text-kyoto-white mx-auto text-2xl md:text-3xl">
-            会員の声
+            Menmber's Voices
           </h2>
         </div>
 

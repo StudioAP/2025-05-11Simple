@@ -26,7 +26,7 @@ const PricingCard = ({ title, price, entryFee, features, isPopular = false }) =>
   return (
     <div
       ref={cardRef}
-      className={`bg-white rounded-sm shadow-lg p-4 hover-lift opacity-0 relative overflow-hidden ${
+      className={`bg-white rounded-sm shadow-lg p-4 hover-lift opacity-0 relative overflow-hidden flex flex-col min-h-[250px] ${
         isPopular ? "border-2 border-kyoto-gold" : "border border-gray-200"
       }`}
     >
@@ -52,7 +52,7 @@ const PricingCard = ({ title, price, entryFee, features, isPopular = false }) =>
         </div>
       </div>
 
-      <ul className="space-y-1 mb-4 text-xs md:text-sm">
+      <ul className="space-y-1 text-xs md:text-sm">
         {features.map((feature, index) => (
           <li key={index} className="flex items-start">
             <svg
@@ -73,13 +73,7 @@ const PricingCard = ({ title, price, entryFee, features, isPopular = false }) =>
           </li>
         ))}
       </ul>
-
-      <Button
-        variant={isPopular ? "secondary" : "outline"}
-        className="w-full text-xs md:text-sm py-1"
-      >
-        詳細を見る
-      </Button>
+      {/* 「詳細を見る」ボタンを削除しました */}
     </div>
   );
 };
@@ -152,16 +146,31 @@ const Pricing = () => {
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center mb-8">
-          <div 
-            ref={imageRef}
-            className="opacity-0 rounded-sm overflow-hidden shadow-lg"
-          >
-            <img 
-              src="/lovable-uploads/a140f6d7-a8b7-489d-b607-c3ecfd71d3b3.png" 
-              alt="テニスコート" 
-              className="w-full h-64 md:h-80 object-cover"
-            />
+        {/* PC表示用レイアウト */}
+        <div className="hidden md:grid grid-cols-2 gap-8 items-start mb-8">
+          <div className="space-y-4">
+            <div 
+              ref={imageRef}
+              className="opacity-0 rounded-sm overflow-hidden shadow-lg"
+            >
+              <img 
+                src="/lovable-uploads/a140f6d7-a8b7-489d-b607-c3ecfd71d3b3.png" 
+                alt="テニスコート" 
+                className="w-full h-80 object-cover"
+              />
+            </div>
+            
+            <div className="bg-white rounded-sm shadow p-5 text-center opacity-0 animate-fade-in-up">
+              <h3 className="text-lg font-bold text-kyoto-dark-green mb-2">
+                ビジターも大歓迎
+              </h3>
+              <p className="text-gray-700 text-base mb-2">
+                会員でなくても1日単位でご利用いただけます
+              </p>
+              <div className="text-2xl font-bold text-kyoto-dark-green">
+                1,500<span className="text-base font-normal text-gray-600">円/日</span>
+              </div>
+            </div>
           </div>
 
           <div className="grid grid-cols-2 gap-3">
@@ -178,17 +187,48 @@ const Pricing = () => {
           </div>
         </div>
 
-        <div className="mt-6 bg-white rounded-sm shadow p-4 text-center opacity-0 animate-fade-in-up max-w-md mx-auto">
-          <h3 className="text-lg font-bold text-kyoto-dark-green mb-2">
-            ビジターも大歓迎
-          </h3>
-          <p className="text-gray-700 text-sm md:text-base mb-2">
-            会員でなくても1日単位でご利用いただけます
-          </p>
-          <div className="text-2xl font-bold text-kyoto-dark-green">
-            1,500<span className="text-base font-normal text-gray-600">円/日</span>
+        {/* スマホ表示用レイアウト */}
+        <div className="md:hidden mb-8">
+          {/* テニスコート画像 */}
+          <div 
+            className="opacity-0 rounded-sm overflow-hidden shadow-lg mb-6 animate-fade-in-up"
+          >
+            <img 
+              src="/lovable-uploads/a140f6d7-a8b7-489d-b607-c3ecfd71d3b3.png" 
+              alt="テニスコート" 
+              className="w-full h-64 object-cover"
+            />
+          </div>
+
+          {/* 会員プランカード */}
+          <div className="grid grid-cols-1 gap-4 mb-6">
+            {pricingPlans.map((plan, index) => (
+              <PricingCard
+                key={index}
+                title={plan.title}
+                price={plan.price}
+                entryFee={plan.entryFee}
+                features={plan.features}
+                isPopular={plan.isPopular}
+              />
+            ))}
+          </div>
+
+          {/* ビジター情報（最下部に配置） */}
+          <div className="bg-white rounded-sm shadow p-5 text-center opacity-0 animate-fade-in-up">
+            <h3 className="text-lg font-bold text-kyoto-dark-green mb-2">
+              ビジターも大歓迎
+            </h3>
+            <p className="text-gray-700 text-base mb-2">
+              会員でなくても1日単位でご利用いただけます
+            </p>
+            <div className="text-2xl font-bold text-kyoto-dark-green">
+              1,500<span className="text-base font-normal text-gray-600">円/日</span>
+            </div>
           </div>
         </div>
+
+        {/* 会員優先予約期間の情報を削除し、ビジター情報を写真下に移動 */}
       </div>
     </section>
   );
