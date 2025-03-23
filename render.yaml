@@ -2,7 +2,7 @@ services:
   - type: web
     name: elegant-court-kyoto
     env: static
-    buildCommand: ./build.sh
+    buildCommand: npm run build
     staticPublishPath: ./dist
     envVars:
       - key: NODE_VERSION
@@ -10,7 +10,7 @@ services:
     headers:
       - path: /*
         name: Cache-Control
-        value: no-cache
+        value: no-store, no-cache
     routes:
       - type: rewrite
         source: /*
