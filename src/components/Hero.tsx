@@ -42,9 +42,18 @@ const Hero = () => {
           
           <div className="mb-8"></div>
           
-          <h2 className="text-xl md:text-2xl text-kyoto-white mb-8 font-light">
+          <h2 className="text-xl md:text-2xl text-kyoto-white mb-6 font-light">
             自然の中、心地よい汗を流そう。
           </h2>
+          
+          <div className="text-center mb-8 p-4 bg-kyoto-dark-green/50 backdrop-blur-sm rounded">
+            <h1 className="text-3xl md:text-4xl text-kyoto-gold font-bold mb-2">
+              京都ローンテニスクラブ
+            </h1>
+            <h2 className="text-xl md:text-2xl text-kyoto-white font-medium tracking-wider">
+              KYOTO LAWN TENNIS CLUB
+            </h2>
+          </div>
           
           {/* 予約ボタンを削除 */}
         </div>
