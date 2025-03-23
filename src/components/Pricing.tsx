@@ -26,17 +26,8 @@ const PricingCard = ({ title, price, entryFee, features, isPopular = false }) =>
   return (
     <div
       ref={cardRef}
-      className={`bg-white rounded-sm shadow-lg p-4 hover-lift opacity-0 relative overflow-hidden flex flex-col min-h-[250px] ${
-        isPopular ? "border-2 border-kyoto-gold" : "border border-gray-200"
-      }`}
+      className="bg-white rounded-sm shadow-lg p-4 hover-lift opacity-0 relative overflow-hidden flex flex-col min-h-[250px] border border-gray-200"
     >
-      {isPopular && (
-        <div className="absolute top-0 right-0">
-          <div className="bg-kyoto-gold text-kyoto-dark-green text-xs font-bold uppercase py-1 px-2 transform rotate-45 translate-x-5 translate-y-2">
-            人気
-          </div>
-        </div>
-      )}
 
       <h3 className="text-lg font-bold text-kyoto-dark-green mb-1">{title}</h3>
       
