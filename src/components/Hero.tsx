@@ -36,7 +36,7 @@ const Hero = () => {
         }`}
       >
         <div className="staggered-fade-in">
-          <h1 className={`text-3xl ${isWindows ? 'md:text-3xl' : 'md:text-4xl'} lg:text-5xl font-bold text-kyoto-white leading-tight mb-6`}>
+          <h1 className={`text-2xl ${isWindows ? 'md:text-3xl' : 'md:text-4xl'} lg:text-5xl font-bold text-kyoto-white leading-tight mb-6`}>
             <span className="block">京都いちの歴史と、</span>
             <span className="block mt-2">豊かな緑がある</span>
             <span className="block mt-2">テニスクラブ。</span>
@@ -60,7 +60,7 @@ const Hero = () => {
           
           <div className="mb-8"></div>
           
-          <h2 className={`text-xl ${isWindows ? 'md:text-2xl' : 'md:text-3xl'} text-kyoto-white font-light`}>
+          <h2 className={`text-lg ${isWindows ? 'md:text-2xl mb-6' : 'md:text-3xl mb-0'} text-kyoto-white font-light`}>
             <span className={isWindows ? 'block mb-1' : 'inline'}>
               自然の中、心地よい汗を流そう。
             </span>
