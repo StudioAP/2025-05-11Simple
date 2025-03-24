@@ -44,7 +44,7 @@ const Hero = () => {
           
           <div className="w-20 h-1 bg-kyoto-gold mb-6"></div>
           
-          <p className={`text-base md:text-lg text-kyoto-white/90 ${isWindows ? 'mb-5' : 'mb-4'}`} style={{ fontFamily: 'Zen Old Mincho, serif' }}>
+          <p className={`${isWindows ? 'text-sm md:text-base' : 'text-base md:text-lg'} text-kyoto-white/90 ${isWindows ? 'mb-5' : 'mb-4'}`} style={{ fontFamily: 'Zen Old Mincho, serif' }}>
             <span className={isWindows ? 'block mb-1' : 'inline'}>
               1935年オープンの、伝統ある会員制クラブ。
             </span>
@@ -70,10 +70,10 @@ const Hero = () => {
             </span>
           </h2>
           <div className="text-center mb-4 p-4 bg-kyoto-dark-green/50 backdrop-blur-sm rounded">
-            <h1 className="text-3xl md:text-4xl text-kyoto-gold font-bold mb-2">
+            <h1 className={`${isWindows ? 'text-2xl md:text-3xl' : 'text-3xl md:text-4xl'} text-kyoto-gold font-bold mb-2`}>
               京都ローンテニスクラブ
             </h1>
-            <h2 className="text-xl md:text-2xl text-kyoto-white font-medium tracking-wider">
+            <h2 className={`${isWindows ? 'text-lg md:text-xl' : 'text-xl md:text-2xl'} text-kyoto-white font-medium tracking-wider`}>
               KYOTO LAWN TENNIS CLUB
             </h2>
           </div>

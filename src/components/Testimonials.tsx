@@ -1,11 +1,20 @@
 
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 const Testimonials = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
   const testimonialsRef = useRef<Array<HTMLDivElement | null>>([]);
+  const [isWindows, setIsWindows] = useState(false);
 
   useEffect(() => {
+    // Windows環境検出
+    const detectWindows = () => {
+      const platform = navigator.userAgent.toLowerCase();
+      return platform.indexOf('win') !== -1;
+    };
+    
+    setIsWindows(detectWindows());
+    
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -54,7 +63,7 @@ const Testimonials = () => {
       <div className="section-container py-8 md:py-12">
         <div className="text-center mb-4"> 
           <h2 className="section-title text-kyoto-white mx-auto text-2xl md:text-3xl">
-            Menmber's Voices
+            Member's Voices
           </h2>
         </div>
 
@@ -71,7 +80,7 @@ const Testimonials = () => {
                 </svg>
               </div>
               
-              <blockquote className="text-base md:text-lg text-white italic leading-relaxed mb-3 h-20 overflow-y-auto">
+              <blockquote className={`${isWindows ? 'text-sm md:text-base' : 'text-base md:text-lg'} text-white italic leading-relaxed mb-3 ${isWindows ? 'h-auto max-h-28' : 'h-20'} ${isWindows ? 'overflow-y-hidden' : 'overflow-y-auto'}`}>
                 {testimonial.quote}
               </blockquote>
               

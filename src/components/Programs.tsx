@@ -139,7 +139,7 @@ const Programs = () => {
                       <div className="mb-3">
                         <p className="text-gray-700 font-medium text-sm md:text-base">ご予約方法：</p>
                         <p className="text-base md:text-lg font-medium text-kyoto-dark-green">
-                          電話: (075)-741-2917（前日まで）
+                          電話: (075)-741-2917<br />（前日まで）
                         </p>
                       </div>
                       {/* 予約ボタンを削除しました */}
