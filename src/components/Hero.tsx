@@ -44,17 +44,27 @@ const Hero = () => {
           
           <div className="w-20 h-1 bg-kyoto-gold mb-6"></div>
           
-          <p className="text-base md:text-lg text-kyoto-white/90 mb-4" style={{ fontFamily: 'Zen Old Mincho, serif' }}>
-            1935年オープンの、伝統ある会員制クラブ。<br />
-            会員の手で運営しているから、年会費もプレー代もお手頃。<br />
-            お盆も正月も、いつでもコートが待ってる。
+          <p className={`text-base md:text-lg text-kyoto-white/90 ${isWindows ? 'mb-5 leading-relaxed' : 'mb-4'}`} style={{ fontFamily: 'Zen Old Mincho, serif' }}>
+            <span className={isWindows ? 'block mb-1' : ''}>
+              1935年オープンの、伝統ある会員制クラブ。
+            </span>
+            <span className={isWindows ? 'block mb-1' : ''}>
+              会員の手で運営しているから、年会費もプレー代もお手頃。
+            </span>
+            <span className={isWindows ? 'block' : ''}>
+              お盆も正月も、いつでもコートが待ってる。
+            </span>
           </p>
           
           <div className="mb-8"></div>
           
-          <h2 className="text-xl md:text-3xl text-kyoto-white mb-0 font-light">
-            自然の中、心地よい汗を流そう。<br />
-            京都ローンテニスクラブ。
+          <h2 className={`text-xl md:text-3xl text-kyoto-white ${isWindows ? 'mb-2 leading-relaxed' : 'mb-0 font-light'}`}>
+            <span className={isWindows ? 'block mb-1' : ''}>
+              自然の中、心地よい汗を流そう。
+            </span>
+            <span className={isWindows ? 'block' : ''}>
+              京都ローンテニスクラブ。
+            </span>
           </h2>
           
           <div className="text-center mb-4 p-4 bg-kyoto-dark-green/50 backdrop-blur-sm rounded">
