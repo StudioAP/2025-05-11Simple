@@ -44,25 +44,28 @@ const Hero = () => {
           
           <div className="w-20 h-1 bg-kyoto-gold mb-6"></div>
           
-          <p className={`text-base md:text-lg text-kyoto-white/90 ${isWindows ? 'mb-5 leading-relaxed' : 'mb-4'}`} style={{ fontFamily: 'Zen Old Mincho, serif' }}>
-            <span className={isWindows ? 'block mb-1' : ''}>
+          <p className={`text-base md:text-lg text-kyoto-white/90 ${isWindows ? 'mb-5' : 'mb-4'}`} style={{ fontFamily: 'Zen Old Mincho, serif' }}>
+            <span className={isWindows ? 'block mb-1' : 'inline'}>
               1935年オープンの、伝統ある会員制クラブ。
             </span>
-            <span className={isWindows ? 'block mb-1' : ''}>
+            <br className={isWindows ? 'hidden' : ''} />
+            <span className={isWindows ? 'block mb-1' : 'inline'}>
               会員の手で運営しているから、年会費もプレー代もお手頃。
             </span>
-            <span className={isWindows ? 'block' : ''}>
+            <br className={isWindows ? 'hidden' : ''} />
+            <span className={isWindows ? 'block' : 'inline'}>
               お盆も正月も、いつでもコートが待ってる。
             </span>
           </p>
           
           <div className="mb-8"></div>
           
-          <h2 className={`text-xl md:text-3xl text-kyoto-white ${isWindows ? 'mb-2 leading-relaxed' : 'mb-0 font-light'}`}>
-            <span className={isWindows ? 'block mb-1' : ''}>
+          <h2 className={`text-xl ${isWindows ? 'md:text-2xl mb-2' : 'md:text-3xl mb-0'} font-light`}>
+            <span className={isWindows ? 'block mb-1' : 'inline'}>
               自然の中、心地よい汗を流そう。
             </span>
-            <span className={isWindows ? 'block' : ''}>
+            <br className={isWindows ? 'hidden' : ''} />
+            <span className={isWindows ? 'block' : 'inline'}>
               京都ローンテニスクラブ。
             </span>
           </h2>
