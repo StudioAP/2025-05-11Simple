@@ -3,13 +3,22 @@ import Button from "./Button";
 
 const Hero = () => {
   const [isLoaded, setIsLoaded] = useState(false);
+  const [isWindows, setIsWindows] = useState(false);
 
   useEffect(() => {
     setIsLoaded(true);
+    
+    // Windows検出
+    const detectWindows = () => {
+      const platform = navigator.userAgent.toLowerCase();
+      return platform.indexOf('win') !== -1;
+    };
+    
+    setIsWindows(detectWindows());
   }, []);
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16 md:pt-0">
+    <section className={`relative min-h-screen flex items-center justify-center overflow-hidden ${isWindows ? 'pt-32 md:pt-24' : 'pt-16 md:pt-0'}`}>
       {/* Background Image with overlay */}
       <div className="absolute inset-0 z-0">
         <img
@@ -22,7 +31,7 @@ const Hero = () => {
 
       {/* Content */}
       <div
-        className={`relative z-10 container mx-auto px-4 text-left max-w-4xl transition-opacity duration-1000 mt-4 sm:mt-0 ${
+        className={`relative z-10 container mx-auto px-4 text-left max-w-4xl transition-opacity duration-1000 ${isWindows ? 'mt-12 sm:mt-12' : 'mt-4 sm:mt-0'} ${
           isLoaded ? "opacity-100" : "opacity-0"
         }`}
       >
