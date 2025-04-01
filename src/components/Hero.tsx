@@ -46,11 +46,11 @@ const Hero = () => {
           
           <p className={`${isWindows ? 'text-sm md:text-base' : 'text-base md:text-lg'} text-kyoto-white/90 ${isWindows ? 'mb-5' : 'mb-4'}`} style={{ fontFamily: 'Zen Old Mincho, serif' }}>
             <span className={isWindows ? 'block mb-1' : 'inline'}>
-              1935年オープンの、伝統ある会員制クラブ。
+              1930年オープンの、伝統ある会員制クラブ。
             </span>
             <br className={isWindows ? 'hidden' : ''} />
             <span className={isWindows ? 'block mb-1' : 'inline'}>
-              会員の手で運営しているから、年会費もプレー代もお手頃。
+              会員の手で運営しているから、年会費もプレー代もリーズナブル。
             </span>
             <br className={isWindows ? 'hidden' : ''} />
             <span className={isWindows ? 'block' : 'inline'}>
@@ -77,9 +77,32 @@ const Hero = () => {
               KYOTO LAWN TENNIS CLUB
             </h2>
           </div>
+        </div>
+        
+        {/* クラブ概要情報 - 小さめに表示 */}
+        <div className="absolute bottom-16 right-4 md:right-8 p-3 bg-kyoto-dark-green/70 backdrop-blur-sm rounded text-left max-w-xs animate-fade-in z-20">
+          <h3 className="text-sm text-kyoto-gold font-medium mb-1">&lt;クラブ概要&gt;</h3>
+          <ul className="text-xs text-kyoto-white/90 space-y-1">
+            <li className="flex items-start">
+              <span className="mr-1">•</span>
+              <span>創立：1930年</span>
+            </li>
+            <li className="flex items-start">
+              <span className="mr-1">•</span>
+              <span>所在地：京都市左京区静市静原町</span>
+            </li>
+            <li className="flex items-start">
+              <span className="mr-1">•</span>
+              <span>会員：50名（男性25名、女性25名）2025年4月1日現在</span>
+            </li>
+            <li className="flex items-start">
+              <span className="mr-1">•</span>
+              <span>年齢層：30〜80歳代</span>
+            </li>
+          </ul>
+        </div>
           
           {/* 予約ボタンを削除 */}
-        </div>
       </div>
 
       {/* Scroll indicator */}

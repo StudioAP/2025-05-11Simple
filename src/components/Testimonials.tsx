@@ -39,21 +39,27 @@ const Testimonials = () => {
 
   const testimonials = [
     {
-      quote: "市のコートは予約が大変。でもここなら、思い立った時にプレーできる。自然に囲まれて、毎回スッキリ！",
+      quote: "以前は友人と市のコートを予約してテニスをしていましたが、京都ローンテニスクラブの会員になってからは、思い立った時にプレーでき、コート確保のわずらわしさがありません。",
       author: "京都ローンテニスクラブ会員",
       position: "10年以上のメンバー",
       image: "/lovable-uploads/2dcc5e2e-3ed3-41e2-9038-cbab6f2a3962.png"
     },
     {
-      quote: "家族でテニスを始めましたが、コーチのアドバイスのおかげで上達が早いです。休日の充実した時間を過ごせています。",
+      quote: "以前はいつも友人とテニスをしていましたが、会員になってからは様々な会員とプレーできるのが魅力です。",
       author: "S.K様",
       position: "家族会員",
       image: "/lovable-uploads/8169b11f-0cde-4649-8dc2-a0cfaf118a91.png"
     },
     {
-      quote: "引退後の趣味として始めましたが、ここの雰囲気がとても良く、新しい仲間もできました。健康維持にも最適です。",
+      quote: "テニスはもちろんのこと、クラブにいってほかの会員とコーヒーを飲みながら談笑するのも楽しみの一つです。おかげで交流関係も広がりました。",
       author: "T.M様",
       position: "シニア会員",
+      image: "/lovable-uploads/a140f6d7-a8b7-489d-b607-c3ecfd71d3b3.png"
+    },
+    {
+      quote: "会員制テニスクラブというと高額なイメージでしたが、実質月1万円以内で十分に楽しめて経済的です。",
+      author: "Y.R様",
+      position: "新規会員",
       image: "/lovable-uploads/a140f6d7-a8b7-489d-b607-c3ecfd71d3b3.png"
     }
   ];
@@ -63,11 +69,11 @@ const Testimonials = () => {
       <div className="section-container py-8 md:py-12">
         <div className="text-center mb-4"> 
           <h2 className="section-title text-kyoto-white mx-auto text-2xl md:text-3xl">
-            Member's Voices
+            お客様の声
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-4xl mx-auto">
           {testimonials.map((testimonial, index) => (
             <div 
               key={index}

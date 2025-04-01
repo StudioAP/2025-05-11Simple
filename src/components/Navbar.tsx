@@ -47,6 +47,12 @@ const Navbar = () => {
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center space-x-8">
           <a
+            href="#news"
+            className="text-kyoto-white hover:text-kyoto-gold transition-colors"
+          >
+            ニュース
+          </a>
+          <a
             href="#facilities"
             className="text-kyoto-white hover:text-kyoto-gold transition-colors"
           >
@@ -76,7 +82,6 @@ const Navbar = () => {
           >
             お問い合わせ
           </a>
-          {/* 「体験を今すぐ予約」ボタンを削除 */}
         </div>
 
         {/* Mobile Menu Button */}
@@ -98,6 +103,13 @@ const Navbar = () => {
         <div className="md:hidden absolute top-full left-0 w-full bg-kyoto-dark-green/95 transform transition-opacity duration-300">
           <div className="container mx-auto px-4 py-4 flex flex-col space-y-4">
             <a
+              href="#news"
+              className="text-kyoto-white hover:text-kyoto-gold transition-colors py-2 border-b border-kyoto-gold/20"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              ニュース
+            </a>
+            <a
               href="#facilities"
               className="text-kyoto-white hover:text-kyoto-gold transition-colors py-2 border-b border-kyoto-gold/20"
               onClick={() => setIsMobileMenuOpen(false)}
@@ -110,6 +122,13 @@ const Navbar = () => {
               onClick={() => setIsMobileMenuOpen(false)}
             >
               会員プラン
+            </a>
+            <a
+              href="#testimonials"
+              className="text-kyoto-white hover:text-kyoto-gold transition-colors py-2 border-b border-kyoto-gold/20"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              お客様の声
             </a>
             <a
               href="#programs"

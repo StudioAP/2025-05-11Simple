@@ -9,6 +9,7 @@ import Programs from "../components/Programs";
 import Pricing from "../components/Pricing";
 import Contact from "../components/Contact";
 import Footer from "../components/Footer";
+import News from "../components/News";
 
 const Index = () => {
   useEffect(() => {
@@ -32,7 +33,8 @@ const Index = () => {
     <div className="min-h-screen bg-white overflow-hidden">
       <Navbar />
       <Hero />
-      {/* 新しいセクション順序: Hero、Facilities、Pricing、Testimonials、Programs、Contact */}
+      <News />
+      {/* 新しいセクション順序: Hero、News、Facilities、Pricing、Testimonials、Programs、Contact */}
       <Facilities />
       <Pricing />
       <Testimonials />
