@@ -178,13 +178,28 @@ const Pricing = () => {
             ref={titleRef}
             className="section-title text-kyoto-dark-green mx-auto opacity-0 text-2xl md:text-3xl"
           >
-            Membership Plans
+            会員プラン
           </h2>
         </div>
 
-        {/* PC表示用レイアウト */}
+        {/* PC表示用レイアウト - 左右入れ替え */}
         <div className="hidden md:flex flex-col mb-8">
           <div className="grid grid-cols-3 gap-6 mb-6">
+            {/* 会員プラン一覧を左側に配置 */}
+            <div className="col-span-2 grid grid-cols-3 gap-4 auto-rows-fr">
+              {pricingPlans.map((plan, index) => (
+                <PricingCard
+                  key={index}
+                  title={plan.title}
+                  price={plan.price}
+                  entryFee={plan.entryFee}
+                  features={plan.features}
+                  isPopular={plan.isPopular}
+                />
+              ))}
+            </div>
+            
+            {/* ビジター情報を右側に配置 */}
             <div className="col-span-1 space-y-4">
               <div 
                 ref={imageRef}
@@ -209,49 +224,12 @@ const Pricing = () => {
                 </div>
               </div>
             </div>
-
-            <div className="col-span-2 grid grid-cols-3 gap-4 auto-rows-fr">
-              {pricingPlans.map((plan, index) => (
-                <PricingCard
-                  key={index}
-                  title={plan.title}
-                  price={plan.price}
-                  entryFee={plan.entryFee}
-                  features={plan.features}
-                  isPopular={plan.isPopular}
-                />
-              ))}
-            </div>
           </div>
         </div>
 
         {/* スマホ表示用レイアウト */}
         <div className="md:hidden mb-8">
-          {/* テニスコート画像 */}
-          <div 
-            className="opacity-0 rounded-sm overflow-hidden shadow-lg mb-6 animate-fade-in-up"
-          >
-            <img 
-              src="/lovable-uploads/a140f6d7-a8b7-489d-b607-c3ecfd71d3b3.png" 
-              alt="テニスコート" 
-              className="w-full h-64 object-cover"
-            />
-          </div>
-
-          {/* ビジター情報（上部に配置） */}
-          <div className="bg-white rounded-sm shadow p-3 text-center mb-6 opacity-0 animate-fade-in-up">
-            <h3 className="text-sm md:text-base font-bold text-kyoto-dark-green mb-1">
-              ビジターも大歓迎
-            </h3>
-            <p className="text-gray-700 text-xs mb-1">
-              会員でなくても1日単位でご利用いただけます
-            </p>
-            <div className="text-base md:text-lg font-bold text-kyoto-dark-green">
-              1,500<span className="text-xs font-normal text-gray-600">円/日</span>
-            </div>
-          </div>
-
-          {/* 会員プランカード */}
+          {/* 会員プランカード - スマホ表示では先に表示 */}
           <div className="grid grid-cols-1 gap-4 mb-6">
             {pricingPlans.map((plan, index) => (
               <PricingCard
@@ -263,6 +241,30 @@ const Pricing = () => {
                 isPopular={plan.isPopular}
               />
             ))}
+          </div>
+          
+          {/* テニスコート画像 */}
+          <div 
+            className="opacity-0 rounded-sm overflow-hidden shadow-lg mb-6 animate-fade-in-up"
+          >
+            <img 
+              src="/lovable-uploads/a140f6d7-a8b7-489d-b607-c3ecfd71d3b3.png" 
+              alt="テニスコート" 
+              className="w-full h-64 object-cover"
+            />
+          </div>
+
+          {/* ビジター情報 */}
+          <div className="bg-white rounded-sm shadow p-3 text-center mb-6 opacity-0 animate-fade-in-up">
+            <h3 className="text-sm md:text-base font-bold text-kyoto-dark-green mb-1">
+              ビジターも大歓迎
+            </h3>
+            <p className="text-gray-700 text-xs mb-1">
+              会員でなくても1日単位でご利用いただけます
+            </p>
+            <div className="text-base md:text-lg font-bold text-kyoto-dark-green">
+              1,500<span className="text-xs font-normal text-gray-600">円/日</span>
+            </div>
           </div>
         </div>
 
@@ -284,4 +286,4 @@ const Pricing = () => {
   );
 };
 
-export default Pricing;
+export default Pricing; 

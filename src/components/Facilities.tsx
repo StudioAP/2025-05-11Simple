@@ -112,7 +112,7 @@ const Facilities = () => {
       <div className="section-container max-w-6xl mx-auto px-4 sm:px-6 py-8">
         <div className="text-center mb-8">
           <h2 className="section-title text-kyoto-dark-green mx-auto text-2xl md:text-3xl">
-            Facilities
+            施設・設備
           </h2>
         </div>
 

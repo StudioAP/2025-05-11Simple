@@ -55,7 +55,7 @@ const Contact = () => {
       <div className="section-container py-6 md:py-8">
         <div className="text-center mb-4">
           <h2 className="section-title text-kyoto-white mx-auto text-xl md:text-2xl">
-            Contact Us
+            お問合せ・所在地
           </h2>
         </div>
 
@@ -66,7 +66,7 @@ const Contact = () => {
             className="opacity-0 md:col-span-5"
           >
             <div className="bg-kyoto-dark-green/50 backdrop-blur-sm p-4 rounded-sm border border-kyoto-gold/30 h-full">
-              <h3 className="text-lg font-bold text-kyoto-white mb-4">Contact & Reservations</h3>
+              <h3 className="text-lg font-bold text-kyoto-white mb-4">お気軽にお問合せください</h3>
               
               <div className="space-y-3">
                 <ContactInfo icon={<MapPin size={20} />} title="住所">

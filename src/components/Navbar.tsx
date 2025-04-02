@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 import Button from "./Button";
@@ -50,13 +49,13 @@ const Navbar = () => {
             href="#news"
             className="text-kyoto-white hover:text-kyoto-gold transition-colors"
           >
-            ニュース
+            お知らせ(随時更新)
           </a>
           <a
             href="#facilities"
             className="text-kyoto-white hover:text-kyoto-gold transition-colors"
           >
-            施設
+            施設・設備
           </a>
           <a
             href="#pricing"
@@ -74,13 +73,13 @@ const Navbar = () => {
             href="#programs"
             className="text-kyoto-white hover:text-kyoto-gold transition-colors"
           >
-            プログラム
+            プログラム&イベント
           </a>
           <a
             href="#contact"
             className="text-kyoto-white hover:text-kyoto-gold transition-colors"
           >
-            お問い合わせ
+            お問合せ・所在地
           </a>
         </div>
 
@@ -135,7 +134,7 @@ const Navbar = () => {
               className="text-kyoto-white hover:text-kyoto-gold transition-colors py-2 border-b border-kyoto-gold/20"
               onClick={() => setIsMobileMenuOpen(false)}
             >
-              プログラム
+              プログラム&イベント
             </a>
             <a
               href="#contact"
@@ -151,4 +150,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default Navbar; 

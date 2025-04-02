@@ -29,15 +29,64 @@ const News = () => {
   const [isAdmin, setIsAdmin] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [containerHeight, setContainerHeight] = useState(0);
   
   // ニュースアナウンスメントのstate
   const [announcements, setAnnouncements] = useState<Announcement[]>([]);
+  const [visibleAnnouncements, setVisibleAnnouncements] = useState<Announcement[]>([]);
   const [newAnnouncement, setNewAnnouncement] = useState({
     title: "",
     date: "",
     description: "",
     imageUrl: ""
   });
+
+  // コンテナの高さを計測して、表示可能なアナウンスメント数を決定
+  useEffect(() => {
+    const updateContainerHeight = () => {
+      const container = document.getElementById('news-container');
+      if (container) {
+        setContainerHeight(container.clientHeight);
+      }
+    };
+
+    updateContainerHeight();
+    window.addEventListener('resize', updateContainerHeight);
+    
+    return () => {
+      window.removeEventListener('resize', updateContainerHeight);
+    };
+  }, []);
+
+  // 表示可能なアナウンスメントを計算（ビューポートからあふれる場合は古い記事から非表示）
+  useEffect(() => {
+    if (announcements.length && containerHeight > 0) {
+      const calculateVisibleItems = () => {
+        // ニュースアイテム1つの平均的な高さ（仮定）
+        const averageItemHeight = 120; 
+        // 2段組みの列数
+        const columns = window.innerWidth >= 768 ? 2 : 1;
+        // 表示可能なアイテム数を計算
+        const maxVisibleItems = Math.floor((containerHeight / averageItemHeight) * columns);
+        // 新しい順に表示（最新のmaxVisibleItems個）
+        return announcements.slice(0, Math.max(maxVisibleItems, 1));
+      };
+      
+      setVisibleAnnouncements(calculateVisibleItems());
+      
+      // リサイズ時にも再計算
+      const handleResize = () => {
+        setVisibleAnnouncements(calculateVisibleItems());
+      };
+      
+      window.addEventListener('resize', handleResize);
+      return () => {
+        window.removeEventListener('resize', handleResize);
+      };
+    } else {
+      setVisibleAnnouncements(announcements);
+    }
+  }, [announcements, containerHeight]);
 
   // Contentfulからニュースデータを取得
   useEffect(() => {
@@ -186,7 +235,7 @@ const News = () => {
 
   // アニメーション効果のためのIntersection Observer
   useEffect(() => {
-    console.log('アニメーションアップデート: ニュースアイテム数 =', announcements.length);
+    console.log('アニメーションアップデート: ニュースアイテム数 =', visibleAnnouncements.length);
     
     // ニュースアイテムの読み込み後に実行されるように仮のタイマーを設定
     const timer = setTimeout(() => {
@@ -222,7 +271,7 @@ const News = () => {
     return () => {
       clearTimeout(timer);
     };
-  }, [announcements]); // announcementsの変更を監視
+  }, [visibleAnnouncements]); // visibleAnnouncementsの変更を監視
 
   const handleAdminLogin = () => {
     // Simple password check - in a real app, use proper authentication
@@ -265,20 +314,33 @@ const News = () => {
     }
   };
 
+  // 表示するニュースが少ない場合のヘルパーメッセージ
+  const renderOverflowMessage = () => {
+    if (visibleAnnouncements.length < announcements.length) {
+      const hiddenCount = announcements.length - visibleAnnouncements.length;
+      return (
+        <div className="text-center mt-4 text-xs text-kyoto-dark-green/70">
+          <p>さらに{hiddenCount}件のニュースがあります（古い記事）</p>
+        </div>
+      );
+    }
+    return null;
+  };
+
   return (
     <section id="news" className="py-8 bg-kyoto-beige japanese-pattern-light">
       <div className="section-container">
         <div className="text-center mb-6">
           <h2 
             ref={(el) => (fadeRefs.current[0] = el)} 
-            className="section-title text-kyoto-dark-green opacity-0 mx-auto text-xl md:text-2xl"
+            className="section-title text-kyoto-dark-green opacity-0 mx-auto text-2xl md:text-3xl"
           >
-            News
+            お知らせ
           </h2>
         </div>
         
         {/* 差別化したデザインのNewsセクション */}
-        <div className="max-w-2xl mx-auto">
+        <div id="news-container" className="max-w-4xl mx-auto">
           <div className="bg-kyoto-gold/10 p-2 rounded-sm text-center mb-4 animate-pulse">
             <p className="text-xs font-bold text-kyoto-dark-green">＊ 随時更新 ＊</p>
           </div>
@@ -291,43 +353,49 @@ const News = () => {
             <div className="bg-white p-3 rounded-sm shadow-lg border-l-4 border-red-500">
               <p className="text-sm text-red-500">{error}</p>
             </div>
-          ) : announcements.length === 0 ? (
+          ) : visibleAnnouncements.length === 0 ? (
             <div className="bg-white p-3 rounded-sm shadow-lg text-center">
               <p className="text-sm text-kyoto-dark-green">現在ニュースはありません</p>
               <p className="text-xs text-gray-500 mt-2">データ取得状況: {JSON.stringify({total: announcements.length})}</p>
               <p className="text-xs text-gray-500 mt-2">最後のデータ取得: {new Date().toLocaleTimeString('ja-JP')}</p>
             </div>
           ) : (
-            <div className="space-y-3">
-              {announcements.map((announcement, index) => (
-                <div 
-                  key={index}
-                  ref={(el) => {
-                    fadeRefs.current[index + 1] = el;
-                  }}
-                  className="bg-white p-3 rounded-sm shadow-lg hover-lift opacity-0 border-l-4 border-kyoto-gold/80 transition-opacity duration-500"
-                >
-                  <div className="pl-2">
-                    <div className="flex justify-between items-center mb-1">
-                      <h4 className="text-base font-bold text-kyoto-dark-green">{announcement.title}</h4>
-                      {announcement.date && (
-                        <span className="text-xs bg-kyoto-gold/20 px-2 py-0.5 rounded text-kyoto-dark-green">{announcement.date}</span>
+            <>
+              {/* 2段組みレイアウト */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                {visibleAnnouncements.map((announcement, index) => (
+                  <div 
+                    key={index}
+                    ref={(el) => {
+                      fadeRefs.current[index + 1] = el;
+                    }}
+                    className="bg-white p-3 rounded-sm shadow-lg hover-lift opacity-0 border-l-4 border-kyoto-gold/80 transition-opacity duration-500"
+                  >
+                    <div className="pl-2">
+                      <div className="flex justify-between items-center mb-1">
+                        <h4 className="text-base font-bold text-kyoto-dark-green">{announcement.title}</h4>
+                        {announcement.date && (
+                          <span className="text-xs bg-kyoto-gold/20 px-2 py-0.5 rounded text-kyoto-dark-green">{announcement.date}</span>
+                        )}
+                      </div>
+                      <p className="text-sm md:text-base text-gray-700">{announcement.description}</p>
+                      {announcement.imageUrl && (
+                        <div className="mt-2">
+                          <img 
+                            src={announcement.imageUrl} 
+                            alt={announcement.title} 
+                            className="w-full h-auto rounded-sm border border-gray-200" 
+                          />
+                        </div>
                       )}
                     </div>
-                    <p className="text-sm md:text-base text-gray-700">{announcement.description}</p>
-                    {announcement.imageUrl && (
-                      <div className="mt-2">
-                        <img 
-                          src={announcement.imageUrl} 
-                          alt={announcement.title} 
-                          className="w-full h-auto rounded-sm border border-gray-200" 
-                        />
-                      </div>
-                    )}
                   </div>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
+              
+              {/* 非表示のニュースがある場合のメッセージ */}
+              {renderOverflowMessage()}
+            </>
           )}
         </div>
       </div>
@@ -422,4 +490,4 @@ const News = () => {
   );
 };
 
-export default News;
+export default News; 
