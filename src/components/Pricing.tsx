@@ -203,24 +203,25 @@ const Pricing = () => {
             <div className="col-span-1 space-y-4">
               <div 
                 ref={imageRef}
-                className="opacity-0 rounded-sm overflow-hidden shadow-lg"
+                className="opacity-0 rounded-sm overflow-hidden shadow-lg w-full"
               >
                 <img 
                   src="/lovable-uploads/a140f6d7-a8b7-489d-b607-c3ecfd71d3b3.png" 
                   alt="テニスコート" 
                   className="w-full h-52 object-cover"
                 />
-              </div>
-              
-              <div className="bg-white rounded-sm shadow p-3 text-center opacity-0 animate-fade-in-up flex flex-col justify-center max-w-xs h-auto">
-                <h3 className="text-sm md:text-base font-bold text-kyoto-dark-green mb-1">
-                  ビジターも大歓迎
-                </h3>
-                <p className="text-gray-700 text-xs mb-1">
-                  会員でなくても1日単位でご利用いただけます
-                </p>
-                <div className="text-base md:text-lg font-bold text-kyoto-dark-green">
-                  1,500<span className="text-xs font-normal text-gray-600">円/日</span>
+                
+                {/* 写真の下にビジター情報を配置 */}
+                <div className="bg-white p-3 text-center opacity-0 animate-fade-in-up w-full">
+                  <h3 className="text-sm md:text-base font-bold text-kyoto-dark-green mb-1">
+                    ビジターも大歓迎
+                  </h3>
+                  <p className="text-gray-700 text-xs mb-1">
+                    会員でなくても1日単位でご利用いただけます
+                  </p>
+                  <div className="text-base md:text-lg font-bold text-kyoto-dark-green">
+                    1,500<span className="text-xs font-normal text-gray-600">円/日</span>
+                  </div>
                 </div>
               </div>
             </div>

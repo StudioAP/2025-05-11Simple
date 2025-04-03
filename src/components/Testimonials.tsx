@@ -42,25 +42,25 @@ const Testimonials = () => {
       quote: "以前は友人と市のコートを予約してテニスをしていましたが、京都ローンテニスクラブの会員になってからは、思い立った時にプレーでき、コート確保のわずらわしさがありません。",
       author: "京都ローンテニスクラブ会員",
       position: "10年以上のメンバー",
-      image: "/lovable-uploads/2dcc5e2e-3ed3-41e2-9038-cbab6f2a3962.png"
+      image: "https://images.unsplash.com/photo-1622279457486-57c73dc6f8e8?q=80&w=200&auto=format&fit=crop"
     },
     {
       quote: "以前はいつも友人とテニスをしていましたが、会員になってからは様々な会員とプレーできるのが魅力です。",
       author: "S.K様",
       position: "家族会員",
-      image: "/lovable-uploads/8169b11f-0cde-4649-8dc2-a0cfaf118a91.png"
+      image: "https://images.unsplash.com/photo-1599586120429-48281b6f0ece?q=80&w=200&auto=format&fit=crop"
     },
     {
       quote: "テニスはもちろんのこと、クラブにいってほかの会員とコーヒーを飲みながら談笑するのも楽しみの一つです。おかげで交流関係も広がりました。",
       author: "T.M様",
       position: "シニア会員",
-      image: "/lovable-uploads/a140f6d7-a8b7-489d-b607-c3ecfd71d3b3.png"
+      image: "https://images.unsplash.com/photo-1560012057-4372e14c5085?q=80&w=200&auto=format&fit=crop"
     },
     {
       quote: "会員制テニスクラブというと高額なイメージでしたが、実質月1万円以内で十分に楽しめて経済的です。",
       author: "Y.R様",
       position: "新規会員",
-      image: "/lovable-uploads/a140f6d7-a8b7-489d-b607-c3ecfd71d3b3.png"
+      image: "https://images.unsplash.com/photo-1620742778397-c7c8f9a63d8a?q=80&w=200&auto=format&fit=crop"
     }
   ];
 
