@@ -1,76 +1,8 @@
 import React, { useEffect, useRef } from "react";
-import Button from "./Button";
-
-const PricingCard = ({ title, price, entryFee, features, isPopular = false }) => {
-  const cardRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("animate-fade-in-up");
-          }
-        });
-      },
-      { threshold: 0.1 }
-    );
-
-    if (cardRef.current) observer.observe(cardRef.current);
-
-    return () => {
-      if (cardRef.current) observer.unobserve(cardRef.current);
-    };
-  }, []);
-
-  return (
-    <div
-      ref={cardRef}
-      className="bg-white rounded-sm shadow-lg p-4 hover-lift opacity-0 relative overflow-hidden flex flex-col h-full border border-gray-200"
-    >
-
-      <h3 className="text-lg font-bold text-kyoto-dark-green mb-1">{title}</h3>
-      
-      <div className="mb-3">
-        <div className="flex items-baseline">
-          <span className="text-2xl font-bold text-kyoto-dark-green">
-            {price}
-          </span>
-          <span className="text-gray-600 ml-1 text-xs md:text-sm">円/年</span>
-        </div>
-        <div className="text-xs md:text-sm text-gray-600">
-          入会金: {entryFee}
-        </div>
-      </div>
-
-      <ul className="space-y-1 text-xs md:text-sm flex-grow">
-        {features.map((feature, index) => (
-          <li key={index} className="flex items-start">
-            <svg
-              className="w-4 h-4 text-kyoto-gold shrink-0 mr-1 mt-0.5"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M5 13l4 4L19 7"
-              ></path>
-            </svg>
-            <span className="text-gray-700">{feature}</span>
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
-};
 
 const Pricing = () => {
   const titleRef = useRef<HTMLHeadingElement>(null);
-  const imageRef = useRef<HTMLDivElement>(null);
+  const sectionRefs = useRef<Array<HTMLDivElement | null>>([]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -78,6 +10,7 @@ const Pricing = () => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             entry.target.classList.add("animate-fade-in-up");
+            entry.target.classList.remove("opacity-0");
           }
         });
       },
@@ -85,90 +18,17 @@ const Pricing = () => {
     );
 
     if (titleRef.current) observer.observe(titleRef.current);
-    if (imageRef.current) observer.observe(imageRef.current);
+    sectionRefs.current.forEach((el) => {
+      if (el) observer.observe(el);
+    });
 
     return () => {
       if (titleRef.current) observer.unobserve(titleRef.current);
-      if (imageRef.current) observer.unobserve(imageRef.current);
+      sectionRefs.current.forEach((el) => {
+        if (el) observer.unobserve(el);
+      });
     };
   }, []);
-
-  const pricingPlans = [
-    {
-      title: "正会員",
-      price: "60,000",
-      entryFee: "100,000円",
-      features: [
-        "プレー可能日: 常時", 
-        "いつでもプレーOK", 
-        "コート優先予約権", 
-        "クラブイベント参加可", 
-        "プレー代: 500円/日", 
-        "※入会金をお支払いいただくことで、年会費が永年割引（例：一年正会員66,000円→正会員60,000円）となります。"
-      ],
-      isPopular: true,
-    },
-    {
-      title: "一年正会員",
-      price: "66,000",
-      entryFee: "なし",
-      features: [
-        "プレー可能日: 常時", 
-        "いつでもプレーOK", 
-        "コート予約可能", 
-        "クラブイベント参加可", 
-        "プレー代: 500円/日"
-      ],
-      isPopular: false,
-    },
-    {
-      title: "平日会員",
-      price: "48,000",
-      entryFee: "100,000円",
-      features: [
-        "プレー可能日: 平日終日・土曜13時まで", 
-        "平日コート予約可能", 
-        "クラブイベント参加可", 
-        "プレー代: 500円/日", 
-        "※入会金をお支払いいただくことで、年会費が永年割引となります。"
-      ],
-      isPopular: false,
-    },
-    {
-      title: "平日一年会員",
-      price: "48,000",
-      entryFee: "なし",
-      features: [
-        "プレー可能日: 平日終日と土曜日13時まで", 
-        "平日コート予約可能", 
-        "クラブイベント参加可", 
-        "プレー代: 500円/日"
-      ],
-      isPopular: false,
-    },
-    {
-      title: "週末・祝日会員",
-      price: "51,000",
-      entryFee: "なし",
-      features: [
-        "プレー可能日: 土日祝のみ", 
-        "限定予約枠あり", 
-        "クラブイベント参加可", 
-        "プレー代: 500円/日"
-      ],
-      isPopular: false,
-    },
-    {
-      title: "特定曜日ビジター",
-      price: "24,000",
-      entryFee: "なし",
-      features: [
-        "プレー可能日: 月～金の希望する曜日", 
-        "プレー代: 500円/日"
-      ],
-      isPopular: false,
-    },
-  ];
 
   return (
     <section id="pricing" className="py-12 bg-kyoto-cream">
@@ -182,104 +42,149 @@ const Pricing = () => {
           </h2>
         </div>
 
-        {/* PC表示用レイアウト - 左右入れ替え */}
-        <div className="hidden md:flex flex-col mb-8">
-          <div className="grid grid-cols-3 gap-6 mb-6">
-            {/* 会員プラン一覧を左側に配置 */}
-            <div className="col-span-2 grid grid-cols-3 gap-4 auto-rows-fr">
-              {pricingPlans.map((plan, index) => (
-                <PricingCard
-                  key={index}
-                  title={plan.title}
-                  price={plan.price}
-                  entryFee={plan.entryFee}
-                  features={plan.features}
-                  isPopular={plan.isPopular}
-                />
-              ))}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10">
+          {/* 左側: 会員種別 */}
+          <div 
+            ref={(el) => (sectionRefs.current[0] = el)}
+            className="bg-white rounded-sm shadow-lg p-5 hover-lift opacity-0"
+          >
+            <h3 className="text-xl font-bold text-kyoto-dark-green mb-4 border-b border-kyoto-gold/30 pb-2">会員種別</h3>
+            
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="border-b border-gray-200">
+                    <th className="py-2 px-1 text-left font-medium text-kyoto-dark-green">会員種別</th>
+                    <th className="py-2 px-1 text-center font-medium text-kyoto-dark-green">入会金</th>
+                    <th className="py-2 px-1 text-center font-medium text-kyoto-dark-green">年会費</th>
+                    <th className="py-2 px-1 text-left font-medium text-kyoto-dark-green">プレーできる日</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr className="border-b border-gray-100">
+                    <td className="py-3 px-1 font-medium">一年正会員</td>
+                    <td className="py-3 px-1 text-center">不要</td>
+                    <td className="py-3 px-1 text-center font-medium text-kyoto-dark-green">66,000円</td>
+                    <td className="py-3 px-1">常時</td>
+                  </tr>
+                  <tr className="border-b border-gray-100">
+                    <td className="py-3 px-1 font-medium">週末・祝日会員</td>
+                    <td className="py-3 px-1 text-center">不要</td>
+                    <td className="py-3 px-1 text-center font-medium text-kyoto-dark-green">51,000円</td>
+                    <td className="py-3 px-1">土日、祝日</td>
+                  </tr>
+                  <tr className="border-b border-gray-100">
+                    <td className="py-3 px-1 font-medium">平日一年会員</td>
+                    <td className="py-3 px-1 text-center">不要</td>
+                    <td className="py-3 px-1 text-center font-medium text-kyoto-dark-green">48,000円</td>
+                    <td className="py-3 px-1">平日終日と土曜日13時まで</td>
+                  </tr>
+                  <tr className="border-b border-gray-100">
+                    <td className="py-3 px-1 font-medium">特定曜日ビジター</td>
+                    <td className="py-3 px-1 text-center">不要</td>
+                    <td className="py-3 px-1 text-center font-medium text-kyoto-dark-green">24,000円</td>
+                    <td className="py-3 px-1">月～金の希望する曜日</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          {/* 右側: 写真とプレーフィ */}
+          <div className="grid grid-rows-2 gap-4">
+            {/* テニスコート写真 */}
+            <div 
+              ref={(el) => (sectionRefs.current[1] = el)}
+              className="rounded-sm overflow-hidden shadow-lg opacity-0"
+            >
+              <img 
+                src="https://images.unsplash.com/photo-1622279457486-57c73dc6f8e8?q=80&w=2070&auto=format&fit=crop" 
+                alt="テニスコート" 
+                className="w-full h-64 object-cover"
+              />
             </div>
             
-            {/* ビジター情報を右側に配置 */}
-            <div className="col-span-1 space-y-4">
-              <div 
-                ref={imageRef}
-                className="opacity-0 rounded-sm overflow-hidden shadow-lg w-full"
-              >
-                <img 
-                  src="/lovable-uploads/a140f6d7-a8b7-489d-b607-c3ecfd71d3b3.png" 
-                  alt="テニスコート" 
-                  className="w-full h-52 object-cover"
-                />
-                
-                {/* 写真の下にビジター情報を配置 */}
-                <div className="bg-white p-3 text-center opacity-0 animate-fade-in-up w-full">
-                  <h3 className="text-sm md:text-base font-bold text-kyoto-dark-green mb-1">
-                    ビジターも大歓迎
-                  </h3>
-                  <p className="text-gray-700 text-xs mb-1">
-                    会員でなくても1日単位でご利用いただけます
-                  </p>
-                  <div className="text-base md:text-lg font-bold text-kyoto-dark-green">
-                    1,500<span className="text-xs font-normal text-gray-600">円/日</span>
-                  </div>
+            {/* プレーフィ情報 */}
+            <div 
+              ref={(el) => (sectionRefs.current[2] = el)}
+              className="bg-white rounded-sm shadow-lg p-5 opacity-0"
+            >
+              <h3 className="text-lg font-bold text-kyoto-dark-green mb-2 border-b border-kyoto-gold/30 pb-2">プレーフィ</h3>
+              <div className="space-y-2 mb-3">
+                <div className="flex justify-between items-center">
+                  <span className="text-gray-700">会員：</span>
+                  <span className="font-bold text-kyoto-dark-green">500円（1日）</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-gray-700">ビジター：</span>
+                  <span className="font-bold text-kyoto-dark-green">1,500円（1日）</span>
                 </div>
               </div>
+              <p className="text-sm text-gray-600 italic">
+                ※会員にならずともビジターとして京都ローンテニスクラブでテニスを楽しめます。
+              </p>
             </div>
           </div>
         </div>
 
-        {/* スマホ表示用レイアウト */}
-        <div className="md:hidden mb-8">
-          {/* 会員プランカード - スマホ表示では先に表示 */}
-          <div className="grid grid-cols-1 gap-4 mb-6">
-            {pricingPlans.map((plan, index) => (
-              <PricingCard
-                key={index}
-                title={plan.title}
-                price={plan.price}
-                entryFee={plan.entryFee}
-                features={plan.features}
-                isPopular={plan.isPopular}
-              />
-            ))}
-          </div>
+        {/* 備考セクション */}
+        <div 
+          ref={(el) => (sectionRefs.current[3] = el)}
+          className="bg-white rounded-sm shadow-lg p-5 mb-8 opacity-0"
+        >
+          <h3 className="text-lg font-bold text-kyoto-dark-green mb-3 border-b border-kyoto-gold/30 pb-2">備考</h3>
           
-          {/* テニスコート画像 */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="space-y-2">
+              <div className="flex items-start">
+                <span className="text-kyoto-gold mr-2 font-bold">•</span>
+                <p className="text-gray-700 text-sm">年度途中に入会の場合、年会費は月割り額になります。</p>
+              </div>
+              <div className="flex items-start">
+                <span className="text-kyoto-gold mr-2 font-bold">•</span>
+                <p className="text-gray-700 text-sm">正会員、平日正会員には、入会金100,000円の支払いにより、年会費が継続して減額になるプランがあります。（正会員66,000円→60,000円、平日正会員54,000円→48,000円）</p>
+              </div>
+            </div>
+            
+            <div className="bg-gray-50 p-4 rounded-sm border-l-4 border-kyoto-gold/80">
+              <p className="text-kyoto-dark-green font-medium text-sm mb-2">具体例</p>
+              <p className="text-gray-700 text-sm mb-1">平日一年会員が週2回プレーした場合 → 年間費用 96,000円（8,000円／月）</p>
+              <p className="text-gray-600 text-xs">内訳：年会費48,000円＋プレーフィ48,000円（500円×月8回×12か月）</p>
+            </div>
+          </div>
+        </div>
+
+        {/* 追加の写真 */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
           <div 
-            className="opacity-0 rounded-sm overflow-hidden shadow-lg mb-6 animate-fade-in-up"
+            ref={(el) => (sectionRefs.current[4] = el)}
+            className="rounded-sm overflow-hidden shadow-lg opacity-0 h-48"
           >
             <img 
-              src="/lovable-uploads/a140f6d7-a8b7-489d-b607-c3ecfd71d3b3.png" 
-              alt="テニスコート" 
-              className="w-full h-64 object-cover"
+              src="https://images.unsplash.com/photo-1560012057-4372e14c5085?q=80&w=1074&auto=format&fit=crop" 
+              alt="テニスラケットとボール" 
+              className="w-full h-full object-cover"
             />
           </div>
-
-          {/* ビジター情報 */}
-          <div className="bg-white rounded-sm shadow p-3 text-center mb-6 opacity-0 animate-fade-in-up">
-            <h3 className="text-sm md:text-base font-bold text-kyoto-dark-green mb-1">
-              ビジターも大歓迎
-            </h3>
-            <p className="text-gray-700 text-xs mb-1">
-              会員でなくても1日単位でご利用いただけます
-            </p>
-            <div className="text-base md:text-lg font-bold text-kyoto-dark-green">
-              1,500<span className="text-xs font-normal text-gray-600">円/日</span>
-            </div>
+          <div 
+            ref={(el) => (sectionRefs.current[5] = el)}
+            className="rounded-sm overflow-hidden shadow-lg opacity-0 h-48"
+          >
+            <img 
+              src="https://images.unsplash.com/photo-1595435934249-5df7ed86e1c0?q=80&w=1064&auto=format&fit=crop" 
+              alt="テニスプレイヤー" 
+              className="w-full h-full object-cover"
+            />
           </div>
-        </div>
-
-        {/* 追加情報 */}
-        <div className="bg-white rounded-sm shadow p-5 text-sm text-gray-700 mb-8">
-          <h3 className="font-bold text-kyoto-dark-green mb-2">注意事項</h3>
-          <ul className="space-y-1">
-            <li>※年度途中に入会の場合、年会費は月割り額になります。</li>
-            <li>※会員のプレー代: 500円（1日）</li>
-            <li>※ビジターのプレー代: 1,500円（1日）</li>
-          </ul>
-          <div className="mt-3 p-3 bg-gray-50 rounded">
-            <p className="font-medium">例: 平日一年会員が週2回プレーした場合 → 年間費用 96,000円 (8,000円/月)</p>
-            <p className="text-xs mt-1">内訳: 年会費 48,000円 + プレー代 48,000円 (500円×月8回×12か月)</p>
+          <div 
+            ref={(el) => (sectionRefs.current[6] = el)}
+            className="rounded-sm overflow-hidden shadow-lg opacity-0 h-48"
+          >
+            <img 
+              src="https://images.unsplash.com/photo-1620742778397-c7c8f9a63d8a?q=80&w=1615&auto=format&fit=crop" 
+              alt="テニスコート" 
+              className="w-full h-full object-cover"
+            />
           </div>
         </div>
       </div>
