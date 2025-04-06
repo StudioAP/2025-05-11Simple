@@ -22,12 +22,11 @@ const Hero = () => {
       {/* Background Image with overlay - アスペクト比3:4に最適化 */}
       <div className="absolute inset-0 z-0">
         <img
-          src="/lovable-uploads/8169b11f-0cde-4649-8dc2-a0cfaf118a91.png"
+          src="/images/2025-04-06top4.jpg"
           alt="テニスボールとラケット"
-          className="object-cover w-full h-full object-[75%_center]"
-          style={{ aspectRatio: '0.75/1' }}
+          className="object-cover w-full h-full"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-kyoto-dark-green/80 to-kyoto-dark-green/50"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-kyoto-dark-green/50 to-kyoto-dark-green/30"></div>
       </div>
 
       {/* Content - F字型スキャンパターンに最適化 */}

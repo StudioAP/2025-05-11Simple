@@ -107,13 +107,10 @@ const Pricing = () => {
             {/* 会員種別表の下に写真スペースを追加（高さ制限付き） */}
             <div className="mt-3 overflow-hidden rounded-sm shadow-md hover:shadow-lg transition-all">
               <img
-                src="/images/sport-5018610_1920.jpg"
+                src="/images/20250404131442-sport-5018610_1920.jpg"
                 alt="テニスクラブの風景"
-                className="w-full h-32 object-cover"
+                className="w-full h-40 object-cover"
               />
-              <div className="p-1 bg-kyoto-dark-green/10 text-center">
-                <span className="text-xs text-kyoto-dark-green font-medium">京都ローンテニスクラブでの一日</span>
-              </div>
             </div>
           </div>
 
