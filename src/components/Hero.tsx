@@ -48,25 +48,27 @@ const Hero = () => {
             
             <div className="w-20 h-1 bg-kyoto-gold mb-4"></div>
             
-            <p className={`${isWindows ? 'text-sm md:text-base' : 'text-base md:text-lg'} text-kyoto-white/90 ${isWindows ? 'mb-4' : 'mb-3'} leading-relaxed`} style={{ fontFamily: 'Zen Old Mincho, serif' }}>
-              <span className="block mb-2">
-                1930年オープンの、伝統ある会員制クラブ。
-              </span>
-              <span className="block mb-2">
-                会員の手で運営しているから、年会費もプレー代もリーズナブル。
-              </span>
-              <span className="block">
-                お盆も正月も、いつでもコートが待ってる。
-              </span>
-            </p>
+            <div className="text-highlight-container overflow-hidden">
+              <p className={`${isWindows ? 'text-sm md:text-base' : 'text-base md:text-lg'} text-kyoto-white/90 ${isWindows ? 'mb-4' : 'mb-3'} leading-relaxed animate-fade-in-up-staggered-1`} style={{ fontFamily: 'Zen Old Mincho, serif' }}>
+                <span className="block mb-2 translate-y-8 opacity-0 animate-fade-in-up-staggered-1">
+                  1930年オープンの、伝統ある会員制クラブ。
+                </span>
+                <span className="block mb-2 translate-y-8 opacity-0 animate-fade-in-up-staggered-2">
+                  会員による運営だから、年会費もプレー代もリーズナブル。
+                </span>
+                <span className="block translate-y-8 opacity-0 animate-fade-in-up-staggered-3">
+                  お盆も正月も、いつでもコートが待っている。
+                </span>
+              </p>
+            </div>
             
             <div className="my-4"></div>
             
             <h2 className={`text-lg ${isWindows ? 'md:text-2xl mb-4' : 'md:text-3xl mb-0'} text-kyoto-white font-light`}>
-              <span className="block mb-1">
+              <span className="block mb-1 translate-y-8 opacity-0 animate-fade-in-up-staggered-4">
                 自然の中、心地よい汗を流そう。
               </span>
-              <span className="block">
+              <span className="block translate-y-8 opacity-0 animate-fade-in-up-staggered-5">
                 京都ローンテニスクラブ。
               </span>
             </h2>
@@ -96,13 +98,6 @@ const Hero = () => {
                 </li>
               </ul>
             </div>
-          </div>
-        </div>
-
-        {/* Scroll indicator */}
-        <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex justify-center w-full pointer-events-none">
-          <div className="scroll-indicator animate-bounce-subtle w-6 h-10 border-2 border-kyoto-gold/50 rounded-full flex items-start justify-center">
-            <div className="w-1.5 h-3 bg-kyoto-gold/70 rounded-full mt-2 animate-pulse"></div>
           </div>
         </div>
       </div>

@@ -56,7 +56,7 @@ const Programs = () => {
                   <div className="flex items-center justify-center">
                     <div className="w-full h-0 pb-[75%] relative rounded-sm overflow-hidden">
                       <img 
-                        src="/lovable-uploads/2dcc5e2e-3ed3-41e2-9038-cbab6f2a3962.png" 
+                        src="/images/Generated Image April 05, 2025 - 11_14AM (1).jpeg"
                         alt="テニス体験" 
                         className="absolute inset-0 w-full h-full object-cover"
                       />
@@ -64,13 +64,15 @@ const Programs = () => {
                   </div>
                   {/* 右にテキストをすべて配置 */}
                   <div>
-                    {/* ボディコピー - 統一スタイル */}
-                    <p className="text-gray-700 text-sm md:text-base mb-4">
-                      初めてでも安心！
-                      会員が温かく迎えます。
-                      一人でも友達とでも。 
-                      平日でも週末でもOK！
-                    </p>
+                    {/* ボディコピー - ケイ囲みスタイル */}
+                    <div className="border-2 border-kyoto-gold/30 bg-kyoto-cream/30 p-3 rounded-sm mb-4">
+                      <p className="text-kyoto-dark-green font-medium text-sm md:text-base">
+                        初めてでも安心！
+                        会員が温かく迎えます。
+                        一人でも友達とでも。 
+                        平日でも週末でもOK！
+                      </p>
+                    </div>
                     
                     {/* 客観情報 - 統一スタイル */}
                     <div className="space-y-2">
@@ -97,196 +99,171 @@ const Programs = () => {
               </div>
             </div>
             
-            {/* 会員＆ビジター交流会 */}
-            <div 
-              ref={(el) => (fadeRefs.current[2] = el)}
-              className="opacity-0"
-            >
-              <div className="bg-white p-4 md:p-5 rounded-sm shadow-lg hover-lift">
-                <h3 className="text-xl font-bold text-kyoto-dark-green mb-3">＊ 会員＆ビジター交流会 ＊</h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                  {/* 左に写真のみ - 比率を4:3に変更 */}
-                  <div className="flex items-center justify-center">
-                    <div className="w-full h-0 pb-[75%] relative rounded-sm overflow-hidden">
-                      <img 
-                        src="/lovable-uploads/a140f6d7-a8b7-489d-b607-c3ecfd71d3b3.png" 
-                        alt="＊ 会員＆ビジター交流会 ＊" 
-                        className="absolute inset-0 w-full h-full object-cover"
-                      />
-                    </div>
-                  </div>
-                  {/* 右にテキストのみ */}
-                  <div>
-                    {/* ボディコピー - 統一スタイル */}
-                    <p className="text-gray-700 text-sm md:text-base mb-4">
-                      会員とビジターが気軽に参加できる交流イベントです。初めての方も安心して参加できます。
-                    </p>
-                    
-                    {/* 客観情報 - 統一スタイル */}
-                    <div className="space-y-2">
-                      <p className="text-kyoto-dark-green font-medium text-sm mb-2">
-                        {newsData.events[0].schedule}
-                      </p>
+            {/* Wrap the next four sections in a grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* 会員＆ビジター交流会 */}
+              <div 
+                ref={(el) => (fadeRefs.current[2] = el)}
+                className="opacity-0 h-full"
+              >
+                <div className="bg-white p-4 md:p-5 rounded-sm shadow-lg hover-lift h-full">
+                  <h3 className="text-xl font-bold text-kyoto-dark-green mb-3">＊ 会員＆ビジター交流会 ＊</h3>
+                  {/* 画像があったグリッドレイアウトを解除 */}
+                  <div className="mb-4">
+                    {/* テキストのみを表示 */}
+                    <div>
+                      {/* ボディコピー - ケイ囲みスタイル */}
+                      <div className="border-2 border-kyoto-gold/30 bg-kyoto-cream/30 p-3 rounded-sm mb-4">
+                        <p className="text-kyoto-dark-green font-medium text-sm md:text-base">
+                          会員とビジターが気軽に参加できる交流イベントです。初めての方も安心して参加できます。
+                        </p>
+                      </div>
                       
-                      {newsData.events[0].details.map((detail, index) => (
-                        <div key={index} className="flex items-start">
+                      {/* 客観情報 - 統一スタイル */}
+                      <div className="space-y-2">
+                        <p className="text-kyoto-dark-green font-medium text-sm mb-2">
+                          {newsData.events[0].schedule}
+                        </p>
+                        
+                        {newsData.events[0].details.map((detail, index) => (
+                          <div key={index} className="flex items-start">
+                            <span className="text-kyoto-gold mr-2">•</span>
+                            <p className="text-gray-700 text-sm">
+                              {/* 参加費の場合は強調表示 */}
+                              {detail.includes('参加費') ? (
+                                <span>参加費: <span className="font-bold text-kyoto-dark-green">{detail.split(':')[1]}</span></span>
+                              ) : (
+                                detail
+                              )}
+                            </p>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              {/* レディース交流会 */}
+              <div 
+                ref={(el) => (fadeRefs.current[3] = el)} 
+                className="opacity-0 h-full"
+              >
+                <div className="bg-white p-4 md:p-5 rounded-sm shadow-lg hover-lift h-full">
+                  <h3 className="text-xl font-bold text-kyoto-dark-green mb-3">＊ レディース交流会 ＊</h3>
+                  {/* 画像があったグリッドレイアウトを解除 */}
+                  <div className="mb-4">
+                    {/* テキストのみを表示 */}
+                    <div>
+                      {/* ボディコピー - ケイ囲みスタイル */}
+                      <div className="border-2 border-kyoto-gold/30 bg-kyoto-cream/30 p-3 rounded-sm mb-4">
+                        <p className="text-kyoto-dark-green font-medium text-sm md:text-base">
+                          女子会員の技術の向上を目的として、試合形式（ダブルス）の交流会を実施しています。
+                        </p>
+                      </div>
+                      
+                      {/* 客観情報 - 統一スタイル */}
+                      <div className="space-y-2">
+                        <div className="flex items-start">
                           <span className="text-kyoto-gold mr-2">•</span>
-                          <p className="text-gray-700 text-sm">
-                            {/* 参加費の場合は強調表示 */}
-                            {detail.includes('参加費') ? (
-                              <span>参加費: <span className="font-bold text-kyoto-dark-green">{detail.split(':')[1]}</span></span>
-                            ) : (
-                              detail
-                            )}
-                          </p>
+                          <p className="text-gray-700 text-sm">日程: 毎月1回木曜日 10時～16時（予定）</p>
                         </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            
-            {/* レディース交流会 */}
-            <div 
-              ref={(el) => (fadeRefs.current[3] = el)} 
-              className="opacity-0"
-            >
-              <div className="bg-white p-4 md:p-5 rounded-sm shadow-lg hover-lift">
-                <h3 className="text-xl font-bold text-kyoto-dark-green mb-3">＊ レディース交流会 ＊</h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                  {/* 左に写真のみ - 比率を4:3に変更 */}
-                  <div className="flex items-center justify-center">
-                    <div className="w-full h-0 pb-[75%] relative rounded-sm overflow-hidden">
-                      <img 
-                        src="/lovable-uploads/8169b11f-0cde-4649-8dc2-a0cfaf118a91.png" 
-                        alt="レディース交流会" 
-                        className="absolute inset-0 w-full h-full object-cover"
-                      />
-                    </div>
-                  </div>
-                  {/* 右にテキストのみ */}
-                  <div>
-                    {/* ボディコピー - 統一スタイル */}
-                    <p className="text-gray-700 text-sm md:text-base mb-4">
-                      女子会員の技術の向上を目的として、試合形式（ダブルス）の交流会を実施しています。
-                    </p>
-                    
-                    {/* 客観情報 - 統一スタイル */}
-                    <div className="space-y-2">
-                      <div className="flex items-start">
-                        <span className="text-kyoto-gold mr-2">•</span>
-                        <p className="text-gray-700 text-sm">日程: 毎月1回木曜日 10時～16時（予定）</p>
-                      </div>
-                      <div className="flex items-start">
-                        <span className="text-kyoto-gold mr-2">•</span>
-                        <p className="text-gray-700 text-sm">対象: 会員およびビジター。クラスは不問です（お一人様でも参加できます）</p>
-                      </div>
-                      <div className="flex items-start">
-                        <span className="text-kyoto-gold mr-2">•</span>
-                        <p className="text-gray-700 text-sm">参加費: <span className="font-bold text-kyoto-dark-green">会員500円、ビジター1,500円</span></p>
-                      </div>
-                      <div className="flex items-start">
-                        <span className="text-kyoto-gold mr-2">•</span>
-                        <p className="text-gray-700 text-sm">募集人数: 20名程度</p>
+                        <div className="flex items-start">
+                          <span className="text-kyoto-gold mr-2">•</span>
+                          <p className="text-gray-700 text-sm">対象: 会員およびビジター。クラスは不問です（お一人様でも参加できます）</p>
+                        </div>
+                        <div className="flex items-start">
+                          <span className="text-kyoto-gold mr-2">•</span>
+                          <p className="text-gray-700 text-sm">参加費: <span className="font-bold text-kyoto-dark-green">会員500円、ビジター1,500円</span></p>
+                        </div>
+                        <div className="flex items-start">
+                          <span className="text-kyoto-gold mr-2">•</span>
+                          <p className="text-gray-700 text-sm">募集人数: 20名程度</p>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-            
-            {/* コーチによるレッスン */}
-            <div 
-              ref={(el) => (fadeRefs.current[4] = el)} 
-              className="opacity-0"
-            >
-              <div className="bg-white p-4 md:p-5 rounded-sm shadow-lg hover-lift">
-                <h3 className="text-xl font-bold text-kyoto-dark-green mb-3">＊ コーチによるレッスン ＊</h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                  {/* 左に写真のみ - 比率を4:3に変更 */}
-                  <div className="flex items-center justify-center">
-                    <div className="w-full h-0 pb-[75%] relative rounded-sm overflow-hidden">
-                      <img 
-                        src="/lovable-uploads/2dcc5e2e-3ed3-41e2-9038-cbab6f2a3962.png" 
-                        alt="コーチによるレッスン" 
-                        className="absolute inset-0 w-full h-full object-cover"
-                      />
-                    </div>
-                  </div>
-                  {/* 右にテキストのみ */}
-                  <div>
-                    {/* ボディコピー - 統一スタイル */}
-                    <p className="text-gray-700 text-sm md:text-base mb-4">
-                      会員の技術の向上を目的として、初級・中級者を対象にコーチによるレッスンを行っています。
-                    </p>
-                    
-                    {/* 客観情報 - 統一スタイル */}
-                    <div className="space-y-2">
-                      <div className="flex items-start">
-                        <span className="text-kyoto-gold mr-2">•</span>
-                        <p className="text-gray-700 text-sm">日程: 毎週火曜日 14時～16時（予定）</p>
+              
+              {/* コーチによるレッスン */}
+              <div 
+                ref={(el) => (fadeRefs.current[4] = el)} 
+                className="opacity-0 h-full"
+              >
+                <div className="bg-white p-4 md:p-5 rounded-sm shadow-lg hover-lift h-full">
+                  <h3 className="text-xl font-bold text-kyoto-dark-green mb-3">＊ コーチによるレッスン ＊</h3>
+                  {/* 画像があったグリッドレイアウトを解除 */}
+                  <div className="mb-4">
+                    {/* テキストのみを表示 */}
+                    <div>
+                      {/* ボディコピー - ケイ囲みスタイル */}
+                      <div className="border-2 border-kyoto-gold/30 bg-kyoto-cream/30 p-3 rounded-sm mb-4">
+                        <p className="text-kyoto-dark-green font-medium text-sm md:text-base">
+                          会員の技術の向上を目的として、初級・中級者を対象にコーチによるレッスンを行っています。
+                        </p>
                       </div>
-                      <div className="flex items-start">
-                        <span className="text-kyoto-gold mr-2">•</span>
-                        <p className="text-gray-700 text-sm">対象: 会員およびビジター。クラスは不問です（お一人様でも参加できます）</p>
-                      </div>
-                      <div className="flex items-start">
-                        <span className="text-kyoto-gold mr-2">•</span>
-                        <p className="text-gray-700 text-sm">参加費: <span className="font-bold text-kyoto-dark-green">会員500円、ビジター1,500円</span></p>
-                      </div>
-                      <div className="flex items-start">
-                        <span className="text-kyoto-gold mr-2">•</span>
-                        <p className="text-gray-700 text-sm">募集人数: 10名程度</p>
+                      
+                      {/* 客観情報 - 統一スタイル */}
+                      <div className="space-y-2">
+                        <div className="flex items-start">
+                          <span className="text-kyoto-gold mr-2">•</span>
+                          <p className="text-gray-700 text-sm">日程: 毎週火曜日 14時～16時（予定）</p>
+                        </div>
+                        <div className="flex items-start">
+                          <span className="text-kyoto-gold mr-2">•</span>
+                          <p className="text-gray-700 text-sm">対象: 会員およびビジター。クラスは不問です（お一人様でも参加できます）</p>
+                        </div>
+                        <div className="flex items-start">
+                          <span className="text-kyoto-gold mr-2">•</span>
+                          <p className="text-gray-700 text-sm">参加費: <span className="font-bold text-kyoto-dark-green">会員500円、ビジター1,500円</span></p>
+                        </div>
+                        <div className="flex items-start">
+                          <span className="text-kyoto-gold mr-2">•</span>
+                          <p className="text-gray-700 text-sm">募集人数: 10名程度</p>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-            
-            {/* 100歳大会 */}
-            <div 
-              ref={(el) => (fadeRefs.current[5] = el)} 
-              className="opacity-0"
-            >
-              <div className="bg-white p-4 md:p-5 rounded-sm shadow-lg hover-lift">
-                <h3 className="text-xl font-bold text-kyoto-dark-green mb-3">＊ 京都ローンテニスクラブ主催の試合（100歳大会） ＊</h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                  {/* 左に写真のみ - 比率を4:3に変更 */}
-                  <div className="flex items-center justify-center">
-                    <div className="w-full h-0 pb-[75%] relative rounded-sm overflow-hidden">
-                      <img 
-                        src="/lovable-uploads/a140f6d7-a8b7-489d-b607-c3ecfd71d3b3.png" 
-                        alt="100歳大会" 
-                        className="absolute inset-0 w-full h-full object-cover"
-                      />
-                    </div>
-                  </div>
-                  {/* 右にテキストのみ */}
-                  <div>
-                    {/* ボディコピー - 統一スタイル */}
-                    <p className="text-gray-700 text-sm md:text-base mb-4">
-                      会員の日頃の研鑽の成果を試す機会として開催するダブルスの大会です。ペアの合計年齢100歳を中心に行います。
-                    </p>
-                    
-                    {/* 客観情報 - 統一スタイル */}
-                    <div className="space-y-2">
-                      <div className="flex items-start">
-                        <span className="text-kyoto-gold mr-2">•</span>
-                        <p className="text-gray-700 text-sm">日程: 11月（予定）</p>
+              
+              {/* 100歳大会 */}
+              <div 
+                ref={(el) => (fadeRefs.current[5] = el)} 
+                className="opacity-0 h-full"
+              >
+                <div className="bg-white p-4 md:p-5 rounded-sm shadow-lg hover-lift h-full">
+                  <h3 className="text-xl font-bold text-kyoto-dark-green mb-3">＊ 京都ローンテニスクラブ主催の試合（100歳大会） ＊</h3>
+                  {/* 画像があったグリッドレイアウトを解除 */}
+                  <div className="mb-4">
+                    {/* テキストのみを表示 */}
+                    <div>
+                      {/* ボディコピー - ケイ囲みスタイル */}
+                      <div className="border-2 border-kyoto-gold/30 bg-kyoto-cream/30 p-3 rounded-sm mb-4">
+                        <p className="text-kyoto-dark-green font-medium text-sm md:text-base">
+                          会員の日頃の研鑽の成果を試す機会として開催するダブルスの大会です。ペアの合計年齢100歳を中心に行います。
+                        </p>
                       </div>
-                      <div className="flex items-start">
-                        <span className="text-kyoto-gold mr-2">•</span>
-                        <p className="text-gray-700 text-sm">対象: 会員およびビジター。クラスは不問です（お一人様でも参加できます）</p>
-                      </div>
-                      <div className="flex items-start">
-                        <span className="text-kyoto-gold mr-2">•</span>
-                        <p className="text-gray-700 text-sm">参加費: <span className="font-bold text-kyoto-dark-green">会員2,000円</span></p>
-                      </div>
-                      <div className="flex items-start">
-                        <span className="text-kyoto-gold mr-2">•</span>
-                        <p className="text-gray-700 text-sm">募集人数: 50名程度</p>
+                      
+                      {/* 客観情報 - 統一スタイル */}
+                      <div className="space-y-2">
+                        <div className="flex items-start">
+                          <span className="text-kyoto-gold mr-2">•</span>
+                          <p className="text-gray-700 text-sm">日程: 11月（予定）</p>
+                        </div>
+                        <div className="flex items-start">
+                          <span className="text-kyoto-gold mr-2">•</span>
+                          <p className="text-gray-700 text-sm">対象: 会員およびビジター。クラスは不問です（お一人様でも参加できます）</p>
+                        </div>
+                        <div className="flex items-start">
+                          <span className="text-kyoto-gold mr-2">•</span>
+                          <p className="text-gray-700 text-sm">参加費: <span className="font-bold text-kyoto-dark-green">会員2,000円</span></p>
+                        </div>
+                        <div className="flex items-start">
+                          <span className="text-kyoto-gold mr-2">•</span>
+                          <p className="text-gray-700 text-sm">募集人数: 50名程度</p>
+                        </div>
                       </div>
                     </div>
                   </div>

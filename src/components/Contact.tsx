@@ -99,13 +99,18 @@ const Contact = () => {
             <div className="bg-kyoto-dark-green/50 backdrop-blur-sm p-4 rounded-sm border border-kyoto-gold/30 h-full">
               <h3 className="text-lg font-bold text-kyoto-white mb-4">Access Map</h3>
               
-              <div className="w-full h-60 bg-kyoto-white/10 rounded-sm overflow-hidden relative">
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="text-kyoto-gold text-lg">
-                    <MapPin size={40} className="mx-auto mb-2" />
-                    <p>地図が表示されます</p>
-                  </div>
-                </div>
+              <div className="w-full h-60 bg-kyoto-white/10 rounded-sm overflow-hidden">
+                <iframe 
+                  src="https://www.google.com/maps?q=京都ローンテニスクラブ+〒601-1121+京都市左京区静市静原町554&output=embed&hl=ja&z=16"
+                  width="100%" 
+                  height="100%" 
+                  style={{ border: 0 }} 
+                  allowFullScreen={false} 
+                  loading="lazy" 
+                  referrerPolicy="no-referrer-when-downgrade"
+                  title="京都ローンテニスクラブの地図"
+                  className="rounded-sm"
+                />
               </div>
               
               <div className="mt-4 text-kyoto-white/80 text-xs md:text-sm">

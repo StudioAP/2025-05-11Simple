@@ -40,27 +40,27 @@ const Testimonials = () => {
   const testimonials = [
     {
       quote: "以前は友人と市のコートを予約してテニスをしていましたが、京都ローンテニスクラブの会員になってからは、思い立った時にプレーでき、コート確保のわずらわしさがありません。",
-      author: "京都ローンテニスクラブ会員",
-      position: "10年以上のメンバー",
-      image: "https://images.unsplash.com/photo-1622279457486-57c73dc6f8e8?q=80&w=200&auto=format&fit=crop"
+      author: "S.K様",
+      position: "一年正会員／５０代・主婦",
+      image: "/images/Generated Image April 04, 2025 - 10_00PM (1).jpeg"
     },
     {
       quote: "以前はいつも友人とテニスをしていましたが、会員になってからは様々な会員とプレーできるのが魅力です。",
-      author: "S.K様",
-      position: "家族会員",
-      image: "https://images.unsplash.com/photo-1599586120429-48281b6f0ece?q=80&w=200&auto=format&fit=crop"
+      author: "T.M様",
+      position: "週末・祝日会員／４０代・会社員",
+      image: "/images/Generated Image April 04, 2025 - 10_12PM.jpeg"
     },
     {
       quote: "テニスはもちろんのこと、クラブにいってほかの会員とコーヒーを飲みながら談笑するのも楽しみの一つです。おかげで交流関係も広がりました。",
-      author: "T.M様",
-      position: "シニア会員",
-      image: "https://images.unsplash.com/photo-1560012057-4372e14c5085?q=80&w=200&auto=format&fit=crop"
+      author: "Y.R様",
+      position: "平日一年会員／６０代・パート",
+      image: "/images/Generated Image April 05, 2025 - 11_12AM (1).jpeg"
     },
     {
       quote: "会員制テニスクラブというと高額なイメージでしたが、実質月1万円以内で十分に楽しめて経済的です。",
-      author: "Y.R様",
-      position: "新規会員",
-      image: "https://images.unsplash.com/photo-1620742778397-c7c8f9a63d8a?q=80&w=200&auto=format&fit=crop"
+      author: "M.S様",
+      position: "特定曜日ビジター／７０代",
+      image: "/images/Generated Image April 04, 2025 - 10_11PM (1).jpeg"
     }
   ];
 
@@ -89,7 +89,7 @@ const Testimonials = () => {
               {/* F字型スキャンパターンを強化するための内部構造 */}
               <div className="flex items-start mb-4">
                 <div className="flex-shrink-0 mr-4">
-                  <div className="h-14 w-14 rounded-full bg-kyoto-gold/20 overflow-hidden border border-kyoto-gold/30">
+                  <div className="h-20 w-20 rounded-full bg-kyoto-gold/20 overflow-hidden border border-kyoto-gold/30">
                     <img 
                       src={testimonial.image} 
                       alt={testimonial.author} 

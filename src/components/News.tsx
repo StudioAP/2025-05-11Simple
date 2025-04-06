@@ -5,6 +5,8 @@ import { Input } from "./ui/input";
 import { toast } from "./ui/use-toast";
 import newsData from "../data/news.json";
 import { createClient } from "contentful";
+import { Link } from "react-router-dom";
+import { ArrowRight } from "lucide-react";
 
 interface Announcement {
   title: string;
@@ -29,64 +31,17 @@ const News = () => {
   const [isAdmin, setIsAdmin] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [containerHeight, setContainerHeight] = useState(0);
   
   // ニュースアナウンスメントのstate
   const [announcements, setAnnouncements] = useState<Announcement[]>([]);
-  const [visibleAnnouncements, setVisibleAnnouncements] = useState<Announcement[]>([]);
+  // 最新のお知らせのみ表示するための状態
+  const [latestAnnouncement, setLatestAnnouncement] = useState<Announcement | null>(null);
   const [newAnnouncement, setNewAnnouncement] = useState({
     title: "",
     date: "",
     description: "",
     imageUrl: ""
   });
-
-  // コンテナの高さを計測して、表示可能なアナウンスメント数を決定
-  useEffect(() => {
-    const updateContainerHeight = () => {
-      const container = document.getElementById('news-container');
-      if (container) {
-        setContainerHeight(container.clientHeight);
-      }
-    };
-
-    updateContainerHeight();
-    window.addEventListener('resize', updateContainerHeight);
-    
-    return () => {
-      window.removeEventListener('resize', updateContainerHeight);
-    };
-  }, []);
-
-  // 表示可能なアナウンスメントを計算（ビューポートからあふれる場合は古い記事から非表示）
-  useEffect(() => {
-    if (announcements.length && containerHeight > 0) {
-      const calculateVisibleItems = () => {
-        // ニュースアイテム1つの平均的な高さ（仮定）
-        const averageItemHeight = 120; 
-        // 2段組みの列数
-        const columns = window.innerWidth >= 768 ? 2 : 1;
-        // 表示可能なアイテム数を計算
-        const maxVisibleItems = Math.floor((containerHeight / averageItemHeight) * columns);
-        // 新しい順に表示（最新のmaxVisibleItems個）
-        return announcements.slice(0, Math.max(maxVisibleItems, 1));
-      };
-      
-      setVisibleAnnouncements(calculateVisibleItems());
-      
-      // リサイズ時にも再計算
-      const handleResize = () => {
-        setVisibleAnnouncements(calculateVisibleItems());
-      };
-      
-      window.addEventListener('resize', handleResize);
-      return () => {
-        window.removeEventListener('resize', handleResize);
-      };
-    } else {
-      setVisibleAnnouncements(announcements);
-    }
-  }, [announcements, containerHeight]);
 
   // Contentfulからニュースデータを取得
   useEffect(() => {
@@ -112,6 +67,10 @@ const News = () => {
           }));
           
           setAnnouncements(fallbackNews);
+          // 最新のお知らせを設定
+          if (fallbackNews.length > 0) {
+            setLatestAnnouncement(fallbackNews[0]);
+          }
           setLoading(false);
           return;
         }
@@ -189,6 +148,10 @@ const News = () => {
             
             console.log('最終ニュースデータ:', validNews);
             setAnnouncements(validNews);
+            // 最新のお知らせを設定
+            if (validNews.length > 0) {
+              setLatestAnnouncement(validNews[0]);
+            }
           } else {
             console.warn('Contentfulにデータがありません。フォールバックデータを使用します。');
             // Contentfulにデータがない場合はローカルストレージまたはデフォルトデータを使用
@@ -203,6 +166,10 @@ const News = () => {
             }));
             
             setAnnouncements(fallbackNews);
+            // 最新のお知らせを設定
+            if (fallbackNews.length > 0) {
+              setLatestAnnouncement(fallbackNews[0]);
+            }
           }
         } catch (err) {
           console.error('Contentful API呼び出しエラー:', err);
@@ -226,6 +193,10 @@ const News = () => {
         }));
         
         setAnnouncements(fallbackNews);
+        // 最新のお知らせを設定
+        if (fallbackNews.length > 0) {
+          setLatestAnnouncement(fallbackNews[0]);
+        }
         setLoading(false);
       }
     };
@@ -235,7 +206,7 @@ const News = () => {
 
   // アニメーション効果のためのIntersection Observer
   useEffect(() => {
-    console.log('アニメーションアップデート: ニュースアイテム数 =', visibleAnnouncements.length);
+    console.log('アニメーションアップデート: 最新ニュース =', latestAnnouncement ? 'あり' : 'なし');
     
     // ニュースアイテムの読み込み後に実行されるように仮のタイマーを設定
     const timer = setTimeout(() => {
@@ -271,7 +242,7 @@ const News = () => {
     return () => {
       clearTimeout(timer);
     };
-  }, [visibleAnnouncements]); // visibleAnnouncementsの変更を監視
+  }, [latestAnnouncement]); // latestAnnouncementの変更を監視
 
   const handleAdminLogin = () => {
     // Simple password check - in a real app, use proper authentication
@@ -306,6 +277,8 @@ const News = () => {
       localStorage.setItem('newsItems', JSON.stringify(newsItems));
       
       setAnnouncements(updatedAnnouncements);
+      // 最新のお知らせを更新
+      setLatestAnnouncement(newAnnouncement);
       setNewAnnouncement({ title: "", date: "", description: "", imageUrl: "" });
       toast({
         title: "お知らせを追加しました",
@@ -314,88 +287,86 @@ const News = () => {
     }
   };
 
-  // 表示するニュースが少ない場合のヘルパーメッセージ
-  const renderOverflowMessage = () => {
-    if (visibleAnnouncements.length < announcements.length) {
-      const hiddenCount = announcements.length - visibleAnnouncements.length;
-      return (
-        <div className="text-center mt-4 text-xs text-kyoto-dark-green/70">
-          <p>さらに{hiddenCount}件のニュースがあります（古い記事）</p>
-        </div>
-      );
-    }
-    return null;
-  };
-
   return (
     <section id="news" className="py-8 bg-kyoto-beige japanese-pattern-light">
-      <div className="section-container">
+      <div className="section-container py-8">
         <div className="text-center mb-6">
           <h2 
             ref={(el) => (fadeRefs.current[0] = el)} 
-            className="section-title text-kyoto-dark-green opacity-0 mx-auto text-2xl md:text-3xl"
+            className="section-title text-kyoto-dark-green opacity-0 mx-auto text-2xl md:text-3xl mb-2"
           >
             お知らせ
           </h2>
         </div>
         
-        {/* 差別化したデザインのNewsセクション */}
-        <div id="news-container" className="max-w-4xl mx-auto">
+        {/* お知らせセクション - 最新の1件のみ表示 */}
+        <div className="max-w-4xl mx-auto">
           <div className="bg-kyoto-gold/10 p-2 rounded-sm text-center mb-4 animate-pulse">
-            <p className="text-xs font-bold text-kyoto-dark-green">＊ 随時更新 ＊</p>
+            <p className="text-sm font-bold text-kyoto-dark-green">＊ 最新のお知らせ ＊</p>
           </div>
           
           {loading ? (
             <div className="bg-white p-3 rounded-sm shadow-lg text-center animate-pulse">
-              <p className="text-sm text-kyoto-dark-green">読み込み中...</p>
+              <p className="text-base text-kyoto-dark-green">読み込み中...</p>
             </div>
           ) : error ? (
             <div className="bg-white p-3 rounded-sm shadow-lg border-l-4 border-red-500">
-              <p className="text-sm text-red-500">{error}</p>
+              <p className="text-base text-red-500">{error}</p>
             </div>
-          ) : visibleAnnouncements.length === 0 ? (
+          ) : !latestAnnouncement ? (
             <div className="bg-white p-3 rounded-sm shadow-lg text-center">
-              <p className="text-sm text-kyoto-dark-green">現在ニュースはありません</p>
-              <p className="text-xs text-gray-500 mt-2">データ取得状況: {JSON.stringify({total: announcements.length})}</p>
-              <p className="text-xs text-gray-500 mt-2">最後のデータ取得: {new Date().toLocaleTimeString('ja-JP')}</p>
+              <p className="text-base text-kyoto-dark-green">現在ニュースはありません</p>
             </div>
           ) : (
-            <>
-              {/* 2段組みレイアウト */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                {visibleAnnouncements.map((announcement, index) => (
-                  <div 
-                    key={index}
-                    ref={(el) => {
-                      fadeRefs.current[index + 1] = el;
-                    }}
-                    className="bg-white p-3 rounded-sm shadow-lg hover-lift opacity-0 border-l-4 border-kyoto-gold/80 transition-opacity duration-500"
-                  >
-                    <div className="pl-2">
-                      <div className="flex justify-between items-center mb-1">
-                        <h4 className="text-base font-bold text-kyoto-dark-green">{announcement.title}</h4>
-                        {announcement.date && (
-                          <span className="text-xs bg-kyoto-gold/20 px-2 py-0.5 rounded text-kyoto-dark-green">{announcement.date}</span>
-                        )}
-                      </div>
-                      <p className="text-sm md:text-base text-gray-700">{announcement.description}</p>
-                      {announcement.imageUrl && (
-                        <div className="mt-2">
-                          <img 
-                            src={announcement.imageUrl} 
-                            alt={announcement.title} 
-                            className="w-full h-auto rounded-sm border border-gray-200" 
-                          />
-                        </div>
-                      )}
-                    </div>
+            <div 
+              ref={(el) => (fadeRefs.current[1] = el)}
+              className="bg-white p-4 rounded-sm shadow-lg hover-lift opacity-0 border-l-4 border-kyoto-gold/80 transition-all duration-500"
+            >
+              {/* 左右二段組みレイアウト */}
+              <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
+                {/* 左側: 日付、タイトル、本文 */}
+                <div className="md:col-span-7 pl-2">
+                  <div className="flex justify-between items-center mb-2">
+                    <h4 className="text-lg font-bold text-kyoto-dark-green">{latestAnnouncement.title}</h4>
+                    {latestAnnouncement.date && (
+                      <span className="text-sm bg-kyoto-gold/20 px-2 py-0.5 rounded text-kyoto-dark-green">{latestAnnouncement.date}</span>
+                    )}
                   </div>
-                ))}
+                  <p className="text-base text-gray-700 mb-4">{latestAnnouncement.description}</p>
+                </div>
+                
+                {/* 右側: 画像 */}
+                <div className="md:col-span-5">
+                  {latestAnnouncement.imageUrl ? (
+                    <div className="h-full flex items-center justify-center">
+                      <img 
+                        src={latestAnnouncement.imageUrl} 
+                        alt={latestAnnouncement.title} 
+                        className="w-full h-auto rounded-sm border border-gray-200 shadow-sm" 
+                        style={{ maxHeight: "200px", objectFit: "cover" }}
+                      />
+                    </div>
+                  ) : (
+                    <div className="h-full flex items-center justify-center bg-kyoto-gold/5 rounded-sm p-4 border border-dashed border-kyoto-gold/30">
+                      <p className="text-kyoto-dark-green/60 text-center text-sm">画像はありません</p>
+                    </div>
+                  )}
+                </div>
               </div>
-              
-              {/* 非表示のニュースがある場合のメッセージ */}
-              {renderOverflowMessage()}
-            </>
+            </div>
+          )}
+          
+          {/* 過去のお知らせ一覧ボタン */}
+          {announcements.length > 1 && (
+            <div className="mt-4 text-center">
+              <Link to="/news-archive" className="inline-flex items-center px-4 py-2 rounded-sm bg-kyoto-dark-green text-kyoto-white hover:bg-kyoto-dark-green/90 transition-colors">
+                <span>過去のお知らせ一覧</span>
+                <ArrowRight className="ml-2" size={16} />
+              </Link>
+              <p className="text-xs text-kyoto-dark-green/60 mt-1">
+                全{announcements.length}件のお知らせがあります
+              </p>
+            </div>
           )}
         </div>
       </div>

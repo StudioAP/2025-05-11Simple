@@ -8,7 +8,9 @@ const FacilityItem = ({ icon, title, description }) => {
         {icon}
       </div>
       <div>
-        <h4 className="font-bold text-kyoto-dark-green mb-1 text-base md:text-lg">{title}</h4>
+        <div className="inline-block border-2 border-kyoto-gold/40 bg-kyoto-cream/30 px-3 py-1 rounded-sm mb-2">
+          <h4 className="font-bold text-kyoto-dark-green text-base md:text-lg">{title}</h4>
+        </div>
         <p className="text-gray-700 text-sm md:text-base">{description}</p>
       </div>
     </div>
@@ -43,7 +45,7 @@ const facilityData = [
     info: {
       icon: <MapPin size={24} />, 
       title: "コート", 
-      description: "3面（オムニコート）、ナイター1面"
+      description: "3面（オムニコート）、ナイター1面。◯◯◯◯◯◯自然に囲まれた環境で静かにテニスを楽しめます。砂入り人工芝のオムニコートはコンディションが良く、雨天後も比較的早く使用できるのが特徴です。◯◯◯◯◯◯静かな環境で集中してプレーできます。"
     }
   },
   {
@@ -55,7 +57,7 @@ const facilityData = [
     info: {
       icon: <Droplets size={24} />, 
       title: "設備", 
-      description: "クラブハウス・シャワー完備"
+      description: "クラブハウス・シャワー完備。◯◯◯◯◯◯休憩スペースには冷暖房を完備しており、季節を問わず快適に過ごせます。◯◯◯◯◯◯プレー後にはきれいなシャワー設備でさっぱりとリフレッシュできます。◯◯◯◯◯◯会員同士の交流の場としても活用されています。"
     }
   },
   {
@@ -67,7 +69,7 @@ const facilityData = [
     info: {
       icon: <Car size={24} />, 
       title: "駐車場", 
-      description: "無料駐車場完備"
+      description: "無料駐車場完備。◯◯◯◯◯◯広々とした駐車スペースで約20台駐車可能です。◯◯◯◯◯◯クラブハウスからすぐの場所にあり、荷物の多いテニス用具も楽に運べます。◯◯◯◯◯◯整備された駐車場で安心してご利用いただけます。"
     }
   }
   // 営業時間情報を削除しました
@@ -104,13 +106,13 @@ const Facilities = () => {
   }, []);
 
   return (
-    <section id="facilities" className="py-12 bg-kyoto-light-green relative overflow-hidden" ref={sectionRef}>
+    <section id="facilities" className="py-8 bg-kyoto-light-green relative overflow-hidden min-h-screen flex items-center" ref={sectionRef}>
       {/* Background decorative elements */}
       <div className="absolute top-0 left-0 w-1/3 h-1/3 bg-kyoto-tennis-green/10 -z-10 rounded-br-full"></div>
       <div className="absolute bottom-0 right-0 w-1/3 h-1/3 bg-kyoto-gold/10 -z-10 rounded-tl-full"></div>
       
       <div className="section-container max-w-6xl mx-auto px-4 sm:px-6 py-8">
-        <div className="text-center mb-8">
+        <div className="text-center mb-6">
           <h2 className="section-title text-kyoto-dark-green mx-auto text-2xl md:text-3xl">
             施設・設備
           </h2>
