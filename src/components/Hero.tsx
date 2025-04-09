@@ -22,7 +22,7 @@ const Hero = () => {
       {/* Background Image with overlay - アスペクト比3:4に最適化 */}
       <div className="absolute inset-0 z-0">
         <img
-          src="/images/2025-04-06top4.jpg"
+          src="/images/2025-04-09top.jpg"
           alt="テニスボールとラケット"
           className="object-cover w-full h-full"
         />
@@ -73,10 +73,10 @@ const Hero = () => {
             </h2>
           </div>
 
-          {/* 右側カラム - クラブ概要情報のみを残して、ロゴボックスは削除 */}
-          <div className="md:col-span-4 flex flex-col justify-end">
-            {/* クラブ概要情報 */}
-            <div className="bg-kyoto-dark-green/70 backdrop-blur-sm rounded p-3 animate-fade-in z-20 border border-kyoto-gold/20">
+          {/* 右側カラム - テニスボールの真上にクラブ概要情報を配置 */}
+          <div className="md:col-span-4 relative">
+            {/* クラブ概要情報 - テニスボールの真上に配置 */}
+            <div className="bg-kyoto-dark-green/70 backdrop-blur-sm rounded p-3 animate-fade-in z-20 border border-kyoto-gold/20 absolute bottom-0 right-0 md:right-auto md:mb-10">
               <h3 className="text-sm text-kyoto-gold font-medium mb-2">&lt;クラブ概要&gt;</h3>
               <ul className="text-xs text-kyoto-white/90 space-y-2">
                 <li className="flex items-start">
@@ -89,7 +89,7 @@ const Hero = () => {
                 </li>
                 <li className="flex items-start">
                   <span className="mr-2 text-kyoto-gold">•</span>
-                  <span>会員：50名（男性25名、女性25名）2025年4月1日現在</span>
+                  <span>会員：50名（男性25名、女性25名）<br />2025年4月1日現在</span>
                 </li>
                 <li className="flex items-start">
                   <span className="mr-2 text-kyoto-gold">•</span>
