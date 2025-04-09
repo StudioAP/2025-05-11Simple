@@ -347,8 +347,8 @@ const News = () => {
                       <img 
                         src={latestAnnouncement.imageUrl} 
                         alt={latestAnnouncement.title} 
-                        className="w-full h-auto rounded-sm border border-gray-200 shadow-sm" 
-                        style={{ maxHeight: "200px", objectFit: "cover" }}
+                        className="w-full h-auto rounded-sm border border-gray-200 shadow-sm"
+                        style={{ objectFit: "contain" }}
                       />
                     </div>
                   ) : (

@@ -229,11 +229,12 @@ const NewsArchive = () => {
                       <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
                         {/* 左側: 日付、タイトル、本文 */}
                         <div className="md:col-span-7 pl-2">
-                          <div className="flex justify-between items-center mb-2">
-                            <h3 className="text-lg font-bold text-kyoto-dark-green">{announcement.title}</h3>
+                          <div className="flex items-center mb-2">
+                            {/* 日付を先に表示 */}
                             {announcement.date && (
-                              <span className="text-sm bg-kyoto-gold/20 px-2 py-0.5 rounded text-kyoto-dark-green">{announcement.date}</span>
+                              <span className="text-sm bg-kyoto-gold/20 px-2 py-0.5 rounded text-kyoto-dark-green mr-2">{announcement.date}</span>
                             )}
+                            <h3 className="text-lg font-bold text-kyoto-dark-green flex-grow text-left">{announcement.title}</h3>
                           </div>
                           <p className="text-base text-gray-700">{announcement.description}</p>
                         </div>
@@ -246,7 +247,7 @@ const NewsArchive = () => {
                                 src={announcement.imageUrl} 
                                 alt={announcement.title} 
                                 className="w-full h-auto rounded-sm border border-gray-200 shadow-sm" 
-                                style={{ maxHeight: "180px", objectFit: "cover" }}
+                                style={{ objectFit: "contain" }}
                               />
                             </div>
                           ) : (
