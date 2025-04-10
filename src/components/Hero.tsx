@@ -73,10 +73,13 @@ const Hero = () => {
             </h2>
           </div>
 
-          {/* 右側カラム - クラブ概要情報を配置調整 */}
-          <div className="md:col-span-4 relative md:flex md:justify-center">
-            {/* クラブ概要情報 - 右側中央付近に配置 */}
-            <div className="bg-kyoto-dark-green/70 backdrop-blur-sm rounded p-3 animate-fade-in z-20 border border-kyoto-gold/20 absolute bottom-0 right-0 md:relative md:bottom-auto md:right-auto md:mt-4 max-w-xs">
+          {/* 右側カラム - クラブ概要情報をテニスボールに合わせて配置 */}
+          <div className="md:col-span-4 relative flex justify-end">
+            {/* クラブ概要情報 - テニスボールと同じ幅、右に2cm移動 */}
+            <div 
+              className="bg-kyoto-dark-green/70 backdrop-blur-sm rounded p-2 animate-fade-in z-20 border border-kyoto-gold/40 w-56 inline-block"
+              style={{ height: '160px', transform: 'translateX(1.3cm) translateY(1cm)' }} // 右に移動、さらに下に1cm移動
+            >
               <h3 className="text-sm text-kyoto-gold font-medium mb-2">&lt;クラブ概要&gt;</h3>
               <ul className="text-xs text-kyoto-white/90 space-y-2">
                 <li className="flex items-start">

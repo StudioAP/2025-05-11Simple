@@ -53,13 +53,13 @@ const Testimonials = () => {
     {
       quote: "テニスはもちろんのこと、クラブにいってほかの会員とコーヒーを飲みながら談笑するのも楽しみの一つです。おかげで交流関係も広がりました。",
       author: "Y.R様",
-      position: "平日一年会員／６０代・パート",
+      position: "特定曜日ビジター／６０代・パート",
       image: "/images/Generated Image April 05, 2025 - 11_12AM (1).jpeg"
     },
     {
       quote: "会員制テニスクラブというと高額なイメージでしたが、実質月1万円以内で十分に楽しめて経済的です。",
       author: "M.S様",
-      position: "特定曜日ビジター／７０代",
+      position: "平日一年会員／７０代",
       image: "/images/Generated Image April 04, 2025 - 10_11PM (1).jpeg"
     }
   ];
