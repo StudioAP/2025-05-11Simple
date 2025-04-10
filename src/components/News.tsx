@@ -329,7 +329,7 @@ const News = () => {
                   <div className="flex items-center mb-2">
                     {/* 日付を先に表示 */}
                     {latestAnnouncement.date && (
-                      <span className="text-sm bg-kyoto-gold/20 px-2 py-0.5 rounded text-kyoto-dark-green mr-2">
+                      <span className="text-sm bg-kyoto-gold/20 px-2 py-0.5 rounded text-kyoto-dark-green mr-2 whitespace-nowrap">
                         {latestAnnouncement.date}
                       </span>
                     )}
