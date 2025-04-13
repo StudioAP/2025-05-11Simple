@@ -70,7 +70,7 @@ const Testimonials = () => {
         {/* F字型スキャンパターンに基づく配置 - 上部に主見出しを配置 */}
         <div className="flex flex-col items-center max-w-4xl mx-auto mb-8"> 
           <h2 className="section-title text-kyoto-white text-center text-2xl md:text-3xl font-bold mb-2">
-            お客様の声
+            会員の声
           </h2>
           <div className="w-16 h-1 bg-kyoto-gold mb-3"></div>
           <p className="text-kyoto-white/80 text-sm md:text-base max-w-2xl">
@@ -92,16 +92,10 @@ const Testimonials = () => {
                   <div className="h-20 w-20 rounded-full bg-kyoto-gold/20 overflow-hidden border border-kyoto-gold/30">
                     <img 
                       src={testimonial.image} 
-                      alt={testimonial.author} 
+                      alt={"会員の声"}
                       className="h-full w-full object-cover object-center"
-                      style={{ aspectRatio: '0.75/1' }} 
                     />
                   </div>
-                </div>
-                
-                <div>
-                  <p className="text-kyoto-gold font-medium text-base">{testimonial.author}</p>
-                  <p className="text-white/70 text-sm">{testimonial.position}</p>
                 </div>
               </div>
               

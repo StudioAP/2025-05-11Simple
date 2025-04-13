@@ -77,11 +77,11 @@ const Hero = () => {
           <div className="md:col-span-4 relative flex justify-end">
             {/* クラブ概要情報 - テニスボールと同じ幅、右に2cm移動 */}
             <div 
-              className="bg-kyoto-dark-green/70 backdrop-blur-sm rounded p-2 animate-fade-in z-20 border border-kyoto-gold/40 w-56 inline-block"
-              style={{ height: '160px', transform: 'translateX(1.3cm) translateY(1cm)' }} // 右に移動、さらに下に1cm移動
+              className="bg-kyoto-dark-green/70 backdrop-blur-sm rounded p-2 animate-fade-in z-20 border border-kyoto-gold/40 w-56 inline-block text-center"
+              style={{ height: '160px', transform: 'translateX(1.3cm) translateY(1cm)' }}
             >
               <h3 className="text-sm text-kyoto-gold font-medium mb-2">&lt;クラブ概要&gt;</h3>
-              <ul className="text-xs text-kyoto-white/90 space-y-2">
+              <ul className="text-xs text-kyoto-white/90 space-y-2 text-left">
                 <li className="flex items-start">
                   <span className="mr-2 text-kyoto-gold">•</span>
                   <span>創立：1930年</span>
@@ -92,7 +92,10 @@ const Hero = () => {
                 </li>
                 <li className="flex items-start">
                   <span className="mr-2 text-kyoto-gold">•</span>
-                  <span>会員：50名（男性25名、女性25名）<br />2025年4月1日現在</span>
+                  <span>会員：男性33名、女性20名</span>
+                </li>
+                <li className="flex justify-end">
+                  <span className="text-right">2025年4月1日現在</span>
                 </li>
                 <li className="flex items-start">
                   <span className="mr-2 text-kyoto-gold">•</span>

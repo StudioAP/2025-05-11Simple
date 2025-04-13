@@ -76,7 +76,7 @@ const Programs = () => {
                     
                     {/* 客観情報 - 統一スタイル */}
                     <div className="space-y-2">
-                      <p className="text-gray-700 font-medium text-sm mb-2">ご予約方法：</p>
+                      <p className="text-gray-700 text-sm mb-2">京都ローンテニスクラブに興味を持たれた方は、まずはこの「お試し１日テニス体験」にお越しください。お電話で前日までにご予約ください。</p>
                       <p className="text-base font-medium text-kyoto-dark-green mb-3">
                         電話: (075)-741-2917（前日まで）
                       </p>
@@ -87,11 +87,7 @@ const Programs = () => {
                       </div>
                       <div className="flex items-start">
                         <span className="text-kyoto-gold mr-2">•</span>
-                        <p className="text-gray-700 text-sm">約1時間のレッスンを体験していただけます。</p>
-                      </div>
-                      <div className="flex items-start">
-                        <span className="text-kyoto-gold mr-2">•</span>
-                        <p className="text-gray-700 text-sm">体験料: <span className="font-bold text-kyoto-dark-green">¥2,000</span>（税込）</p>
+                        <p className="text-gray-700 text-sm">体験料: <span className="font-bold text-kyoto-dark-green">¥500</span></p>
                       </div>
                     </div>
                   </div>
@@ -119,7 +115,7 @@ const Programs = () => {
                     {/* 客観情報 - 統一スタイル */}
                     <div className="space-y-2">
                       <p className="text-kyoto-dark-green font-medium text-sm mb-2">
-                        {newsData.events[0].schedule}
+                        不定期で開催します
                       </p>
                       
                       {newsData.events[0].details.map((detail, index) => (
@@ -164,7 +160,7 @@ const Programs = () => {
                   <div className="flex items-center justify-center">
                     <div className="w-full h-0 pb-[75%] relative rounded-sm overflow-hidden">
                       <img 
-                        src="/images/joseitatitakusann.jpg"
+                        src="/images/ledieskoryu.jpg"
                         alt="レディース交流会" 
                         className="absolute inset-0 w-full h-full object-cover"
                       />

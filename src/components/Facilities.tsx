@@ -3,16 +3,16 @@ import { MapPin, Clock, Car, Droplets, Image } from "lucide-react";
 
 const FacilityItem = ({ icon, title, description }) => {
   return (
-    <div className="flex p-4 bg-white/80 backdrop-blur-sm rounded-sm shadow hover-lift">
-      <div className="mr-4 text-kyoto-dark-green">
-        {icon}
-      </div>
-      <div>
-        <div className="inline-block border-2 border-kyoto-gold/40 bg-kyoto-cream/30 px-3 py-1 rounded-sm mb-2">
+    <div className="flex flex-col h-full p-4 bg-white/80 backdrop-blur-sm rounded-sm shadow hover-lift">
+      <div className="flex mb-3">
+        <div className="mr-4 text-kyoto-dark-green">
+          {icon}
+        </div>
+        <div className="inline-block border-2 border-kyoto-gold/40 bg-kyoto-cream/30 px-3 py-1 rounded-sm">
           <h4 className="font-bold text-kyoto-dark-green text-base md:text-lg">{title}</h4>
         </div>
-        <p className="text-gray-700 text-sm md:text-base">{description}</p>
       </div>
+      <p className="text-gray-700 text-sm md:text-base flex-grow">{description}</p>
     </div>
   );
 };
@@ -26,9 +26,6 @@ const PhotoFrame = ({ title, imageUrl, altText }) => {
           alt={altText}
           className="w-full h-48 md:h-56 object-cover transition-transform duration-500 group-hover:scale-105"
         />
-        <div className="absolute bottom-0 left-0 right-0 bg-kyoto-dark-green/70 p-2 text-center">
-          <span className="text-kyoto-white text-sm font-medium">{title}</span>
-        </div>
       </div>
     </div>
   );
@@ -39,7 +36,7 @@ const facilityData = [
   {
     photo: {
       title: "コート", 
-      imageUrl: "/lovable-uploads/coat.jpeg", 
+      imageUrl: "/images/コート.JPG",
       altText: "テニスコート写真"
     },
     info: {
@@ -51,7 +48,7 @@ const facilityData = [
   {
     photo: {
       title: "クラブハウス", 
-      imageUrl: "/lovable-uploads/setsubi.jpg", 
+      imageUrl: "/images/clubhouse.JPG",
       altText: "クラブハウス設備写真"
     },
     info: {
@@ -62,15 +59,14 @@ const facilityData = [
   },
   {
     photo: {
-      title: "駐車場写真", 
-      imageUrl: "/lovable-uploads/carport.jpg", 
+      title: "駐車場",
+      imageUrl: "/images/駐車場.JPG",
       altText: "駐車場写真"
     },
     info: {
       icon: <Car size={24} />, 
       title: "駐車場", 
-      description: "無料駐車場完備。広々とした駐車スペースで約20台駐車可能です。" + 
-      "クラブハウスからすぐの場所にあり、荷物の多いテニス用具も楽に運べます。"
+      description: "無料駐車場完備。広々とした駐車スペースで約20台駐車可能です。クラブハウスからすぐの場所にあり、テニス用具も楽に運べます。駐車場横には、壁打ちのスペースも備えています。"
     }
   }
   // 営業時間情報を削除しました
@@ -155,7 +151,7 @@ const Facilities = () => {
             className="grid grid-cols-3 gap-8 mx-auto opacity-0"
           >
             {facilityData.map((facility, index) => (
-              <div key={index} className="flex flex-col">
+              <div key={index} className="flex flex-col h-full">
                 {/* 写真 */}
                 <div className="mb-4">
                   <PhotoFrame 
