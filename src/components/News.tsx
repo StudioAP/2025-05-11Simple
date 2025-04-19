@@ -321,7 +321,7 @@ const News = () => {
             <div 
               ref={(el) => (fadeRefs.current[1] = el)}
               className="bg-white p-4 rounded-sm shadow-lg hover-lift opacity-0 border-l-4 border-kyoto-gold/80 transition-all duration-500"
-            >
+                  >
               {/* 左右二段組みレイアウト */}
               <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
                 {/* 左側: 日付、タイトル、本文 */}
@@ -332,35 +332,35 @@ const News = () => {
                       <span className="text-sm bg-kyoto-gold/20 px-2 py-0.5 rounded text-kyoto-dark-green mr-2 whitespace-nowrap">
                         {latestAnnouncement.date}
                       </span>
-                    )}
+                        )}
                     <h4 className="text-lg font-bold text-kyoto-dark-green flex-grow text-left">
                       {latestAnnouncement.title}
                     </h4>
                   </div>
                   <p className="text-base text-gray-700 mb-4">{latestAnnouncement.description}</p>
-                </div>
+                      </div>
                 
                 {/* 右側: 画像 */}
                 <div className="md:col-span-5">
                   {latestAnnouncement.imageUrl ? (
                     <div className="h-full flex items-center justify-center">
-                      <img 
+                          <img 
                         src={latestAnnouncement.imageUrl} 
                         alt={latestAnnouncement.title} 
                         className="w-full h-auto rounded-sm border border-gray-200 shadow-sm"
                         style={{ objectFit: "contain" }}
-                      />
-                    </div>
+                          />
+                        </div>
                   ) : (
                     <div className="h-full flex items-center justify-center bg-kyoto-gold/5 rounded-sm p-4 border border-dashed border-kyoto-gold/30">
                       <p className="text-kyoto-dark-green/60 text-center text-sm">画像はありません</p>
                     </div>
                   )}
-                </div>
+                  </div>
               </div>
             </div>
           )}
-          
+              
           {/* 過去のお知らせ一覧ボタン */}
           {announcements.length > 1 && (
             <div className="mt-4 text-center">

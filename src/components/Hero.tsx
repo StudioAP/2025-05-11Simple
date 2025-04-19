@@ -50,15 +50,15 @@ const Hero = () => {
             <div className="text-highlight-container overflow-hidden">
               <p className={`${isWindows ? 'text-sm md:text-base' : 'text-base md:text-lg'} text-kyoto-white/90 ${isWindows ? 'mb-4' : 'mb-3'} leading-relaxed animate-fade-in-up-staggered-1`} style={{ fontFamily: 'Zen Old Mincho, serif' }}>
                 <span className="block mb-2 translate-y-8 opacity-0 animate-fade-in-up-staggered-1">
-                  1930年オープンの、伝統ある会員制クラブ。
-                </span>
+                1930年オープンの、伝統ある会員制クラブ。
+              </span>
                 <span className="block mb-2 translate-y-8 opacity-0 animate-fade-in-up-staggered-2">
                   会員による運営だから、年会費もプレー代もリーズナブル。
-                </span>
+              </span>
                 <span className="block translate-y-8 opacity-0 animate-fade-in-up-staggered-3">
                   お盆も正月も、いつでもコートが待っている。
-                </span>
-              </p>
+              </span>
+            </p>
             </div>
             
             <div className="my-4"></div>

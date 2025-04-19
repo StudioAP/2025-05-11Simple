@@ -13,7 +13,7 @@ const queryClient = new QueryClient();
 
 const App = () => {
   return (
-    <QueryClientProvider client={queryClient}>
+  <QueryClientProvider client={queryClient}>
       <Toaster />
       <Router>
         <Routes>
@@ -24,8 +24,8 @@ const App = () => {
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>
-    </QueryClientProvider>
-  );
+  </QueryClientProvider>
+);
 };
 
 export default App;

@@ -67,11 +67,11 @@ const Programs = () => {
                     {/* ボディコピー - ケイ囲みスタイル */}
                     <div className="border-2 border-kyoto-gold/30 bg-kyoto-cream/30 p-3 rounded-sm mb-4">
                       <p className="text-kyoto-dark-green font-medium text-sm md:text-base">
-                        初めてでも安心！
-                        会員が温かく迎えます。
-                        一人でも友達とでも。 
-                        平日でも週末でもOK！
-                      </p>
+                      初めてでも安心！
+                      会員が温かく迎えます。
+                      一人でも友達とでも。 
+                      平日でも週末でもOK！
+                    </p>
                     </div>
                     
                     {/* 客観情報 - 統一スタイル */}
@@ -172,8 +172,8 @@ const Programs = () => {
                     {/* ボディコピー - ケイ囲みスタイル */}
                     <div className="border-2 border-kyoto-gold/30 bg-kyoto-cream/30 p-3 rounded-sm mb-4">
                       <p className="text-kyoto-dark-green font-medium text-sm md:text-base">
-                        女子会員の技術の向上を目的として、試合形式（ダブルス）の交流会を実施しています。
-                      </p>
+                      女子会員の技術の向上を目的として、試合形式（ダブルス）の交流会を実施しています。
+                    </p>
                     </div>
                     
                     {/* 客観情報 - 統一スタイル */}
@@ -213,8 +213,8 @@ const Programs = () => {
                     {/* ボディコピー - ケイ囲みスタイル */}
                     <div className="border-2 border-kyoto-gold/30 bg-kyoto-cream/30 p-3 rounded-sm mb-4">
                       <p className="text-kyoto-dark-green font-medium text-sm md:text-base">
-                        会員の技術の向上を目的として、初級・中級者を対象にコーチによるレッスンを行っています。
-                      </p>
+                      会員の技術の向上を目的として、初級・中級者を対象にコーチによるレッスンを行っています。
+                    </p>
                     </div>
                     
                     {/* 客観情報 - 統一スタイル */}
@@ -276,8 +276,8 @@ const Programs = () => {
                     {/* ボディコピー - ケイ囲みスタイル */}
                     <div className="border-2 border-kyoto-gold/30 bg-kyoto-cream/30 p-3 rounded-sm mb-4">
                       <p className="text-kyoto-dark-green font-medium text-sm md:text-base">
-                        会員の日頃の研鑽の成果を試す機会として開催するダブルスの大会です。ペアの合計年齢100歳を中心に行います。
-                      </p>
+                      会員の日頃の研鑽の成果を試す機会として開催するダブルスの大会です。ペアの合計年齢100歳を中心に行います。
+                    </p>
                     </div>
                     
                     {/* 客観情報 - 統一スタイル */}

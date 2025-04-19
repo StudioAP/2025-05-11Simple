@@ -113,8 +113,8 @@ const Pricing = () => {
                   <p className="font-bold text-kyoto-dark-green text-lg">500円</p>
                 </div>
               </div>
-            </div>
-            
+              </div>
+              
             {/* 備考を会員種別表の下に移動 */}
             <div 
               ref={(el) => (sectionRefs.current[2] = el)}
@@ -161,24 +161,24 @@ const Pricing = () => {
                 <p className="text-base text-gray-700">
                   会員にならずともビジターとして京都ローンテニスクラブでテニスを楽しめます。
                 </p>
-              </div>
-              
+        </div>
+
               {/* プレーフィ情報 - 年会費と同じ配置に */}
               <div className="flex items-center mb-4">
                 <div className="w-2/3 text-base text-gray-700">ビジタープレーフィ（1日）</div>
                 <div className="w-1/3 text-center">
                   <p className="font-bold text-kyoto-dark-green text-lg">1,500円</p>
                 </div>
-              </div>
-              
+          </div>
+          
               {/* 写真 - 最下部に移動 */}
               <div className="overflow-hidden rounded-sm shadow-md hover:shadow-lg transition-all">
-                <img
+            <img 
                   src="/images/20250404131442-sport-5018610_1920.jpg"
                   alt="テニスクラブの風景"
                   className="w-full h-40 object-cover"
-                />
-              </div>
+            />
+          </div>
             </div>
           </div>
         </div>

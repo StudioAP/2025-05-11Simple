@@ -5,9 +5,9 @@ const FacilityItem = ({ icon, title, description }) => {
   return (
     <div className="flex flex-col h-full p-4 bg-white/80 backdrop-blur-sm rounded-sm shadow hover-lift">
       <div className="flex mb-3">
-        <div className="mr-4 text-kyoto-dark-green">
-          {icon}
-        </div>
+      <div className="mr-4 text-kyoto-dark-green">
+        {icon}
+      </div>
         <div className="inline-block border-2 border-kyoto-gold/40 bg-kyoto-cream/30 px-3 py-1 rounded-sm">
           <h4 className="font-bold text-kyoto-dark-green text-base md:text-lg">{title}</h4>
         </div>
