@@ -2,29 +2,47 @@ import React, { useEffect, useRef } from "react";
 import { MapPin, Clock, Car, Droplets, Image } from "lucide-react";
 
 const FacilityItem = ({ icon, title, description }) => {
+  // description を <br /> で分割し、各行を段落としてレンダリング
+  const descriptionLines = typeof description === 'string' ? description.split('<br />') : [];
+
   return (
     <div className="flex flex-col h-full p-4 bg-white/80 backdrop-blur-sm rounded-sm shadow hover-lift">
       <div className="flex mb-3">
-      <div className="mr-4 text-kyoto-dark-green">
-        {icon}
-      </div>
+        <div className="mr-4 text-kyoto-dark-green">
+          {icon}
+        </div>
         <div className="inline-block border-2 border-kyoto-gold/40 bg-kyoto-cream/30 px-3 py-1 rounded-sm">
           <h4 className="font-bold text-kyoto-dark-green text-base md:text-lg">{title}</h4>
         </div>
       </div>
-      <p className="text-gray-700 text-sm md:text-base flex-grow">{description}</p>
+      <div className="text-gray-700 text-sm md:text-base flex-grow">
+        {descriptionLines.length > 1 ? (
+          descriptionLines.map((line, index) => (
+            <p key={index} className={index > 0 ? 'mt-1' : ''}>{line.trim()}</p>
+          ))
+        ) : (
+          <p>{description}</p>
+        )}
+      </div>
     </div>
   );
 };
 
-const PhotoFrame = ({ title, imageUrl, altText }) => {
+const PhotoFrame = ({ title, imageUrl, altText, isLarge = false, fillHeight = false }) => {
+  let heightClass = 'h-48 md:h-56'; // Default height
+  if (isLarge) {
+    heightClass = 'h-64 md:h-72'; // Larger fixed height
+  } else if (fillHeight) {
+    heightClass = 'h-full'; // Fill height
+  }
+
   return (
-    <div className="overflow-hidden rounded-sm shadow-lg hover-lift group">
-      <div className="relative">
+    <div className={`overflow-hidden rounded-sm shadow-lg hover-lift group ${fillHeight ? 'h-full' : ''}`}>
+      <div className="relative h-full">
         <img
           src={imageUrl}
           alt={altText}
-          className="w-full h-48 md:h-56 object-cover transition-transform duration-500 group-hover:scale-105"
+          className={`w-full ${heightClass} object-contain transition-transform duration-500 group-hover:scale-105`}
         />
       </div>
     </div>
@@ -39,10 +57,15 @@ const facilityData = [
       imageUrl: "/images/コート.JPG",
       altText: "テニスコート写真"
     },
+    photo2: {
+      title: "コート図", 
+      imageUrl: "/images/mukashinocourtnoe.jpg",
+      altText: "テニスコート配置図"
+    },
     info: {
       icon: <MapPin size={24} />, 
       title: "コート", 
-      description: "コートは３面。オムニコート。砂入り人工芝のオムニコートはコンディションが良く、雨天後も比較的早く使用できるのが特徴です。内１面はナイター設備も備えています。シャワーも完備しています。"
+      description: "コートは３面。オムニコート。砂入り人工芝のオムニコートはコンディションが良く、雨天後も比較的早く使用できるのが特徴です。<br />内１面はナイター設備も備えています。シャワーも完備しています。"
     }
   },
   {
@@ -121,13 +144,38 @@ const Facilities = () => {
           className="md:hidden opacity-0"
         >
           <div className="space-y-6">
-            {facilityData.map((facility, index) => (
+            {/* コートセクション（スマホ表示） */}
+            <div className="space-y-4">
+              <div className="grid grid-cols-1 gap-4">
+                <PhotoFrame 
+                  title={facilityData[0].photo.title} 
+                  imageUrl={facilityData[0].photo.imageUrl} 
+                  altText={facilityData[0].photo.altText}
+                  isLarge={true}
+                />
+                <PhotoFrame 
+                  title={facilityData[0].photo2.title} 
+                  imageUrl={facilityData[0].photo2.imageUrl} 
+                  altText={facilityData[0].photo2.altText} 
+                />
+              </div>
+              <FacilityItem 
+                icon={facilityData[0].info.icon} 
+                title={facilityData[0].info.title} 
+                description={facilityData[0].info.description} 
+              />
+              <div className="border-t border-kyoto-dark-green/20 pt-4"></div>
+            </div>
+            
+            {/* クラブハウスと駐車場（スマホ表示） */}
+            {facilityData.slice(1).map((facility, index) => (
               <div key={index} className="space-y-4">
                 {facility.photo && (
                   <PhotoFrame 
                     title={facility.photo.title} 
                     imageUrl={facility.photo.imageUrl} 
-                    altText={facility.photo.altText} 
+                    altText={facility.photo.altText}
+                    isLarge={true}
                   />
                 )}
                 <FacilityItem 
@@ -135,7 +183,7 @@ const Facilities = () => {
                   title={facility.info.title} 
                   description={facility.info.description} 
                 />
-                {index < facilityData.length - 1 && (
+                {index < facilityData.slice(1).length - 1 && (
                   <div className="border-t border-kyoto-dark-green/20 pt-4"></div>
                 )}
               </div>
@@ -143,21 +191,55 @@ const Facilities = () => {
           </div>
         </div>
 
-        {/* PC表示用のレイアウト - 横並びに変更 */}
+        {/* PC表示用のレイアウト - 上2つ下2つの4セクションレイアウト */}
         <div className="hidden md:block">
-          {/* 施設情報と写真を横並びに表示 */}
+          {/* コートセクション - 上段に配置（特別レイアウト） */}
+          <div className="mb-8">
+            {/* 画像を5列グリッドで配置し、右側のコート図に多くの幅を割り当てる */}
+            <div className="grid grid-cols-5 gap-6">
+              {/* 左側の写真 (2列分) */}
+              <div className="flex items-center col-span-2">
+                <PhotoFrame 
+                  title={facilityData[0].photo.title} 
+                  imageUrl={facilityData[0].photo.imageUrl} 
+                  altText={facilityData[0].photo.altText}
+                  isLarge={true}
+                />
+              </div>
+              {/* 右側の写真 (3列分) */}
+              <div className="flex items-stretch col-span-3">
+                <PhotoFrame 
+                  title={facilityData[0].photo2.title} 
+                  imageUrl={facilityData[0].photo2.imageUrl} 
+                  altText={facilityData[0].photo2.altText}
+                  fillHeight={true} 
+                />
+              </div>
+            </div>
+            {/* コートの説明文 - 両写真の下にバランスよく配置 */}
+            <div className="mt-4">
+              <FacilityItem 
+                icon={facilityData[0].info.icon} 
+                title={facilityData[0].info.title} 
+                description={facilityData[0].info.description} 
+              />
+            </div>
+          </div>
+          
+          {/* クラブハウスと駐車場 - 下段に2列で配置 */}
           <div 
             ref={infoRef} 
-            className="grid grid-cols-3 gap-8 mx-auto opacity-0"
+            className="grid grid-cols-2 gap-8 mx-auto opacity-0"
           >
-            {facilityData.map((facility, index) => (
+            {facilityData.slice(1).map((facility, index) => (
               <div key={index} className="flex flex-col h-full">
                 {/* 写真 */}
                 <div className="mb-4">
                   <PhotoFrame 
                     title={facility.photo.title} 
                     imageUrl={facility.photo.imageUrl} 
-                    altText={facility.photo.altText} 
+                    altText={facility.photo.altText}
+                    isLarge={true}
                   />
                 </div>
                 {/* 施設情報 */}

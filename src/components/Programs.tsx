@@ -56,7 +56,7 @@ const Programs = () => {
                   <div className="flex items-center justify-center">
                     <div className="w-full h-0 pb-[75%] relative rounded-sm overflow-hidden">
                       <img 
-                        src="/images/Generated Image April 05, 2025 - 11_14AM (1).jpeg"
+                        src="/images/お試し１日体験.jpg"
                         alt="テニス体験" 
                         className="absolute inset-0 w-full h-full object-cover"
                       />
@@ -118,19 +118,36 @@ const Programs = () => {
                         不定期で開催します
                       </p>
                       
-                      {newsData.events[0].details.map((detail, index) => (
+                      {/* {newsData.events[0].details.map((detail, index) => (
                         <div key={index} className="flex items-start">
                           <span className="text-kyoto-gold mr-2">•</span>
                           <p className="text-gray-700 text-sm">
                             {/* 参加費の場合は強調表示 */}
-                            {detail.includes('参加費') ? (
-                              <span>参加費: <span className="font-bold text-kyoto-dark-green">{detail.split(':')[1]}</span></span>
+                      {/*      {detail.includes('参加費') ? (
+                              <span>参加費: <span className="font-bold text-kyoto-dark-green">会員500円、ビジター1,500円</span></span>
                             ) : (
                               detail
                             )}
                           </p>
                         </div>
-                      ))}
+                      ))} */}
+                      {/* Updated details based on user request */}
+                      <div className="flex items-start">
+                        <span className="text-kyoto-gold mr-2">•</span>
+                        <p className="text-gray-700 text-sm">対象: クラス不問</p>
+                      </div>
+                      <div className="flex items-start">
+                        <span className="text-kyoto-gold mr-2">•</span>
+                        <p className="text-gray-700 text-sm">お一人様でも参加大歓迎</p>
+                      </div>
+                      <div className="flex items-start">
+                        <span className="text-kyoto-gold mr-2">•</span>
+                        <p className="text-gray-700 text-sm">参加費: <span className="font-bold text-kyoto-dark-green">会員500円、ビジター1,500円</span></p>
+                      </div>
+                       <div className="flex items-start">
+                        <span className="text-kyoto-gold mr-2">•</span>
+                        <p className="text-gray-700 text-sm">募集人数: 30名程度</p>
+                      </div>
                     </div>
                   </div>
                   
@@ -138,7 +155,7 @@ const Programs = () => {
                   <div className="flex items-center justify-center">
                     <div className="w-full h-0 pb-[75%] relative rounded-sm overflow-hidden">
                       <img 
-                        src="/images/sizennnadannjo.jpg"
+                        src="images/kaiinvisitor.jpg"
                         alt="会員＆ビジター交流会" 
                         className="absolute inset-0 w-full h-full object-cover"
                       />
@@ -160,7 +177,7 @@ const Programs = () => {
                   <div className="flex items-center justify-center">
                     <div className="w-full h-0 pb-[75%] relative rounded-sm overflow-hidden">
                       <img 
-                        src="/images/ledieskoryu.jpg"
+                        src="images/ladieskoryu.jpg"
                         alt="レディース交流会" 
                         className="absolute inset-0 w-full h-full object-cover"
                       />
@@ -242,7 +259,7 @@ const Programs = () => {
                   <div className="flex items-center justify-center">
                     <div className="w-full h-0 pb-[75%] relative rounded-sm overflow-hidden">
                       <img 
-                        src="/images/ko-tikaranoressunntikame2.jpg"
+                        src="/images/コーチレッスン.jpg"
                         alt="コーチによるレッスン" 
                         className="absolute inset-0 w-full h-full object-cover"
                       />

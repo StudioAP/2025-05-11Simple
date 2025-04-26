@@ -7,11 +7,27 @@ import newsData from "../data/news.json";
 import { createClient } from "contentful";
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
+// ↓↓↓ Rich Text レンダリング用に追加 ↓↓↓
+import { documentToReactComponents, Options } from '@contentful/rich-text-react-renderer';
+import { BLOCKS, INLINES, MARKS, Document } from '@contentful/rich-text-types';
+// ↑↑↑ Rich Text レンダリング用に追加 ↑↑↑
+import type { EntryFieldTypes, Entry } from 'contentful';
+
+// ★ Contentful Entry の型定義を追加
+interface NewsEntrySkeleton {
+  contentTypeId: 'kyotolawntennisclubNews' // コンテンツタイプID
+  fields: {
+    title: EntryFieldTypes.Symbol;
+    date: EntryFieldTypes.Date;
+    body: EntryFieldTypes.RichText;
+    image?: EntryFieldTypes.AssetLink; // オプションのAsset Link
+  }
+}
 
 interface Announcement {
   title: string;
   date: string;
-  description: string;
+  description: Document | string; // RichText Document またはフォールバック文字列
   imageUrl?: string;
 }
 
@@ -22,6 +38,14 @@ const contentfulClient = import.meta.env.VITE_CONTENTFUL_SPACE_ID && import.meta
       accessToken: import.meta.env.VITE_CONTENTFUL_ACCESS_TOKEN,
     })
   : null;
+
+// ↓↓↓ このログを追加 ↓↓↓
+console.log("--- Environment Variables Check ---");
+console.log("VITE_CONTENTFUL_SPACE_ID:", import.meta.env.VITE_CONTENTFUL_SPACE_ID);
+console.log("VITE_CONTENTFUL_ACCESS_TOKEN:", import.meta.env.VITE_CONTENTFUL_ACCESS_TOKEN ? '*** Exists ***' : undefined); // トークン自体は表示しない
+console.log("VITE_CONTENTFUL_CONTENT_TYPE_ID:", import.meta.env.VITE_CONTENTFUL_CONTENT_TYPE_ID);
+console.log("----------------------------------");
+// ↑↑↑ ここまで追加 ↑↑↑
 
 const News = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -43,164 +67,161 @@ const News = () => {
     imageUrl: ""
   });
 
+  // --- ▼ Rich Text レンダリングオプション ▼ ---
+  const richTextOptions: Options = {
+    renderMark: {
+      [MARKS.BOLD]: (text) => <strong className="font-bold">{text}</strong>,
+      [MARKS.ITALIC]: (text) => <em className="italic">{text}</em>,
+      [MARKS.UNDERLINE]: (text) => <u className="underline">{text}</u>,
+      // 他のマーク (code, strikethrough など) も必要に応じて追加
+    },
+    renderNode: {
+      [BLOCKS.PARAGRAPH]: (node, children) => <p className="mb-2">{children}</p>,
+      [BLOCKS.HEADING_1]: (node, children) => <h1 className="text-2xl font-bold mt-4 mb-2">{children}</h1>,
+      [BLOCKS.HEADING_2]: (node, children) => <h2 className="text-xl font-bold mt-3 mb-2">{children}</h2>,
+      [BLOCKS.HEADING_3]: (node, children) => <h3 className="text-lg font-bold mt-2 mb-1">{children}</h3>,
+      // 他の見出しレベルも必要に応じて追加
+      [BLOCKS.UL_LIST]: (node, children) => <ul className="list-disc list-inside mb-2 ml-4">{children}</ul>,
+      [BLOCKS.OL_LIST]: (node, children) => <ol className="list-decimal list-inside mb-2 ml-4">{children}</ol>,
+      [BLOCKS.LIST_ITEM]: (node, children) => <li>{children}</li>,
+      [BLOCKS.QUOTE]: (node, children) => <blockquote className="border-l-4 border-gray-300 pl-4 italic my-2">{children}</blockquote>,
+      [BLOCKS.HR]: () => <hr className="my-4" />,
+
+      // エラー回避のため、埋め込み要素は一旦 null (非表示) またはシンプルな表示にする
+      [BLOCKS.EMBEDDED_ASSET]: (node) => {
+        // 埋め込み画像を表示したい場合はここで img タグをレンダリングする
+        // 例: const asset = findAssetById(node.data.target.sys.id); return <img src={...} alt={...} />;
+        console.log("Embedded Asset found, but not rendered by default options:", node);
+        return null; 
+      },
+      [BLOCKS.EMBEDDED_ENTRY]: (node) => {
+        console.log("Embedded Entry found, but not rendered by default options:", node);
+        return <div className="my-2 p-2 border border-dashed border-gray-300">[埋め込みコンテンツは表示されません]</div>;
+      },
+
+      [INLINES.HYPERLINK]: (node, children) => (
+        <a href={node.data.uri} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
+          {children}
+        </a>
+      ),
+      // 他のインライン要素 (Entry/Asset Hyperlinkなど) も必要なら追加
+    },
+  };
+  // --- ▲ Rich Text レンダリングオプション ▲ ---
+
   // Contentfulからニュースデータを取得
   useEffect(() => {
     const fetchNewsFromContentful = async () => {
       try {
         setLoading(true);
-        
-        // 環境変数を直接確認（より確実な方法）
+        // 環境変数を取得
         const spaceId = import.meta.env.VITE_CONTENTFUL_SPACE_ID;
         const accessToken = import.meta.env.VITE_CONTENTFUL_ACCESS_TOKEN;
-        
-        if (!spaceId || !accessToken) {
-          console.warn('Contentfulの環境変数が設定されていません。フォールバックデータを使用します。');
-          // フォールバックデータを使用
+        // ★ ハードコードを元に戻し、環境変数から読み込む
+        // const contentTypeId = "kyotolawntennisclubNews"; 
+        const contentTypeId = import.meta.env.VITE_CONTENTFUL_CONTENT_TYPE_ID;
+
+        if (!spaceId || !accessToken || !contentTypeId) { // ← contentTypeId のチェックを元に戻す
+          console.warn('Contentful環境変数が不足... フォールバック');
           const savedNews = localStorage.getItem('newsItems');
           const newsItems = savedNews ? JSON.parse(savedNews) : newsData.newsItems;
-          
-          const fallbackNews = newsItems.map((item: any) => ({
-            title: item.title,
-            date: item.date,
-            description: item.content,
-            imageUrl: item.imageUrl || ""
+          const fallbackNews: Announcement[] = newsItems.map((item: any) => ({
+            title: item.title || '',
+            date: item.date || '',
+            description: item.content || "", // 文字列としてフォールバック
+            imageUrl: item.imageUrl || undefined
           }));
-          
           setAnnouncements(fallbackNews);
-          // 最新のお知らせを設定
-          if (fallbackNews.length > 0) {
-            setLatestAnnouncement(fallbackNews[0]);
-          }
+          if (fallbackNews.length > 0) setLatestAnnouncement(fallbackNews[0]);
           setLoading(false);
           return;
         }
-        
-        // 確実にContentfulクライアントを初期化
-        const client = createClient({
-          space: spaceId,
-          accessToken: accessToken,
-        });
-        
-        // ContentfulからnewsEventsコンテンツタイプのエントリを取得
+
+        const client = createClient({ space: spaceId!, accessToken: accessToken! });
+
         try {
-          console.log('Contentful APIを呼び出し中...');
-          
-          // JSONプレビューから確認した正確なコンテンツタイプIDを使用
-          const contentTypeId = 'newsEvents'; // JSONプレビューの sys.id の値
-          
-          const response = await client.getEntries({
-            content_type: contentTypeId,
-            order: ['-fields.date'] // 日付フィールドで新しい順に並べ替え
+          console.log('API呼び出し中... Content Type:', contentTypeId);
+          const response = await client.getEntries<NewsEntrySkeleton>({
+            content_type: contentTypeId!, // null/undefinedでないことを示すために ! を追加(チェック済みのため)
+            order: ['-fields.date'],
+            include: 1, // リンクされたアセットを解決
+            // locale: 'ja-JP' // ★ 日本語ロケール指定はコメントアウトする (スペースに設定がないため)
           });
-          
-          // API呼び出しの詳細をログ出力
-          console.log('コンテンツタイプ:', contentTypeId);
-          
-          console.log('Contentful応答:', response);
-          
+          console.log('応答:', response);
+
           if (response.items && response.items.length > 0) {
-            // ContentfulのレスポンスをAnnouncementの形式に変換
-            const contentfulNews = response.items.map((item: any) => {
-              console.log('項目のフィールド:', item.fields);
-              // JSONプレビューから確認したフィールド構造に合わせてマッピング
-              // fields: title, date, body, image
-              
-              // title: タイトルフィールド
+            const contentfulNews: Announcement[] = response.items.map((item) => {
               const title = item.fields.title || '';
-              
-              // body: 本文フィールド
-              const description = item.fields.body || '';
-              
-              // date: 日付フィールド
+              const body = item.fields.body;
               let date = '';
               if (item.fields.date) {
-                // ISO形式の日付文字列を日本語形式に変換
-                const dateObj = new Date(item.fields.date);
-                date = dateObj.toLocaleDateString('ja-JP', {
-                  year: 'numeric',
-                  month: 'long',
-                  day: 'numeric'
-                });
+                 const dateObj = new Date(item.fields.date);
+                 date = dateObj.toLocaleDateString('ja-JP', { year: 'numeric', month: 'long', day: 'numeric' });
               } else {
-                date = new Date(item.sys.createdAt).toLocaleDateString('ja-JP');
+                 date = new Date(item.sys.createdAt).toLocaleDateString('ja-JP');
               }
-              
-              // image: 画像フィールド
-              const imageUrl = item.fields.image?.fields?.file?.url 
-                ? `https:${item.fields.image.fields.file.url}` 
-                : '';
-              
+              let imageUrl: string | undefined = undefined;
+              const imageField = item.fields.image;
+              if (imageField && typeof imageField === 'object' && 'fields' in imageField && imageField.fields?.file?.url) {
+                 const rawUrl = imageField.fields.file.url;
+                 imageUrl = rawUrl.startsWith('//') ? `https:${rawUrl}` : rawUrl;
+              }
               return {
                 title,
                 date,
-                description,
+                description: body || "",
                 imageUrl
               };
             });
-            
-            console.log('整形後のニュースデータ:', contentfulNews);
-            
-            // 空のタイトルや説明があるアイテムを除外
+
             const validNews = contentfulNews.filter(item => item.title && item.description);
-            console.log('有効なニュースデータ:', validNews);
-            
-            // Contentful APIからのデータはすでにソート済みなので、追加のソートは不要
-            
-            console.log('最終ニュースデータ:', validNews);
             setAnnouncements(validNews);
-            // 最新のお知らせを設定
-            if (validNews.length > 0) {
-              setLatestAnnouncement(validNews[0]);
-            }
+            if (validNews.length > 0) setLatestAnnouncement(validNews[0]);
+
           } else {
-            console.warn('Contentfulにデータがありません。フォールバックデータを使用します。');
-            // Contentfulにデータがない場合はローカルストレージまたはデフォルトデータを使用
+            console.warn('Contentfulにデータなし... フォールバック');
             const savedNews = localStorage.getItem('newsItems');
             const newsItems = savedNews ? JSON.parse(savedNews) : newsData.newsItems;
-            
-            const fallbackNews = newsItems.map((item: any) => ({
-              title: item.title,
-              date: item.date,
-              description: item.content,
-              imageUrl: item.imageUrl || ""
+            const fallbackNews: Announcement[] = newsItems.map((item: any) => ({
+              title: item.title || '',
+              date: item.date || '',
+              description: item.content || "",
+              imageUrl: item.imageUrl || undefined
             }));
-            
             setAnnouncements(fallbackNews);
-            // 最新のお知らせを設定
-            if (fallbackNews.length > 0) {
-              setLatestAnnouncement(fallbackNews[0]);
-            }
+            if (fallbackNews.length > 0) setLatestAnnouncement(fallbackNews[0]);
           }
         } catch (err) {
-          console.error('Contentful API呼び出しエラー:', err);
-          throw err;
-        }
-        
+           console.error('APIエラー:', err);
+           setError('ニュース取得エラー');
+           const savedNews = localStorage.getItem('newsItems');
+           const newsItems = savedNews ? JSON.parse(savedNews) : newsData.newsItems;
+           const fallbackNews: Announcement[] = newsItems.map((item: any) => ({
+             title: item.title || '',
+             date: item.date || '',
+             description: item.content || "",
+             imageUrl: item.imageUrl || undefined
+           }));
+           setAnnouncements(fallbackNews);
+           if (fallbackNews.length > 0) setLatestAnnouncement(fallbackNews[0]);
+         }
         setLoading(false);
       } catch (err) {
-        console.error('Contentfulからのデータ取得エラー:', err);
-        setError('ニュースデータの取得に失敗しました');
-        
-        // エラー時はフォールバックとしてローカルデータを使用
+        console.error('設定/予期せぬエラー:', err);
+        setError('設定問題/予期せぬエラー');
         const savedNews = localStorage.getItem('newsItems');
         const newsItems = savedNews ? JSON.parse(savedNews) : newsData.newsItems;
-        
-        const fallbackNews = newsItems.map((item: any) => ({
-          title: item.title,
-          date: item.date,
-          description: item.content,
-          imageUrl: item.imageUrl || ""
+        const fallbackNews: Announcement[] = newsItems.map((item: any) => ({
+          title: item.title || '',
+          date: item.date || '',
+          description: item.content || "",
+          imageUrl: item.imageUrl || undefined
         }));
-        
         setAnnouncements(fallbackNews);
-        // 最新のお知らせを設定
-        if (fallbackNews.length > 0) {
-          setLatestAnnouncement(fallbackNews[0]);
-        }
+        if (fallbackNews.length > 0) setLatestAnnouncement(fallbackNews[0]);
         setLoading(false);
       }
     };
-    
     fetchNewsFromContentful();
   }, []);
 
@@ -321,7 +342,7 @@ const News = () => {
             <div 
               ref={(el) => (fadeRefs.current[1] = el)}
               className="bg-white p-4 rounded-sm shadow-lg hover-lift opacity-0 border-l-4 border-kyoto-gold/80 transition-all duration-500"
-                  >
+            >
               {/* 左右二段組みレイアウト */}
               <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
                 {/* 左側: 日付、タイトル、本文 */}
@@ -337,8 +358,13 @@ const News = () => {
                       {latestAnnouncement.title}
                     </h4>
                   </div>
-                  <p className="text-base text-gray-700 mb-4">{latestAnnouncement.description}</p>
-                      </div>
+                  <div className="text-base text-gray-700 mb-4 break-words">
+                    {(latestAnnouncement.description && typeof latestAnnouncement.description === 'object' && latestAnnouncement.description.nodeType === BLOCKS.DOCUMENT)
+                      ? documentToReactComponents(latestAnnouncement.description, richTextOptions) as React.ReactNode
+                      : <p>{latestAnnouncement.description}</p> // 文字列の場合はそのまま表示
+                    }
+                  </div>
+                </div>
                 
                 {/* 右側: 画像 */}
                 <div className="md:col-span-5">

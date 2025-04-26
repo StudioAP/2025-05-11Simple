@@ -67,7 +67,7 @@ const Navbar = () => {
             href="#testimonials"
             className="text-kyoto-white hover:text-kyoto-gold transition-colors"
           >
-            お客様の声
+            会員の声
           </a>
           <a
             href="#programs"
@@ -127,7 +127,7 @@ const Navbar = () => {
               className="text-kyoto-white hover:text-kyoto-gold transition-colors py-2 border-b border-kyoto-gold/20"
               onClick={() => setIsMobileMenuOpen(false)}
             >
-              お客様の声
+              会員の声
             </a>
             <a
               href="#programs"

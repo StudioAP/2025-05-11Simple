@@ -63,7 +63,7 @@ const Contact = () => {
           {/* Contact Information */}
           <div 
             ref={(el) => (fadeRefs.current[0] = el)} 
-            className="opacity-0 md:col-span-5"
+            className="opacity-0 md:col-span-4"
           >
             <div className="bg-kyoto-dark-green/50 backdrop-blur-sm p-4 rounded-sm border border-kyoto-gold/30 h-full">
               <h3 className="text-lg font-bold text-kyoto-white mb-4">お気軽にお問合せください</h3>
@@ -83,7 +83,7 @@ const Contact = () => {
                 </ContactInfo>
                 
                 <ContactInfo icon={<Mail size={20} />} title="メール">
-                  <p>info@kyoto-ltc.example.jp</p>
+                  <p>info@kyoto-lawn.org</p>
                 </ContactInfo>
               </div>
               
@@ -91,26 +91,38 @@ const Contact = () => {
             </div>
           </div>
 
-          {/* Map Area */}
+          {/* Map Area - 幅を拡大し、イラストマップとGoogleマップを並べて表示 */}
           <div 
             ref={mapRef} 
-            className="opacity-0 md:col-span-7"
+            className="opacity-0 md:col-span-8"
           >
             <div className="bg-kyoto-dark-green/50 backdrop-blur-sm p-4 rounded-sm border border-kyoto-gold/30 h-full">
               <h3 className="text-lg font-bold text-kyoto-white mb-4">Access Map</h3>
               
-              <div className="w-full h-60 bg-kyoto-white/10 rounded-sm overflow-hidden">
-                <iframe 
-                  src="https://www.google.com/maps?q=京都ローンテニスクラブ+〒601-1121+京都市左京区静市静原町554&output=embed&hl=ja&z=16"
-                  width="100%" 
-                  height="100%" 
-                  style={{ border: 0 }} 
-                  allowFullScreen={false} 
-                  loading="lazy" 
-                  referrerPolicy="no-referrer-when-downgrade"
-                  title="京都ローンテニスクラブの地図"
-                  className="rounded-sm"
-                />
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {/* 左側にイラストマップを配置 */}
+                <div className="w-full h-60 md:h-80 bg-kyoto-white/10 rounded-sm overflow-hidden">
+                  <img 
+                    src="/images/irasutogazou.jpg"
+                    alt="京都ローンテニスクラブのイラストマップ" 
+                    className="w-full h-full object-contain rounded-sm"
+                  />
+                </div>
+                
+                {/* 右側にGoogleマップを配置 */}
+                <div className="w-full h-60 md:h-80 bg-kyoto-white/10 rounded-sm overflow-hidden">
+                  <iframe 
+                    src="https://www.google.com/maps?q=京都ローンテニスクラブ+〒601-1121+京都市左京区静市静原町554&output=embed&hl=ja&z=16"
+                    width="100%" 
+                    height="100%" 
+                    style={{ border: 0 }} 
+                    allowFullScreen={false} 
+                    loading="lazy" 
+                    referrerPolicy="no-referrer-when-downgrade"
+                    title="京都ローンテニスクラブの地図"
+                    className="rounded-sm"
+                  />
+                </div>
               </div>
               
               <div className="mt-4 text-kyoto-white/80 text-xs md:text-sm">
@@ -123,6 +135,10 @@ const Contact = () => {
                   <li className="flex items-start">
                     <span className="font-medium mr-1">車:</span>
                     <span>市原交差点から東へ5分、無料駐車場あり</span>
+                  </li>
+                  <li className="flex items-start mt-1">
+                    <span className="font-medium mr-1">北大路堀川より:</span>
+                    <span>車で約20分</span>
                   </li>
                 </ul>
               </div>
