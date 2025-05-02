@@ -85,7 +85,7 @@ const Pricing = () => {
                     <td className="py-2 px-3 text-center text-base">不要</td>
                     <td className="py-2 px-3 text-center">
                       <span className="font-bold text-kyoto-dark-green text-lg">
-                        48,000円
+                        54,000円
                       </span>
                     </td>
                     <td className="py-2 px-3 text-base">平日終日と土曜日13時まで</td>
@@ -145,10 +145,10 @@ const Pricing = () => {
               <p className="text-base text-gray-700 mb-2">平日一年会員が週2回プレーした場合</p>
               <div className="bg-kyoto-cream/30 p-3 rounded">
                 <p className="bg-white/50 px-2 py-1 rounded-sm inline-block font-bold text-kyoto-dark-green text-lg mb-1">
-                  年間費用: 96,000円（8,000円／月）
+                  年間費用: 102,000円（8,500円／月）
                 </p>
-                <p className="text-gray-700 text-sm">内訳：年会費48,000円＋プレーフィ48,000円</p>
-                <p className="text-gray-700 text-sm">（500円×月8回×12か月）</p>
+                <p className="text-gray-700 text-sm">内訳：年会費54,000円＋プレーフィ48,000円（500円×月8回×12か月）</p>
+
               </div>
             </div>
 

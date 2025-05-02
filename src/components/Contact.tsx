@@ -136,10 +136,6 @@ const Contact = () => {
                     <span className="font-medium mr-1">車:</span>
                     <span>市原交差点から東へ5分、無料駐車場あり</span>
                   </li>
-                  <li className="flex items-start mt-1">
-                    <span className="font-medium mr-1">北大路堀川より:</span>
-                    <span>車で約20分</span>
-                  </li>
                 </ul>
               </div>
             </div>

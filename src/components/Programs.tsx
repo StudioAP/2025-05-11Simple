@@ -259,7 +259,7 @@ const Programs = () => {
                   <div className="flex items-center justify-center">
                     <div className="w-full h-0 pb-[75%] relative rounded-sm overflow-hidden">
                       <img 
-                        src="/images/コーチレッスン.jpg"
+                        src="/images/coachresson.jpg"
                         alt="コーチによるレッスン" 
                         className="absolute inset-0 w-full h-full object-cover"
                       />
@@ -281,7 +281,7 @@ const Programs = () => {
                   <div className="flex items-center justify-center">
                     <div className="w-full h-0 pb-[75%] relative rounded-sm overflow-hidden">
                       <img 
-                        src="/images/takusannkottimuiteegaoyayatikaku.jpg"
+                        src="/images/100ages.jpg"
                         alt="100歳大会" 
                         className="absolute inset-0 w-full h-full object-cover"
                       />
