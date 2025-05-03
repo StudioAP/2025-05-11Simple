@@ -3,11 +3,24 @@ import { Link } from "react-router-dom";
 import { ChevronLeft } from "lucide-react";
 import { createClient } from "contentful";
 import newsData from "../data/news.json";
+import { documentToReactComponents, Options } from '@contentful/rich-text-react-renderer';
+import { BLOCKS, INLINES, MARKS, Document } from '@contentful/rich-text-types';
+import type { EntryFieldTypes, Entry } from 'contentful';
+
+interface NewsEntrySkeleton {
+  contentTypeId: 'kyotolawntennisclubNews'
+  fields: {
+    title: EntryFieldTypes.Symbol;
+    date: EntryFieldTypes.Date;
+    body: EntryFieldTypes.RichText;
+    image?: EntryFieldTypes.AssetLink;
+  }
+}
 
 interface Announcement {
   title: string;
   date: string;
-  description: string;
+  description: Document | string;
   imageUrl?: string;
 }
 
@@ -16,132 +29,137 @@ const NewsArchive = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+  const richTextOptions: Options = {
+    renderMark: {
+      [MARKS.BOLD]: (text) => <strong className="font-bold">{text}</strong>,
+      [MARKS.ITALIC]: (text) => <em className="italic">{text}</em>,
+      [MARKS.UNDERLINE]: (text) => <u className="underline">{text}</u>,
+    },
+    renderNode: {
+      [BLOCKS.PARAGRAPH]: (node, children) => <p className="mb-1">{children}</p>,
+      [BLOCKS.HEADING_1]: (node, children) => <h1 className="text-xl font-bold mt-3 mb-1">{children}</h1>,
+      [BLOCKS.HEADING_2]: (node, children) => <h2 className="text-lg font-bold mt-2 mb-1">{children}</h2>,
+      [BLOCKS.HEADING_3]: (node, children) => <h3 className="text-base font-bold mt-1 mb-1">{children}</h3>,
+      [BLOCKS.UL_LIST]: (node, children) => <ul className="list-disc list-inside mb-1 ml-4">{children}</ul>,
+      [BLOCKS.OL_LIST]: (node, children) => <ol className="list-decimal list-inside mb-1 ml-4">{children}</ol>,
+      [BLOCKS.LIST_ITEM]: (node, children) => <li>{children}</li>,
+      [BLOCKS.QUOTE]: (node, children) => <blockquote className="border-l-4 border-gray-300 pl-3 italic my-1">{children}</blockquote>,
+      [BLOCKS.HR]: () => <hr className="my-2" />,
+      [BLOCKS.EMBEDDED_ASSET]: (node) => null,
+      [BLOCKS.EMBEDDED_ENTRY]: (node) => <div className="my-1 p-1 border border-dashed border-gray-300 text-xs">[埋込コンテンツ]</div>,
+      [INLINES.HYPERLINK]: (node, children) => (
+        <a href={node.data.uri} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
+          {children}
+        </a>
+      ),
+    },
+  };
+
   useEffect(() => {
     const fetchNewsFromContentful = async () => {
       try {
         setLoading(true);
-        
-        // 環境変数を直接確認
         const spaceId = import.meta.env.VITE_CONTENTFUL_SPACE_ID;
         const accessToken = import.meta.env.VITE_CONTENTFUL_ACCESS_TOKEN;
-        
-        if (!spaceId || !accessToken) {
-          console.warn('Contentfulの環境変数が設定されていません。フォールバックデータを使用します。');
-          // フォールバックデータを使用
+        const contentTypeId = import.meta.env.VITE_CONTENTFUL_CONTENT_TYPE_ID;
+
+        if (!spaceId || !accessToken || !contentTypeId) {
+          console.warn('Contentful環境変数が不足... フォールバック (NewsArchive)');
           const savedNews = localStorage.getItem('newsItems');
           const newsItems = savedNews ? JSON.parse(savedNews) : newsData.newsItems;
-          
-          const fallbackNews = newsItems.map((item: any) => ({
-            title: item.title,
-            date: item.date,
-            description: item.content,
-            imageUrl: item.imageUrl || ""
+          const fallbackNews: Announcement[] = newsItems.map((item: any) => ({
+            title: item.title || '',
+            date: item.date || '',
+            description: item.content || "",
+            imageUrl: item.imageUrl || undefined
           }));
-          
           setAnnouncements(fallbackNews);
           setLoading(false);
           return;
         }
-        
-        // Contentfulクライアントを初期化
-        const client = createClient({
-          space: spaceId,
-          accessToken: accessToken,
-        });
-        
+
+        const client = createClient({ space: spaceId!, accessToken: accessToken! });
+
         try {
-          // コンテンツタイプID
-          const contentTypeId = 'newsEvents';
-          
-          const response = await client.getEntries({
-            content_type: contentTypeId,
-            order: ['-fields.date'] // 日付フィールドで新しい順に並べ替え
+          console.log('API呼び出し中 (NewsArchive)... Content Type:', contentTypeId);
+          const response = await client.getEntries<NewsEntrySkeleton>({
+            content_type: contentTypeId!,
+            order: ['-fields.date'],
+            include: 1
           });
-          
+          console.log('応答 (NewsArchive):', response);
+
           if (response.items && response.items.length > 0) {
-            // ContentfulのレスポンスをAnnouncementの形式に変換
-            const contentfulNews = response.items.map((item: any) => {
-              // タイトル
+            const contentfulNews: Announcement[] = response.items.map((item) => {
               const title = item.fields.title || '';
-              
-              // 本文
-              const description = item.fields.body || '';
-              
-              // 日付
+              const body = item.fields.body;
               let date = '';
               if (item.fields.date) {
-                const dateObj = new Date(item.fields.date);
-                date = dateObj.toLocaleDateString('ja-JP', {
-                  year: 'numeric',
-                  month: 'long',
-                  day: 'numeric'
-                });
+                 const dateObj = new Date(item.fields.date);
+                 date = dateObj.toLocaleDateString('ja-JP', { year: 'numeric', month: 'long', day: 'numeric' });
               } else {
-                date = new Date(item.sys.createdAt).toLocaleDateString('ja-JP');
+                 date = new Date(item.sys.createdAt).toLocaleDateString('ja-JP');
               }
-              
-              // 画像
-              const imageUrl = item.fields.image?.fields?.file?.url 
-                ? `https:${item.fields.image.fields.file.url}` 
-                : '';
-              
+              let imageUrl: string | undefined = undefined;
+              const imageField = item.fields.image;
+              if (imageField && typeof imageField === 'object' && 'fields' in imageField && imageField.fields?.file?.url) {
+                 const rawUrl = imageField.fields.file.url;
+                 imageUrl = rawUrl.startsWith('//') ? `https:${rawUrl}` : rawUrl;
+              }
               return {
                 title,
                 date,
-                description,
+                description: body || "",
                 imageUrl
               };
             });
-            
-            // 空のタイトルや説明があるアイテムを除外
-            const validNews = contentfulNews.filter(item => item.title && item.description);
-            
+
+            const validNews = contentfulNews.filter(item => item.title);
             setAnnouncements(validNews);
           } else {
-            console.warn('Contentfulにデータがありません。フォールバックデータを使用します。');
-            // Contentfulにデータがない場合はローカルストレージまたはデフォルトデータを使用
+            console.warn('Contentfulにデータなし... フォールバック (NewsArchive)');
             const savedNews = localStorage.getItem('newsItems');
             const newsItems = savedNews ? JSON.parse(savedNews) : newsData.newsItems;
-            
-            const fallbackNews = newsItems.map((item: any) => ({
-              title: item.title,
-              date: item.date,
-              description: item.content,
-              imageUrl: item.imageUrl || ""
+            const fallbackNews: Announcement[] = newsItems.map((item: any) => ({
+              title: item.title || '',
+              date: item.date || '',
+              description: item.content || "",
+              imageUrl: item.imageUrl || undefined
             }));
-            
             setAnnouncements(fallbackNews);
           }
         } catch (err) {
-          console.error('Contentful API呼び出しエラー:', err);
-          throw err;
-        }
-        
+           console.error('APIエラー (NewsArchive):', err);
+           setError('ニュース取得エラー');
+           const savedNews = localStorage.getItem('newsItems');
+           const newsItems = savedNews ? JSON.parse(savedNews) : newsData.newsItems;
+           const fallbackNews: Announcement[] = newsItems.map((item: any) => ({
+             title: item.title || '',
+             date: item.date || '',
+             description: item.content || "",
+             imageUrl: item.imageUrl || undefined
+           }));
+           setAnnouncements(fallbackNews);
+         }
         setLoading(false);
       } catch (err) {
-        console.error('Contentfulからのデータ取得エラー:', err);
-        setError('ニュースデータの取得に失敗しました');
-        
-        // エラー時はフォールバックとしてローカルデータを使用
+        console.error('設定/予期せぬエラー (NewsArchive):', err);
+        setError('設定問題/予期せぬエラー');
         const savedNews = localStorage.getItem('newsItems');
         const newsItems = savedNews ? JSON.parse(savedNews) : newsData.newsItems;
-        
-        const fallbackNews = newsItems.map((item: any) => ({
-          title: item.title,
-          date: item.date,
-          description: item.content,
-          imageUrl: item.imageUrl || ""
+        const fallbackNews: Announcement[] = newsItems.map((item: any) => ({
+          title: item.title || '',
+          date: item.date || '',
+          description: item.content || "",
+          imageUrl: item.imageUrl || undefined
         }));
-        
         setAnnouncements(fallbackNews);
         setLoading(false);
       }
     };
-    
     fetchNewsFromContentful();
   }, []);
 
-  // 年月ごとにニュースを分類
   const groupByYearMonth = (news: Announcement[]) => {
     const groups: { [key: string]: Announcement[] } = {};
     
@@ -150,7 +168,6 @@ const NewsArchive = () => {
       
       if (item.date) {
         try {
-          // 日本語形式の日付から年月を抽出
           const match = item.date.match(/(\d+)年(\d+)月/);
           if (match) {
             const year = match[1];
@@ -169,7 +186,6 @@ const NewsArchive = () => {
       groups[groupKey].push(item);
     });
     
-    // キー（年月）でソート（降順）
     return Object.keys(groups)
       .sort()
       .reverse()
@@ -200,66 +216,49 @@ const NewsArchive = () => {
         </div>
         
         {loading ? (
-          <div className="bg-white p-4 rounded-sm shadow-lg text-center animate-pulse">
-            <p className="text-base text-kyoto-dark-green">読み込み中...</p>
-          </div>
+          <div className="text-center p-6">読み込み中...</div>
         ) : error ? (
-          <div className="bg-white p-4 rounded-sm shadow-lg border-l-4 border-red-500">
-            <p className="text-base text-red-500">{error}</p>
-          </div>
+          <div className="text-center p-6 text-red-600">{error}</div>
         ) : announcements.length === 0 ? (
-          <div className="bg-white p-4 rounded-sm shadow-lg text-center">
-            <p className="text-base text-kyoto-dark-green">現在ニュースはありません</p>
-          </div>
+          <div className="text-center p-6">お知らせはありません。</div>
         ) : (
           <div className="space-y-8">
-            {Object.entries(newsGroups).map(([yearMonth, items]) => (
-              <div key={yearMonth} className="animate-fade-in-up">
-                <h2 className="text-xl font-bold text-kyoto-dark-green mb-4 bg-kyoto-gold/10 p-2 rounded-sm">
-                  {yearMonth}
-                </h2>
-                
-                <div className="space-y-4">
-                  {items.map((announcement, index) => (
-                    <div 
-                      key={index}
-                      className="bg-white p-4 rounded-sm shadow-lg hover-lift border-l-4 border-kyoto-gold/80 transition-all duration-300"
-                    >
-                      {/* 左右二段組みレイアウト */}
-                      <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
-                        {/* 左側: 日付、タイトル、本文 */}
-                        <div className="md:col-span-7 pl-2">
-                          <div className="flex items-center mb-2">
-                            {/* 日付を先に表示 */}
-                            {announcement.date && (
-                              <span className="text-sm bg-kyoto-gold/20 px-2 py-0.5 rounded text-kyoto-dark-green mr-2">{announcement.date}</span>
-                            )}
-                            <h3 className="text-lg font-bold text-kyoto-dark-green flex-grow text-left">{announcement.title}</h3>
+            {Object.entries(newsGroups).map(([yearMonth, newsList]) => (
+              <div key={yearMonth}>
+                <h2 className="text-xl font-semibold text-kyoto-dark-green mb-3 border-b-2 border-kyoto-gold pb-1">{yearMonth}</h2>
+                <ul className="space-y-4">
+                  {newsList.map((item, index) => (
+                    <li key={index} className="bg-white p-4 rounded-sm shadow hover-lift transition-shadow duration-200">
+                      <div className="flex flex-col md:flex-row gap-4">
+                        {item.imageUrl && (
+                          <div className="md:w-1/4 flex-shrink-0">
+                            <img 
+                              src={item.imageUrl} 
+                              alt={item.title} 
+                              className="w-full h-auto object-contain rounded border"
+                            />
                           </div>
-                          <p className="text-base text-gray-700">{announcement.description}</p>
-                        </div>
-                        
-                        {/* 右側: 画像 */}
-                        <div className="md:col-span-5">
-                          {announcement.imageUrl ? (
-                            <div className="h-full flex items-center justify-center">
-                              <img 
-                                src={announcement.imageUrl} 
-                                alt={announcement.title} 
-                                className="w-full h-auto rounded-sm border border-gray-200 shadow-sm" 
-                                style={{ objectFit: "contain" }}
-                              />
-                            </div>
-                          ) : (
-                            <div className="h-full flex items-center justify-center bg-kyoto-gold/5 rounded-sm p-4 border border-dashed border-kyoto-gold/30">
-                              <p className="text-kyoto-dark-green/60 text-center text-sm">画像はありません</p>
-                            </div>
-                          )}
+                        )}
+                        <div className="flex-grow">
+                          <div className="flex items-center mb-1">
+                             {item.date && (
+                               <span className="text-xs bg-kyoto-gold/20 px-2 py-0.5 rounded text-kyoto-dark-green mr-2 whitespace-nowrap">
+                                 {item.date}
+                               </span>
+                             )}
+                             <h3 className="text-lg font-bold text-kyoto-dark-green">{item.title}</h3>
+                          </div>
+                          <div className="text-sm text-gray-700 break-words">
+                             {item.description && typeof item.description === 'object' && 'nodeType' in item.description
+                               ? documentToReactComponents(item.description, richTextOptions) as React.ReactNode
+                               : <p>{item.description}</p>
+                             }
+                          </div>
                         </div>
                       </div>
-                    </div>
+                    </li>
                   ))}
-                </div>
+                </ul>
               </div>
             ))}
           </div>
