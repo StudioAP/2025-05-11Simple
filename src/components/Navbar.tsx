@@ -33,7 +33,7 @@ const Navbar = () => {
     >
       <div className="container mx-auto px-4 flex justify-between items-center">
         <div className="flex items-center">
-          <a href="#" className="flex flex-col items-start">
+          <a href="/" className="flex flex-col items-start">
             <span className="text-kyoto-gold font-mincho text-2xl font-bold tracking-wider">
               京都ローンテニスクラブ
             </span>

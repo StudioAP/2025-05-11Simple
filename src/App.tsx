@@ -19,6 +19,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Layout><Home /></Layout>} />
           <Route path="/news-archive" element={<Layout><NewsArchive /></Layout>} />
+          {/* <Route path="/news-archive" element={<NewsArchive />} /> */}
           <Route path="/manage-news" element={<ManageNewsPage />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />

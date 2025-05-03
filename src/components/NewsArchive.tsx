@@ -36,17 +36,17 @@ const NewsArchive = () => {
       [MARKS.UNDERLINE]: (text) => <u className="underline">{text}</u>,
     },
     renderNode: {
-      [BLOCKS.PARAGRAPH]: (node, children) => <p className="mb-1">{children}</p>,
-      [BLOCKS.HEADING_1]: (node, children) => <h1 className="text-xl font-bold mt-3 mb-1">{children}</h1>,
-      [BLOCKS.HEADING_2]: (node, children) => <h2 className="text-lg font-bold mt-2 mb-1">{children}</h2>,
-      [BLOCKS.HEADING_3]: (node, children) => <h3 className="text-base font-bold mt-1 mb-1">{children}</h3>,
-      [BLOCKS.UL_LIST]: (node, children) => <ul className="list-disc list-inside mb-1 ml-4">{children}</ul>,
-      [BLOCKS.OL_LIST]: (node, children) => <ol className="list-decimal list-inside mb-1 ml-4">{children}</ol>,
+      [BLOCKS.PARAGRAPH]: (node, children) => <p className="mb-2">{children}</p>,
+      [BLOCKS.HEADING_1]: (node, children) => <h1 className="text-2xl font-bold mt-4 mb-2">{children}</h1>,
+      [BLOCKS.HEADING_2]: (node, children) => <h2 className="text-xl font-bold mt-3 mb-2">{children}</h2>,
+      [BLOCKS.HEADING_3]: (node, children) => <h3 className="text-lg font-bold mt-2 mb-1">{children}</h3>,
+      [BLOCKS.UL_LIST]: (node, children) => <ul className="list-disc list-inside mb-2 ml-4">{children}</ul>,
+      [BLOCKS.OL_LIST]: (node, children) => <ol className="list-decimal list-inside mb-2 ml-4">{children}</ol>,
       [BLOCKS.LIST_ITEM]: (node, children) => <li>{children}</li>,
-      [BLOCKS.QUOTE]: (node, children) => <blockquote className="border-l-4 border-gray-300 pl-3 italic my-1">{children}</blockquote>,
-      [BLOCKS.HR]: () => <hr className="my-2" />,
+      [BLOCKS.QUOTE]: (node, children) => <blockquote className="border-l-4 border-gray-300 pl-4 italic my-2">{children}</blockquote>,
+      [BLOCKS.HR]: () => <hr className="my-4" />,
       [BLOCKS.EMBEDDED_ASSET]: (node) => null,
-      [BLOCKS.EMBEDDED_ENTRY]: (node) => <div className="my-1 p-1 border border-dashed border-gray-300 text-xs">[埋込コンテンツ]</div>,
+      [BLOCKS.EMBEDDED_ENTRY]: (node) => <div className="my-2 p-2 border border-dashed border-gray-300 text-xs">[埋込コンテンツ]</div>,
       [INLINES.HYPERLINK]: (node, children) => (
         <a href={node.data.uri} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
           {children}
@@ -251,7 +251,7 @@ const NewsArchive = () => {
                           <div className="text-sm text-gray-700 break-words">
                              {item.description && typeof item.description === 'object' && 'nodeType' in item.description
                                ? documentToReactComponents(item.description, richTextOptions) as React.ReactNode
-                               : <p>{item.description}</p>
+                               : typeof item.description === 'string' ? <p>{item.description}</p> : null
                              }
                           </div>
                         </div>
