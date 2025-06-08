@@ -1,11 +1,11 @@
 # Supabase Edge Function (send-general-contact) の Resend API エラーに関する相談
 
-## 1. 現在の状況
+## 1. 問題の背景と現在の状況
 
 Supabase Edge Function `send-general-contact` が、お問い合わせフォームからのメール送信時に500エラーを返しています。
-以前はログが全く出力されませんでしたが、`RESEND_API_KEY` の取得タイミングを `Deno.serve` のコールバック関数内に移動したところ、Supabaseダッシュボードに以下のエラーログが出力されるようになりました。
+以前はログが全く出力されませんでしたが、`RESEND_API_KEY` の取得タイミングを `Deno.serve` のコールバック関数内に移動したところ、Supabase管理画面に以下のエラーログが出力されるようになりました。
 
-## 2. 確認されたエラーログ (Supabaseダッシュボードより)
+## 2. 確認されたエラーログ (Supabase管理画面より)
 
 ### エラーパターン1 (最新のログ - 主な問題)
 
@@ -182,10 +182,12 @@ Deno.serve(async (req: Request) => {
 
 ### 4.2. Resend設定による対策 (エラーパターン2の根本解決)
 
-*   **Resendダッシュボードでのドメイン認証:**
-    *   [resend.com/domains](https://resend.com/domains) にて、ウェブサイトで使用しているドメイン（例: `your-website.com`）を認証する。
-*   **`from` アドレスの変更:**
-    *   ドメイン認証後、Supabase Function内の `from` アドレスを、認証したドメインのメールアドレス（例: `contact@your-website.com`, `noreply@your-website.com` など）に変更する。
+*   **Resend管理画面でのドメイン認証:**
+    *   Resend側で送信元ドメイン (`rhythm-find-harmony.com`) が正しく認証済み（Verified）であるか再確認。
+    *   SPF/DKIMレコードがDNSに正しく設定され、Resend側で認識されているか。
+*   **APIキーの権限**: 現在使用しているResend APIキーが、メール送信に必要な権限 (`full_access` または `sending_access`) を持っているかResend管理画面で確認。
+*   **To/Fromアドレス形式**: `to`, `from` フィールドのメールアドレス形式がRFC標準に準拠しているか。
+    *   `from` はResendで認証済みドメインのメールアドレスである必要がある。
 
 ## 5. 他のAIに聞きたいこと
 
